@@ -1,0 +1,1373 @@
+{
+  "jogador": [
+    {
+      "nome": "MATHEUS",
+      "jogador": "DOMINIK",
+      "origem": "BOMBEIRO",
+      "idade": "35",
+      "sexo": "MACHO",
+      "lnascimento": "MANAUS",
+      "lresidencia": "BELFORD ROXO",
+      "vida": {
+        "id": 0,
+        "atual": 8,
+        "maximo": 9
+      },
+      "sanidade": {
+        "id": 0,
+        "atual": 6,
+        "maximo": 6
+      },
+      "ocultismo": {
+        "id": 0,
+        "atual": 9,
+        "maximo": 10
+      },
+      "esforco": {
+        "id": 0,
+        "atual": 6,
+        "maximo": 14
+      },
+      "atributos": [
+        {
+          "id": 1,
+          "nome": "FORÇA",
+          "valor": 5
+        },
+        {
+          "id": 2,
+          "nome": "APARENCIA",
+          "valor": 12
+        },
+        {
+          "id": 3,
+          "nome": "CONTITUIÇÃO",
+          "valor": 16
+        },
+        {
+          "id": 4,
+          "nome": "DESTREZA",
+          "valor": 15
+        }
+      ],
+      "resistencias": [
+        {
+          "id": 1,
+          "nome": "FÍSICA",
+          "valor": 2
+        },
+        {
+          "id": 2,
+          "nome": "BALÍSTICA",
+          "valor": 3
+        },
+        {
+          "id": 3,
+          "nome": "INSANIDADE",
+          "valor": 2
+        },
+        {
+          "id": 4,
+          "nome": "MEDO",
+          "valor": 9
+        },
+        {
+          "id": 5,
+          "nome": "SANGUE",
+          "valor": 5
+        },
+        {
+          "id": 6,
+          "nome": "MORTE",
+          "valor": 6
+        },
+        {
+          "id": 6,
+          "nome": "ENERGIA",
+          "valor": 7
+        },
+        {
+          "id": 6,
+          "nome": "CONHECIMEN",
+          "valor": 2
+        }
+      ],
+      "pericias": [
+        {
+          "id": 2,
+          "nome": "Atualidades",
+          "valor": 11
+        },
+        {
+          "id": 3,
+          "nome": "Ciência",
+          "valor": 6
+        },
+        {
+          "id": 4,
+          "nome": "Diplomacia",
+          "valor": 7
+        }
+      ],
+      "id": 1
+    },
+    {
+      "nome": "DAVID",
+      "jogador": "JOSEPH",
+      "origem": "INVESTIGADOR",
+      "idade": "50",
+      "sexo": "MACHO",
+      "lnascimento": "MANAUS",
+      "lresidencia": "BELFORD ROXO",
+      "vida": {
+        "id": 0,
+        "atual": 8,
+        "maximo": 14
+      },
+      "sanidade": {
+        "id": 0,
+        "atual": 6,
+        "maximo": 6
+      },
+      "ocultismo": {
+        "id": 0,
+        "atual": 9,
+        "maximo": 10
+      },
+      "esforco": {
+        "id": 0,
+        "atual": 6,
+        "maximo": 14
+      },
+      "atributos": [
+        {
+          "id": 1,
+          "nome": "FORÇA",
+          "valor": 5
+        },
+        {
+          "id": 2,
+          "nome": "APARENCIA",
+          "valor": 12
+        },
+        {
+          "id": 3,
+          "nome": "CONTITUIÇÃO",
+          "valor": 16
+        },
+        {
+          "id": 4,
+          "nome": "DESTREZA",
+          "valor": 15
+        }
+      ],
+      "resistencias": [
+        {
+          "id": 1,
+          "nome": "FÍSICA",
+          "valor": 2
+        },
+        {
+          "id": 2,
+          "nome": "BALÍSTICA",
+          "valor": 3
+        },
+        {
+          "id": 3,
+          "nome": "INSANIDADE",
+          "valor": 2
+        },
+        {
+          "id": 4,
+          "nome": "MEDO",
+          "valor": 9
+        },
+        {
+          "id": 5,
+          "nome": "SANGUE",
+          "valor": 5
+        },
+        {
+          "id": 6,
+          "nome": "MORTE",
+          "valor": 6
+        },
+        {
+          "id": 6,
+          "nome": "ENERGIA",
+          "valor": 7
+        },
+        {
+          "id": 6,
+          "nome": "CONHECIMEN",
+          "valor": 2
+        }
+      ],
+      "pericias": [
+        {
+          "id": 2,
+          "nome": "Atualidades",
+          "valor": 11
+        },
+        {
+          "id": 3,
+          "nome": "Ciência",
+          "valor": 6
+        },
+        {
+          "id": 4,
+          "nome": "Diplomacia",
+          "valor": 7
+        }
+      ],
+      "id": 2
+    },
+    {
+      "nome": "ERIK",
+      "jogador": "TOMAS",
+      "origem": "EXORCISTA",
+      "idade": "23",
+      "sexo": "MACHO",
+      "lnascimento": "MANAUS",
+      "lresidencia": "MANAUS",
+      "vida": {
+        "id": 0,
+        "atual": 8,
+        "maximo": 9
+      },
+      "sanidade": {
+        "id": 0,
+        "atual": 6,
+        "maximo": 6
+      },
+      "ocultismo": {
+        "id": 0,
+        "atual": 9,
+        "maximo": 10
+      },
+      "esforco": {
+        "id": 0,
+        "atual": 6,
+        "maximo": 14
+      },
+      "atributos": [
+        {
+          "id": 1,
+          "nome": "FORÇA",
+          "valor": 5
+        }
+      ],
+      "resistencias": [
+        {
+          "id": 1,
+          "nome": "FÍSICA",
+          "valor": 2
+        },
+        {
+          "id": 2,
+          "nome": "BALÍSTICA",
+          "valor": 3
+        },
+        {
+          "id": 3,
+          "nome": "INSANIDADE",
+          "valor": 2
+        },
+        {
+          "id": 4,
+          "nome": "MEDO",
+          "valor": 9
+        },
+        {
+          "id": 5,
+          "nome": "SANGUE",
+          "valor": 5
+        },
+        {
+          "id": 6,
+          "nome": "MORTE",
+          "valor": 6
+        },
+        {
+          "id": 6,
+          "nome": "ENERGIA",
+          "valor": 7
+        },
+        {
+          "id": 6,
+          "nome": "CONHECIMEN",
+          "valor": 2
+        }
+      ],
+      "pericias": [
+        {
+          "id": 2,
+          "nome": "Atualidades",
+          "valor": 11
+        },
+        {
+          "id": 3,
+          "nome": "Ciência",
+          "valor": 6
+        },
+        {
+          "id": 4,
+          "nome": "Diplomacia",
+          "valor": 7
+        }
+      ],
+      "id": 3
+    },
+    {
+      "nome": "MATHEUS SILVA",
+      "jogador": "ISAAC",
+      "origem": "TERRORISTA",
+      "idade": "34",
+      "sexo": "MACHO",
+      "lnascimento": "RIO DE JANEIRO",
+      "lresidencia": "MANAUS",
+      "vida": {
+        "id": 0,
+        "atual": 8,
+        "maximo": 9
+      },
+      "sanidade": {
+        "id": 0,
+        "atual": 6,
+        "maximo": 6
+      },
+      "ocultismo": {
+        "id": 0,
+        "atual": 9,
+        "maximo": 10
+      },
+      "esforco": {
+        "id": 0,
+        "atual": 6,
+        "maximo": 14
+      },
+      "atributos": [
+        {
+          "id": 1,
+          "nome": "FORÇA",
+          "valor": 5
+        }
+      ],
+      "resistencias": [
+        {
+          "id": 1,
+          "nome": "FÍSICA",
+          "valor": 2
+        },
+        {
+          "id": 2,
+          "nome": "BALÍSTICA",
+          "valor": 3
+        },
+        {
+          "id": 3,
+          "nome": "INSANIDADE",
+          "valor": 2
+        },
+        {
+          "id": 4,
+          "nome": "MEDO",
+          "valor": 9
+        },
+        {
+          "id": 5,
+          "nome": "SANGUE",
+          "valor": 5
+        },
+        {
+          "id": 6,
+          "nome": "MORTE",
+          "valor": 6
+        },
+        {
+          "id": 6,
+          "nome": "ENERGIA",
+          "valor": 7
+        },
+        {
+          "id": 6,
+          "nome": "CONHECIMEN",
+          "valor": 2
+        }
+      ],
+      "pericias": [
+        {
+          "id": 2,
+          "nome": "Atualidades",
+          "valor": 11
+        },
+        {
+          "id": 3,
+          "nome": "Ciência",
+          "valor": 6
+        },
+        {
+          "id": 4,
+          "nome": "Diplomacia",
+          "valor": 7
+        }
+      ],
+      "id": 5
+    },
+    {
+      "nome": "Matheus da Silva Galdino",
+      "jogador": "SORAKA",
+      "origem": "SUPORTE",
+      "idade": "45",
+      "sexo": "MACHO ",
+      "lnascimento": "SLA",
+      "lresidencia": "SLA",
+      "vida": {
+        "id": 0,
+        "atual": 8,
+        "maximo": 9
+      },
+      "sanidade": {
+        "id": 0,
+        "atual": 6,
+        "maximo": 6
+      },
+      "ocultismo": {
+        "id": 0,
+        "atual": 9,
+        "maximo": 10
+      },
+      "esforco": {
+        "id": 0,
+        "atual": 6,
+        "maximo": 14
+      },
+      "atributos": [
+        {
+          "id": 1,
+          "nome": "FORÇA",
+          "valor": 5
+        }
+      ],
+      "resistencias": [
+        {
+          "id": 1,
+          "nome": "FÍSICA",
+          "valor": "10"
+        },
+        {
+          "id": 2,
+          "nome": "BALÍSTICA",
+          "valor": "8"
+        },
+        {
+          "id": 3,
+          "nome": "INSANIDADE",
+          "valor": "7"
+        },
+        {
+          "id": 4,
+          "nome": "MEDO",
+          "valor": "2"
+        },
+        {
+          "id": 5,
+          "nome": "SANGUE",
+          "valor": "13"
+        },
+        {
+          "id": 6,
+          "nome": "MORTE",
+          "valor": "13"
+        },
+        {
+          "id": 6,
+          "nome": "ENERGIA",
+          "valor": "10"
+        },
+        {
+          "id": 6,
+          "nome": "CONHECIMEN",
+          "valor": 2
+        }
+      ],
+      "pericias": [
+        {
+          "id": 2,
+          "nome": "Atualidades",
+          "valor": 11
+        },
+        {
+          "id": 3,
+          "nome": "Ciência",
+          "valor": 6
+        },
+        {
+          "id": 4,
+          "nome": "Diplomacia",
+          "valor": 7
+        }
+      ],
+      "id": 6
+    },
+    {
+      "nome": "JEREMIAS",
+      "jogador": "JOESTAR",
+      "origem": "AGIOTA",
+      "idade": "26",
+      "sexo": "MACHO",
+      "lnascimento": "MANAUS",
+      "lresidencia": "MANAUS",
+      "vida": {
+        "id": 0,
+        "atual": 17,
+        "maximo": 17
+      },
+      "sanidade": {
+        "id": 0,
+        "atual": 78,
+        "maximo": 78
+      },
+      "ocultismo": {
+        "id": 0,
+        "atual": 12,
+        "maximo": 12
+      },
+      "esforco": {
+        "id": 0,
+        "atual": 20,
+        "maximo": 20
+      },
+      "atributos": [
+        {
+          "id": 1,
+          "nome": "FORÇA",
+          "valor": 5
+        },
+        {
+          "id": 2,
+          "nome": "agilidade"
+        },
+        {
+          "id": 3,
+          "nome": "POER",
+          "valor": 12
+        }
+      ],
+      "resistencias": [
+        {
+          "id": 1,
+          "nome": "FÍSICA",
+          "valor": "10"
+        },
+        {
+          "id": 2,
+          "nome": "BALÍSTICA",
+          "valor": "10"
+        },
+        {
+          "id": 3,
+          "nome": "INSANIDADE",
+          "valor": "9"
+        },
+        {
+          "id": 4,
+          "nome": "MEDO",
+          "valor": "9"
+        },
+        {
+          "id": 5,
+          "nome": "SANGUE",
+          "valor": "7"
+        },
+        {
+          "id": 6,
+          "nome": "MORTE",
+          "valor": "10"
+        },
+        {
+          "id": 6,
+          "nome": "ENERGIA",
+          "valor": "8"
+        },
+        {
+          "id": 6,
+          "nome": "CONHECIMEN",
+          "valor": "10"
+        }
+      ],
+      "pericias": [
+        {
+          "id": 2,
+          "nome": "Atualidades",
+          "valor": 0
+        },
+        {
+          "id": 3,
+          "nome": "Ciência",
+          "valor": 0
+        },
+        {
+          "id": 4,
+          "nome": "Diplomacia",
+          "valor": 0
+        }
+      ],
+      "id": 7
+    },
+    {
+      "nome": "FELIPE",
+      "jogador": "ALUCARD",
+      "origem": "VAMPIRO",
+      "idade": "45",
+      "sexo": "MACHO",
+      "lnascimento": "HOMENIA",
+      "lresidencia": "TRANSILVANIA",
+      "vida": {
+        "id": 0,
+        "atual": 20,
+        "maximo": 20
+      },
+      "sanidade": {
+        "id": 0,
+        "atual": 99,
+        "maximo": 99
+      },
+      "ocultismo": {
+        "id": 0,
+        "atual": 15,
+        "maximo": 16
+      },
+      "esforco": {
+        "id": 0,
+        "atual": 10,
+        "maximo": 10
+      },
+      "atributos": [
+        {
+          "id": 1,
+          "nome": "FORÇA",
+          "valor": 5
+        }
+      ],
+      "resistencias": [
+        {
+          "id": 1,
+          "nome": "FÍSICA",
+          "valor": 0
+        },
+        {
+          "id": 2,
+          "nome": "BALÍSTICA",
+          "valor": 0
+        },
+        {
+          "id": 3,
+          "nome": "INSANIDADE",
+          "valor": 0
+        },
+        {
+          "id": 4,
+          "nome": "MEDO",
+          "valor": 0
+        },
+        {
+          "id": 5,
+          "nome": "SANGUE",
+          "valor": 0
+        },
+        {
+          "id": 6,
+          "nome": "MORTE",
+          "valor": 0
+        },
+        {
+          "id": 6,
+          "nome": "ENERGIA",
+          "valor": 0
+        },
+        {
+          "id": 6,
+          "nome": "CONHECIMEN",
+          "valor": 0
+        }
+      ],
+      "pericias": [
+        {
+          "id": 2,
+          "nome": "Atualidades",
+          "valor": 0
+        },
+        {
+          "id": 3,
+          "nome": "Ciência",
+          "valor": 0
+        },
+        {
+          "id": 4,
+          "nome": "Diplomacia",
+          "valor": 0
+        }
+      ],
+      "id": 8
+    },
+    {
+      "nome": "fulano",
+      "jogador": "VLAD",
+      "origem": "PISTOLEIRO",
+      "idade": "35",
+      "sexo": "MACHO",
+      "lnascimento": "BETANIA",
+      "lresidencia": "BETANIA",
+      "vida": {
+        "id": 0,
+        "atual": 0,
+        "maximo": 1
+      },
+      "sanidade": {
+        "id": 0,
+        "atual": 0,
+        "maximo": 1
+      },
+      "ocultismo": {
+        "id": 0,
+        "atual": 0,
+        "maximo": 1
+      },
+      "esforco": {
+        "id": 0,
+        "atual": 0,
+        "maximo": 1
+      },
+      "atributos": [
+        {
+          "id": 1,
+          "nome": "FORÇA",
+          "valor": 5
+        },
+        {
+          "id": 2,
+          "nome": "DESASTRE",
+          "valor": 18
+        },
+        {
+          "id": 3,
+          "nome": "TESTE",
+          "valor": 14
+        },
+        {
+          "id": 4,
+          "nome": "AAA",
+          "valor": 20
+        }
+      ],
+      "resistencias": [
+        {
+          "id": 1,
+          "nome": "FÍSICA",
+          "valor": "10"
+        },
+        {
+          "id": 2,
+          "nome": "BALÍSTICA",
+          "valor": "11"
+        },
+        {
+          "id": 3,
+          "nome": "INSANIDADE",
+          "valor": "12"
+        },
+        {
+          "id": 4,
+          "nome": "MEDO",
+          "valor": "15"
+        },
+        {
+          "id": 5,
+          "nome": "SANGUE",
+          "valor": "10"
+        },
+        {
+          "id": 6,
+          "nome": "MORTE",
+          "valor": "5"
+        },
+        {
+          "id": 6,
+          "nome": "ENERGIA",
+          "valor": "5"
+        },
+        {
+          "id": 6,
+          "nome": "CONHECIMEN",
+          "valor": "4"
+        }
+      ],
+      "pericias": [
+        {
+          "id": 2,
+          "nome": "Atualidades",
+          "valor": 0
+        },
+        {
+          "id": 3,
+          "nome": "Ciência",
+          "valor": 0
+        },
+        {
+          "id": 4,
+          "nome": "Diplomacia",
+          "valor": 0
+        },
+        {
+          "id": 5,
+          "nome": "FUNFOU",
+          "valor": 20
+        }
+      ],
+      "id": 9
+    },
+    {
+      "nome": "",
+      "jogador": "",
+      "origem": "",
+      "idade": 0,
+      "sexo": "",
+      "lnascimento": "",
+      "lresidencia": "",
+      "movimento": 17.5,
+      "vida": {
+        "id": 0,
+        "atual": 0,
+        "maximo": 1
+      },
+      "sanidade": {
+        "id": 0,
+        "atual": 0,
+        "maximo": 1
+      },
+      "ocultismo": {
+        "id": 0,
+        "atual": 0,
+        "maximo": 1
+      },
+      "esforco": {
+        "id": 0,
+        "atual": 0,
+        "maximo": 1
+      },
+      "atributos": [
+        {
+          "id": 1,
+          "nome": "APARÊNCIA",
+          "valor": 10
+        },
+        {
+          "id": 2,
+          "nome": "CONSTITUIÇÃO",
+          "valor": 11
+        },
+        {
+          "id": 3,
+          "nome": "DESTREZA",
+          "valor": 13
+        },
+        {
+          "id": 4,
+          "nome": "EDUCAÇÃO",
+          "valor": 8
+        },
+        {
+          "id": 5,
+          "nome": "FORÇA",
+          "valor": 14
+        },
+        {
+          "id": 6,
+          "nome": "INTELIGÊNCIA",
+          "valor": 8
+        },
+        {
+          "id": 7,
+          "nome": "PODER",
+          "valor": 12
+        },
+        {
+          "id": 8,
+          "nome": "SORTE",
+          "valor": 11
+        },
+        {
+          "id": 9,
+          "nome": "TAMANHO",
+          "valor": 12
+        }
+      ],
+      "resistencias": [
+        {
+          "id": 1,
+          "nome": "FÍSICA",
+          "valor": 0
+        },
+        {
+          "id": 2,
+          "nome": "BALÍSTICA",
+          "valor": "9"
+        },
+        {
+          "id": 3,
+          "nome": "INSANIDADE",
+          "valor": "11"
+        },
+        {
+          "id": 4,
+          "nome": "MEDO",
+          "valor": "7"
+        },
+        {
+          "id": 5,
+          "nome": "SANGUE",
+          "valor": "14"
+        },
+        {
+          "id": 6,
+          "nome": "MORTE",
+          "valor": "10"
+        },
+        {
+          "id": 7,
+          "nome": "ENERGIA",
+          "valor": "6"
+        },
+        {
+          "id": 8,
+          "nome": "CONHECIMENTO",
+          "valor": "6"
+        }
+      ],
+      "pericias": [
+        {
+          "id": 1,
+          "nome": "ATLETISMO",
+          "valor": 0
+        },
+        {
+          "id": 2,
+          "nome": "ATUALIDADES",
+          "valor": 0
+        },
+        {
+          "id": 3,
+          "nome": "CIÊNCIAS",
+          "valor": 0
+        },
+        {
+          "id": 4,
+          "nome": "DIPLOMACIA",
+          "valor": 0
+        },
+        {
+          "id": 5,
+          "nome": "ENGANAÇÃO",
+          "valor": 0
+        },
+        {
+          "id": 6,
+          "nome": "FORTITUDE",
+          "valor": 0
+        },
+        {
+          "id": 7,
+          "nome": "FURTIVIDADE",
+          "valor": 0
+        },
+        {
+          "id": 8,
+          "nome": "INTIMIDAÇÃO",
+          "valor": 0
+        },
+        {
+          "id": 9,
+          "nome": "INTUIÇÃO",
+          "valor": 0
+        },
+        {
+          "id": 10,
+          "nome": "INVESTIGAÇÃO",
+          "valor": 0
+        },
+        {
+          "id": 11,
+          "nome": "LUTA",
+          "valor": 0
+        },
+        {
+          "id": 12,
+          "nome": "MEDICINA",
+          "valor": 0
+        },
+        {
+          "id": 13,
+          "nome": "OCULTISMO",
+          "valor": 0
+        },
+        {
+          "id": 14,
+          "nome": "PERCEPÇÃO",
+          "valor": 0
+        },
+        {
+          "id": 15,
+          "nome": "PILOTAGEM",
+          "valor": 0
+        },
+        {
+          "id": 16,
+          "nome": "PONTARIA",
+          "valor": 0
+        },
+        {
+          "id": 17,
+          "nome": "PRESTIDIGITAÇÃO",
+          "valor": 0
+        },
+        {
+          "id": 18,
+          "nome": "PROFISSÃO",
+          "valor": 0
+        },
+        {
+          "id": 19,
+          "nome": "REFLEXOS",
+          "valor": 0
+        },
+        {
+          "id": 20,
+          "nome": "RELIGIÃO",
+          "valor": 0
+        },
+        {
+          "id": 21,
+          "nome": "TÁTICA",
+          "valor": 0
+        },
+        {
+          "id": 22,
+          "nome": "TECNOLOGIA",
+          "valor": 0
+        },
+        {
+          "id": 23,
+          "nome": "VONTADE",
+          "valor": 0
+        }
+      ],
+      "id": 10
+    }
+  ],
+  "newJogador": [
+    {
+      "nome": "a",
+      "jogador": "b",
+      "origem": "c",
+      "idade": 12,
+      "sexo": "d",
+      "lnascimento": "e",
+      "lresidencia": "f",
+      "id": 1,
+      "vida": {
+        "id": 0,
+        "atual": 0,
+        "maximo": 1
+      },
+      "sanidade": {
+        "id": 0,
+        "atual": 0,
+        "maximo": 1
+      },
+      "ocutismo": {
+        "id": 0,
+        "atual": 0,
+        "maximo": 0
+      },
+      "esforco": {
+        "id": 0,
+        "atual": 0,
+        "maximo": 1
+      },
+      "classe": "",
+      "atributos": [
+        {
+          "id": 1,
+          "nome": "APARÊNCIA",
+          "valor": 0
+        },
+        {
+          "id": 2,
+          "nome": "CONSTITUIÇÃO",
+          "valor": 8
+        },
+        {
+          "id": 3,
+          "nome": "DESTREZA",
+          "valor": 9
+        },
+        {
+          "id": 4,
+          "nome": "EDUCAÇÃO",
+          "valor": 17
+        },
+        {
+          "id": 5,
+          "nome": "FORÇA",
+          "valor": 0
+        },
+        {
+          "id": 6,
+          "nome": "INTELIGÊNCIA",
+          "valor": 13
+        },
+        {
+          "id": 7,
+          "nome": "PODER",
+          "valor": 0
+        },
+        {
+          "id": 8,
+          "nome": "SORTE",
+          "valor": 0
+        },
+        {
+          "id": 9,
+          "nome": "TAMANHO",
+          "valor": 0
+        }
+      ],
+      "pericias": [
+        {
+          "id": 1,
+          "treino": "DESTREINADA",
+          "tipo": "treinada",
+          "nome": "ATLETISMO",
+          "valor": 4
+        },
+        {
+          "id": 2,
+          "treino": "DESTREINADA",
+          "tipo": "treinada",
+          "nome": "ATUALIDADES",
+          "valor": 2
+        },
+        {
+          "id": 3,
+          "treino": "DESTREINADA",
+          "tipo": "treinada",
+          "nome": "CIÊNCIAS",
+          "valor": 11
+        },
+        {
+          "id": 4,
+          "treino": "DESTREINADA",
+          "tipo": "treinada",
+          "nome": "DIPLOMACIA",
+          "valor": 10
+        },
+        {
+          "id": 5,
+          "treino": "DESTREINADA",
+          "tipo": "treinada",
+          "nome": "ENGANAÇÃO",
+          "valor": 9
+        },
+        {
+          "id": 6,
+          "treino": "DESTREINADA",
+          "tipo": "treinada",
+          "nome": "FORTITUDE",
+          "valor": 8
+        },
+        {
+          "id": 7,
+          "treino": "DESTREINADA",
+          "tipo": "treinada",
+          "nome": "FURTIVIDADE",
+          "valor": 10
+        },
+        {
+          "id": 8,
+          "treino": "DESTREINADA",
+          "tipo": "treinada",
+          "nome": "INTIMIDAÇÃO",
+          "valor": 6
+        },
+        {
+          "id": 9,
+          "treino": "DESTREINADA",
+          "tipo": "treinada",
+          "nome": "INTUIÇÃO",
+          "valor": 9
+        },
+        {
+          "id": 10,
+          "treino": "DESTREINADA",
+          "tipo": "treinada",
+          "nome": "INVESTIGAÇÃO",
+          "valor": 12
+        },
+        {
+          "id": 11,
+          "treino": "DESTREINADA",
+          "tipo": "treinada",
+          "nome": "LUTA",
+          "valor": 13
+        },
+        {
+          "id": 12,
+          "treino": "DESTREINADA",
+          "tipo": "treinada",
+          "nome": "MEDICINA",
+          "valor": 6
+        },
+        {
+          "id": 13,
+          "treino": "DESTREINADA",
+          "tipo": "treinada",
+          "nome": "OCULTISMO",
+          "valor": 12
+        },
+        {
+          "id": 14,
+          "treino": "DESTREINADA",
+          "tipo": "treinada",
+          "nome": "PERCEPÇÃO",
+          "valor": 13
+        },
+        {
+          "id": 15,
+          "treino": "DESTREINADA",
+          "tipo": "treinada",
+          "nome": "PILOTAGEM",
+          "valor": 0
+        },
+        {
+          "id": 16,
+          "treino": "DESTREINADA",
+          "tipo": "treinada",
+          "nome": "PONTARIA",
+          "valor": 0
+        },
+        {
+          "id": 17,
+          "treino": "DESTREINADA",
+          "tipo": "treinada",
+          "nome": "PRESTIDIGITAÇÃO",
+          "valor": 0
+        },
+        {
+          "id": 18,
+          "treino": "DESTREINADA",
+          "tipo": "treinada",
+          "nome": "PROFISSÃO",
+          "valor": 0
+        },
+        {
+          "id": 19,
+          "treino": "DESTREINADA",
+          "tipo": "treinada",
+          "nome": "REFLEXOS",
+          "valor": 0
+        },
+        {
+          "id": 20,
+          "treino": "DESTREINADA",
+          "tipo": "treinada",
+          "nome": "RELIGIÃO",
+          "valor": 0
+        },
+        {
+          "id": 21,
+          "treino": "DESTREINADA",
+          "tipo": "treinada",
+          "nome": "TÁTICA",
+          "valor": 0
+        },
+        {
+          "id": 22,
+          "treino": "DESTREINADA",
+          "tipo": "treinada",
+          "nome": "TECNOLOGIA",
+          "valor": 0
+        },
+        {
+          "id": 23,
+          "treino": "DESTREINADA",
+          "tipo": "treinada",
+          "nome": "VONTADE",
+          "valor": 0
+        }
+      ],
+      "resistencias": [
+        {
+          "id": 1,
+          "nome": "FÍSICA",
+          "valor": "9"
+        },
+        {
+          "id": 2,
+          "nome": "BALÍSTICA",
+          "valor": "7"
+        },
+        {
+          "id": 3,
+          "nome": "INSANIDADE",
+          "valor": "8"
+        },
+        {
+          "id": 4,
+          "nome": "MEDO",
+          "valor": "9"
+        },
+        {
+          "id": 5,
+          "nome": "SANGUE",
+          "valor": "4"
+        },
+        {
+          "id": 6,
+          "nome": "MORTE",
+          "valor": "10"
+        },
+        {
+          "id": 7,
+          "nome": "ENERGIA",
+          "valor": "10"
+        },
+        {
+          "id": 8,
+          "nome": "CONHECIMENTO",
+          "valor": "7"
+        }
+      ]
+    },
+    {
+      "nome": "a",
+      "jogador": "b",
+      "origem": "c",
+      "idade": 12,
+      "sexo": "d",
+      "lnascimento": "e",
+      "lresidencia": "f",
+      "id": 2
+    },
+    {
+      "nome": "a",
+      "jogador": "b",
+      "origem": "c",
+      "idade": 12,
+      "sexo": "d",
+      "lnascimento": "e",
+      "lresidencia": "f",
+      "id": 3
+    }
+  ]
+}

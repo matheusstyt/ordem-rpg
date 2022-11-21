@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <h1>SOCKET.IO</h1>
+    <div class="conteiner-g">
+        <div class="lateral">
+            <div class="contato">
+                <img src="./img/perfil.jpg" alt="">
+                <h2>Contatos</h2>
+            </div>
+            <div class="contato-box">
+                <h4>Matheus</h4>
+            </div>
+        </div>
+        <div class="box-msg">
+            <div class="name">
+                <h2>Fulano</h1>
+            </div>
+            <div class="msg">
+                <div id="msg">
+                    <p id="message">conteudo aqui!</p>
+                </div>
+            </div>
+            <div class="enviar-input">
+                <input type="text" name="" id="">
+            </div>
+        </div>
+
+    </div>
+
+
+
+    <script src="/socket.io/socket.io.js"></script>
+    <SCript>
+        const socket = io()
+        socket.on('connect', function(){
+            //$("#msg").append(`conectado com ${socket.id} <br>`)
+            //socket.emit('msg','Estou conectado'+socket.id)
+        });
+        socket.on('msg', function(msg){
+            $('#msg').append(msg);
+        });
+        $(function(){
+            $("input").keydown(function(key){
+                if(key.keyCode === 13){
+                   // socket.emit('msg', `usuário: ${socket.id}<br> msg:${$(this).val()}`);
+
+                    socket.emit('msg', $(this).val());
+                    //socket.emit('user', socket.id);
+                    $(this).val('');
+
+                }
+            })
+        })
+
+    </SCript>
+</body>
+<style>
+body, html{
+    margin:0;
+    padding: 0;
+}
+body{
+    background-color: rgb(127, 127, 225);
+}
+h1, h2,h3, h4, p{
+    font-family: "Consolas";
+    color: #fff;
+    margin:0;
+}
+.conteiner-g{
+    background-color: rgb(17  17  17 / 0.3);
+    width: 80%;
+    height: 80%;
+    margin: 0 auto;
+    grid-template-areas: 'l m m m m';
+    display: grid;
+}
+.conteiner-g h2{
+    text-align: center;
+}
+.lateral{
+    grid-area: l;
+    width: 100%;
+    background-color: rgb(27, 27, 27);
+}
+.box-msg{
+    grid-area: m;
+    background-color: rgb(48  48  48 / 0.4);
+    width: 100%;
+
+}
+.name, .contato{
+    background-color: rgb(227, 227, 227);
+    height: 70px;
+    border-right: 1px solid rgba(0 0 0 / 0.4);
+}
+.contato img{
+    width: 60px;
+    height: 60px;
+}
+.name h2, .contato h2{
+    color: black;
+    margin: 0;
+
+}
+.contato-box{
+    background-color: rgba(0 0 0 / 0.4);
+    padding: 20px;
+}
+.msg{
+    display: flex;
+
+}
+#msg{
+    flex-direction: column;
+    background-color: rgba(61, 100, 238, 0.5);
+    border-radius: 10px;
+    padding: 5px;
+    margin: 10px 20px;
+
+}
+.enviar-input{
+    width: 100%;
+    padding: 10px;
+    margin: 0;
+    background-color: rgba(225, 225, 225, 0.5);
+    text-align: center;
+}
+.enviar-input input{
+    width: 80%;
+    font-size: 16px;
+    font-family: "Consolas";
+    color: black;
+    margin: 0 auto;
+}
+</style>
+</html>
