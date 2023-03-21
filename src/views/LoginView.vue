@@ -22,7 +22,8 @@
 
 </template>
 <script>
-//import * as server from '../model/mysql.js';
+import axios from 'axios';
+
 export default {
     
     data() {
@@ -33,28 +34,41 @@ export default {
     },
     methods:{
         checkUser(e){ 
-            this.checkPOST();
+            //this.checkPOST();
+            this.get_token();
+
             e.preventDefault()
         },
-        async checkPOST(){
-            let dataJson = JSON.stringify({
-                    username: this.user,
-                    password: this.pass,
-                });
-            const req = await fetch("http://localhost:5000/checkuser/", {
-               //mode: 'no-cors', 
-               method: "POST",
-               headers: { "Content-Type": "application/json"},
-               body: dataJson
-            });
-            const res = await req.json()
-            const dataJSON = JSON.stringify(res.logado)
-            if(res.valido){
-                this.$router.push({name:"mestre", params:{
-                dJson:dataJSON}});
-            }else{
-                alert('USUÁRIO OU SENHA INVÁLIDOS!!!')
+        async get_token(){
+            const url = "http://192.168.100.26:8000/token";
+            const headers = { "Content-Type": "application/json"};
+            const body = {
+                username: this.user,
+                password: this.pass,
             }
+            axios.post(url, body)
+            .then( res => {
+                sessionStorage.setItem('token' , res.data.token);
+                sessionStorage.setItem('user_id' , res.data.user_id);
+                sessionStorage.setItem('email' , res.data.email);
+
+                this.$router.push({name:"painel"});
+            })
+            .catch( error => { 
+                console.log(error)
+            })
+        },  
+        async clean_input(){
+            this.user = ''        
+            this.pass = ''
+           // const res = await req.json()
+           // const dataJSON = JSON.stringify(res.logado)
+            //if(res.valido){
+            //    this.$router.push({name:"mestre", params:{
+            //    dJson:dataJSON}});
+            //}else{
+           //     alert('USUÁRIO OU SENHA INVÁLIDOS!!!')
+            //}
         },
         cadastrar(){
             this.$router.push({name:"cadastro"});

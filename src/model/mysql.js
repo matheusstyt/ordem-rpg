@@ -132,7 +132,7 @@ async function updatePerson(dados, idP, idV, idS, idE, idO, idAr, idAn){
 const con = await getConnection();
 
 const sqlP = `UPDATE sistema_personagem SET idade = ?, lnascimento = ?, lresidencia = ?, movimento = ?, nome_jogador = ?, nome_personagem = ?, origem = ?, reacao = ?, sexo = ? where idPersonagem = ?`
-const valuesP = [dados.idade, dados.lnascimento, dados.lre sidencia,dados.movimento, dados.nome_jogador, dados.nome_personagem, dados.origem, dados.resistencias, dados.sexo, idP]
+const valuesP = [dados.idade, dados.lnascimento, dados.lresidencia,dados.movimento, dados.nome_jogador, dados.nome_personagem, dados.origem, dados.resistencias, dados.sexo, idP]
 const updateP = await con.query(sqlP, valuesP);
 
 const sqlV = `UPDATE vida SET atual_v = ?, maximo_v = ? WHERE idVida = ?`
