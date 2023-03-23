@@ -13,7 +13,7 @@
           <div class="content-right">
             <div class="container-new-session">
                 <p>Não há sessões abertas.</p>
-                <div class="content-new-session">
+                <div class="content-new-session" @click="addSession">
                     <h4>+</h4>
                 </div>
 
@@ -70,18 +70,12 @@
           <div class="conteiner-b">
             <h2>{{Usuario}}</h2>
             <div class="caixa-btn-sessao">
-               <button id="btn-sessao" @click="newSessao">CRIAR NOVA SESSÃO</button>
+               <button id="btn-sessao" @click="newSessao">NOVO</button>
+               <h2>CONTATOS</h2>
             </div>
             
-            <!-- <ul class="menuMestre">
-              <li>Gerenciar Itens</li>
-              <li>Gerenciar Rituais</li>
-              <li>Gerenciar Jogadores</li>
-              <li>Configuração</li>
-            </ul> -->
-            <div>
-              <h2>CONTATOS</h2>
-            </div>
+             
+      
           </div>
          <!--    <NewSessao :displaySessao="displaySessao" @updateDisplayS="updateDisplayS" :id="id"/> -->
           <div class="conteiner-c"></div>
@@ -112,7 +106,7 @@
           return{
               id: 0,
               idSe: 0,
-              Usuario: 'Fulano',
+              Usuario: sessionStorage.getItem('email'),
               sessoeCarregadas : [],
               statusCarregados: [],
               status_sessao: '',
@@ -139,7 +133,26 @@
           }
       },
       methods:{
- 
+        addSession(){
+          
+        },
+        async postSession(){
+            const url = "http://192.168.100.26:8000/session";
+            const now = Date()
+            const headers = { "Content-Type": "application/json"};
+            const body = {
+                fk_mestre: sessionStorage.getItem("user_id"),
+                data_criacao: now,
+                status: false
+            }
+            axios.post(url, body)
+            .then( res => {
+                console.log(res)
+            })
+            .catch( error => { 
+                console.log(error)
+            })
+        },  
       },
       mounted(){
         //this.getJogadores();
@@ -247,10 +260,7 @@
     width:70%;
     border: 1px solid rgba(88, 88, 88, 0.7);;
   }
-  .conteiner-b h2, .content-right h2{
-    padding-bottom:20px;
-    border-bottom: 1px solid rgba(238, 238, 238, 0.6);
-  }
+
   .conteiner-c{
     grid-area: ladoC;
     background-color: rgb(181, 217, 177);
@@ -420,20 +430,24 @@
     background-color: rgba(61, 114, 17, 0.3)
   }
   .caixa-btn-sessao{
-    display: block;
-    text-align: center;
+    display: flex;
+    padding: 1em;
+    align-items: center;
+    justify-content: space-evenly ;
+    border-top: 1px solid rgba(190, 190, 190, 0.6);
+    border-bottom: 1px solid rgba(190, 190, 190, 0.6);
     width: 100%;
+  }
+  .caixa-btn-sessao h2{
+    margin: 0;
   }
   #btn-sessao{
       background-color: rgba(87, 241, 151, 0.7);
       color: #fff;
       font-size: 16px;
       border: none;
-      margin: 0 auto;
       border-radius: 5px;
-  
-      right:10px;    
-      top:10px;
+ 
   }
   #btn-sessao:hover{
       background-color: rgba(19, 82, 29, 0.7);
