@@ -1,89 +1,115 @@
 <template>
-    <div class="container-g">
-        <div class="header">
-            <div class="header-content">
-                <h3>{{email}}</h3>
-                <img src="/assets/gear_ico.svg" alt="Ferramentas" srcset="">
-                <img src="/assets/account_ico.svg" alt="Perfil" srcset="">
-            </div>
-            
+  <div>
+    <div class="modal-session">
+      <div class="new-session-box">
+        <h3>Iniciar nova sesão</h3>
+        <div class="input-field">
+          <label for="max">Data de criação:</label>
+          <p>{{data_atual}}</p>
         </div>
-        <div class="home">
-            
-          <div class="content-right">
-            <div class="container-new-session">
-                <p>Não há sessões abertas.</p>
-                <div class="content-new-session" @click="addSession">
-                    <h4>+</h4>
-                </div>
+        <div class="input-field">
+          <label for="desc">Descrição da sessão:</label>
+          <input type="text" name="desc" id="desc" maxlength="50">
+        </div>
+        <div class="input-field">
+          <label for="max">Quantidade máxima de jogadores: </label>
+          <input type="number" name="max" id="desc" max="10" min="0">
 
-            </div>
-            <div class="content-session-open">
-                <h3>Suas sessões em aberto</h3>
-                <ul>
-                  <li :style="styleStatusM" v-for="(sessao, index) in sessoeCarregadas" :key="index"  >
-                  <div @click="abrirSessao(sessao.idSessao)">
-                    <p>N°: {{index+1}}</p>
-                    
-                    <p>mestre: {{Usuario}}</p>
-                    
-                    <p>Jogadores ativos: 0/{{sessao.qtdMaxima}}</p>
-                    
-                    <p>data de inicio: {{sessao.dataInicio}}</p>
-                    
-                    <p>Tempo decorrido: {{sessao.tempoDecorrido}}</p>
-                    <label  for="status">status:</label>
-                  </div>
-                    
-                    <select v-if="sessao.status === 0" name="status" id="status">
-                      <option value="aberto" >aberto</option>
-                      <option value="fechado" select>fechado</option>
-                    </select>
-                    <select v-if="sessao.status === 1" name="status" id="status">
-                      <option value="aberto" select>aberto</option>
-                      <option value="fechado" >fechado</option>
-                    </select>
-                  </li>
-                </ul>
-            </div>
-            <div class="content-session-open">
-                <h3>Suas missões</h3>
-                <ul>
-                  <li :style="styleStatusM" v-for="(sessao, index) in missoes" :key="index">
-                    <p>N°: {{index+1}}</p>
-                    
-                    <p>mestre: {{nome}}</p>
-                    
-                    <p>Jogadores ativos: 0/{{sessao.qtdMaxima}}</p>
-                    
-                    <p>data de inicio: {{sessao.dataInicio}}</p>
-                    
-                    <p>Tempo decorrido: {{sessao.tempoDecorrido}}</p>
-                    <p v-if="sessao.status == 1">status: aberto</p>
-                    <p v-else>status: fechado</p>
-          
-                  </li>
-                </ul>
-            </div>
-    
-          </div>
-          <div class="conteiner-b">
-            <h2>{{Usuario}}</h2>
-            <div class="caixa-btn-sessao">
-               <button id="btn-sessao" @click="newSessao">NOVO</button>
-               <h2>CONTATOS</h2>
-            </div>
-            
-             
-      
-          </div>
-         <!--    <NewSessao :displaySessao="displaySessao" @updateDisplayS="updateDisplayS" :id="id"/> -->
-          <div class="conteiner-c"></div>
-      
-        <!-- <SessaoPersonagens :idSe="idSe" :displaySessao="displaySessaoP" @updateDisplayOpenS="updateDisplayOpenS" /> -->
         </div>
+        <button>Salvar</button>
+
+        
+      </div>
 
     </div>
+    <div class="container-g">
+      
+      <div class="header">
+          <div class="header-content">
+            <p>Início</p>
+              <h3>{{email}}</h3>
+              <p>Ferramentas</p>
+              <p>Perfil</p>
+          </div>
+          
+      </div>
+      
+      <div class="home">
+          
+        <div class="content-right">
+          <div class="container-new-session">
+            <div class="content-new-session" @click="addSession">
+              <h4>+</h4>
+              </div>
+              <p>Não há sessões abertas.</p>
+          </div>
+          <div class="content-session-open" style="display: none">
+              <h3>Suas sessões em aberto</h3>
+              <ul>
+                <li :style="styleStatusM" v-for="(sessao, index) in sessoeCarregadas" :key="index"  >
+                <div @click="abrirSessao(sessao.idSessao)">
+                  <p>N°: {{index+1}}</p>
+                  
+                  <p>mestre: {{Usuario}}</p>
+                  
+                  <p>Jogadores ativos: 0/{{sessao.qtdMaxima}}</p>
+                  
+                  <p>data de inicio: {{sessao.dataInicio}}</p>
+                  
+                  <p>Tempo decorrido: {{sessao.tempoDecorrido}}</p>
+                  <label  for="status">status:</label>
+                </div>
+                  
+                  <select v-if="sessao.status === 0" name="status" id="status">
+                    <option value="aberto" >aberto</option>
+                    <option value="fechado" select>fechado</option>
+                  </select>
+                  <select v-if="sessao.status === 1" name="status" id="status">
+                    <option value="aberto" select>aberto</option>
+                    <option value="fechado" >fechado</option>
+                  </select>
+                </li>
+              </ul>
+          </div>
+          <div class="content-session-open" style="display: none">
+              <h3>Suas missões</h3>
+              <ul>
+                <li :style="styleStatusM" v-for="(sessao, index) in missoes" :key="index">
+                  <p>N°: {{index+1}}</p>
+                  
+                  <p>mestre: {{nome}}</p>
+                  
+                  <p>Jogadores ativos: 0/{{sessao.qtdMaxima}}</p>
+                  
+                  <p>data de inicio: {{sessao.dataInicio}}</p>
+                  
+                  <p>Tempo decorrido: {{sessao.tempoDecorrido}}</p>
+                  <p v-if="sessao.status == 1">status: aberto</p>
+                  <p v-else>status: fechado</p>
+        
+                </li>
+              </ul>
+          </div>
+  
+        </div>
+        <div class="conteiner-b">
+          <div class="caixa-btn-sessao">
+             <button id="btn-sessao" @click="newSessao">NOVO</button>
+             <h2>CONTATOS</h2>
+          </div>
+          
+           
+    
+        </div>
+       <!--    <NewSessao :displaySessao="displaySessao" @updateDisplayS="updateDisplayS" :id="id"/> -->
+        <div class="conteiner-c"></div>
+    
+      <!-- <SessaoPersonagens :idSe="idSe" :displaySessao="displaySessaoP" @updateDisplayOpenS="updateDisplayOpenS" /> -->
+      </div>
+
+  </div>
+  </div>
+    
     
   </template>
   <script>
@@ -128,7 +154,8 @@
               listOcultismo: [],
               listEsforco: [],
 
-              email : sessionStorage.getItem('email')
+              email : sessionStorage.getItem('email'),
+              data_atual : null
   
           }
       },
@@ -157,6 +184,13 @@
       mounted(){
         //this.getJogadores();
         //this.getSessoes();
+        setInterval(() => {
+          let now = new Date();
+          let formatter = new Intl.DateTimeFormat('pt-BR', {weekday: 'long', day: 'numeric', month: 'long', hour: 'numeric', minute: 'numeric'});
+          let formattedDate = formatter.format(now);
+          this.data_atual = formattedDate;
+
+        }, 1000);
         
       },
       computed:{
@@ -173,8 +207,9 @@
   </script>
   <style scoped>
   .container-g{
+    margin: 0 auto;
     height: 100vh;
-    width: 100vw;
+    max-width: 75vw;
     display: block;
   }
   .header{
@@ -197,8 +232,8 @@
   }
   .container-new-session{
     width: 100%;
-    margin: 0 auto;
-   
+    margin: 0.6em auto;
+    
     
   }
   .container-new-session p{
@@ -209,19 +244,77 @@
   }
   .content-new-session{
     background-color: #4d4d4d83;
-    border-radius: 2vmax;
+    border-radius: 0.5em;
     border: 1px dashed rgba(0  0  0 / 0.4);
     display: flex;
     align-items: center;
     justify-content: center;
     width: 60%;
-    margin: 0 auto;
+    margin: 0 auto; 
+    cursor: pointer;
   }
   .content-new-session h4{
-    font-size: 4em;
+    font-size: 2em;
     margin: 0;
     padding: 0;
   }
+  .content-new-session:hover{
+    background-color: #88888883;
+    border: 1px dashed rgba(82, 82, 82, 0.4);
+  }
+.modal-session{
+  background-color: rgba(0  0  0 / 0.7);
+  width: 100%;
+  height: 100%;
+  position: fixed;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.new-session-box{
+  background-color: #1b1b1b;
+  padding: 1em;
+  border: 1px solid bisque;
+  background-color: rgba(0  0  0 / 0.7);
+  width: auto;
+  height: auto;
+  box-shadow: 0px 0px 3px #858585;
+}.new-session-box:hover{
+box-shadow: 0px 0px 5px #fff;
+transition: ease 0.5s;
+}
+.new-session-box h3{
+  text-align: center;
+}
+.new-session-box button{
+  color: #1b1b1b;
+}
+.new-session-box button:hover{
+  color: #1b1b1b;
+  background-color: #b3b3b3;
+  transition: ease 1s;
+  border: 2px solid #b3b3b3;
+}
+.input-field{
+  width: 100%;
+  display: flex;
+  gap: 1em;
+  padding: 0.5em 0;
+}
+.input-field label{
+  color: #fff;
+}
+.input-field p{
+  margin: 0;
+}
+
+
+
+
+
+
+
 
   #app{
     background: black;
@@ -247,14 +340,12 @@
   
   
   .content-right{
-    grid-area: ladoA;
+    border: 1px solid rgba(110, 110, 110, 0.918);
     background-color: rgba(23, 23, 23, 0.7);
-    border: 1px solid rgba(23, 23, 23, 0.7);;
     height: 100vh;
     width:100%;
   }
   .conteiner-b{
-    grid-area: ladoB;
     background-color: rgba(23, 23, 23, 0.5);
     height: 100vh;
     width:70%;
@@ -431,7 +522,7 @@
   }
   .caixa-btn-sessao{
     display: flex;
-    padding: 1em;
+    padding: 1em 0;
     align-items: center;
     justify-content: space-evenly ;
     border-top: 1px solid rgba(190, 190, 190, 0.6);

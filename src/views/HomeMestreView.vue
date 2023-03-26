@@ -1,5 +1,16 @@
 <template>
   <div class="home">
+    <div class="modal-session">
+      <div class="new-session-box">
+        <h3>Iniciar nova sesão</h3>
+        <div class="input-field">
+          <label for="desc">Descrição da sessão</label>
+          <input type="text" name="desc" id="desc" maxlength="50">
+
+        </div>
+      </div>
+
+    </div>
     <div class="conteiner-a">
       <div class="caixa-sessoes-open">
           <h3>Suas sessões em aberto</h3>
