@@ -41,7 +41,6 @@ export default {
         },
         async get_token(){
             const url = "http://192.168.100.26:8000/token";
-            const headers = { "Content-Type": "application/json"};
             const body = {
                 username: this.user,
                 password: this.pass,

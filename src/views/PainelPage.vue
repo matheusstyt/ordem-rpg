@@ -1,26 +1,9 @@
 <template>
   <div>
-    <div class="modal-session">
-      <div class="new-session-box">
-        <h3>Iniciar nova sesão</h3>
-        <div class="input-field">
-          <label for="max">Data de criação:</label>
-          <p>{{data_atual}}</p>
-        </div>
-        <div class="input-field">
-          <label for="desc">Descrição da sessão:</label>
-          <input type="text" name="desc" id="desc" maxlength="50">
-        </div>
-        <div class="input-field">
-          <label for="max">Quantidade máxima de jogadores: </label>
-          <input type="number" name="max" id="desc" max="10" min="0">
-
-        </div>
-        <button>Salvar</button>
-
-        
-      </div>
-
+    
+    <div class="modal-session" v-if="modal_session_opened === true">
+      <button class="btn-x" @click="open_modal()">X</button>
+      <ModalSessao />
     </div>
     <div class="container-g">
       
@@ -38,7 +21,7 @@
           
         <div class="content-right">
           <div class="container-new-session">
-            <div class="content-new-session" @click="addSession">
+            <div class="content-new-session" @click="add_session">
               <h4>+</h4>
               </div>
               <p>Não há sessões abertas.</p>
@@ -113,10 +96,10 @@
     
   </template>
   <script>
-  import NewSessao from '../components/ModalNewSessao.vue'
+  import ModalSessao from '../components/ModalNewSessao.vue'
   import SessaoPersonagens from '../components/SessaoPersonagens.vue'
   export default {
-      components: {NewSessao, SessaoPersonagens},
+      components: {ModalSessao, SessaoPersonagens},
       props:{
           data : Object,
           vida : Object,
@@ -155,13 +138,17 @@
               listEsforco: [],
 
               email : sessionStorage.getItem('email'),
-              data_atual : null
+              data_atual : null,
+              modal_session_opened : false
   
           }
       },
       methods:{
-        addSession(){
-          
+        open_modal(){
+          this.modal_session_opened = false
+        },
+        add_session(){
+          this.modal_session_opened = true
         },
         async postSession(){
             const url = "http://192.168.100.26:8000/session";
@@ -262,60 +249,6 @@
     background-color: #88888883;
     border: 1px dashed rgba(82, 82, 82, 0.4);
   }
-.modal-session{
-  background-color: rgba(0  0  0 / 0.7);
-  width: 100%;
-  height: 100%;
-  position: fixed;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.new-session-box{
-  background-color: #1b1b1b;
-  padding: 1em;
-  border: 1px solid bisque;
-  background-color: rgba(0  0  0 / 0.7);
-  width: auto;
-  height: auto;
-  box-shadow: 0px 0px 3px #858585;
-}.new-session-box:hover{
-box-shadow: 0px 0px 5px #fff;
-transition: ease 0.5s;
-}
-.new-session-box h3{
-  text-align: center;
-}
-.new-session-box button{
-  color: #1b1b1b;
-}
-.new-session-box button:hover{
-  color: #1b1b1b;
-  background-color: #b3b3b3;
-  transition: ease 1s;
-  border: 2px solid #b3b3b3;
-}
-.input-field{
-  width: 100%;
-  display: flex;
-  gap: 1em;
-  padding: 0.5em 0;
-}
-.input-field label{
-  color: #fff;
-}
-.input-field p{
-  margin: 0;
-}
-
-
-
-
-
-
-
-
   #app{
     background: black;
     background-image: url('../img/background.webp');
@@ -336,8 +269,16 @@ transition: ease 0.5s;
     height: 100vh;
   
   }
-  
-  
+.btn-x{
+  background-color: rgb(0  0  0 / 0.0);
+  top: 1%;
+  right: 1%;
+  position: absolute;
+  z-index: 3;
+}
+.btn-x:hover{
+  background-color: rgba(223, 17, 17, 0.7);
+}
   
   .content-right{
     border: 1px solid rgba(110, 110, 110, 0.918);

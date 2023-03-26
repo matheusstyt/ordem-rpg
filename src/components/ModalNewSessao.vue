@@ -1,52 +1,30 @@
 <template>
-    <div  id="modal-dado" class="modalP" :style="displaySessao">
-
-        <div class="modal-dado" >
-            <button class="btnX" @click="sair">x</button>
-            <H2>INICIAR NOVA SESSÃO?</H2>
-            <div>
-                <h3 for="qtd">Quantidade de Jogadores</h3>
-                <select name="qtd" id="qtd" v-model="qtdMaxima">
-                    <option value="1" >1</option>
-                    <option value="2" >2</option>
-                    <option value="3" >3</option>
-                    <option value="4" >4</option>
-                    <option value="5" >5</option>
-                    <option value="6" >6</option>
-                    <option value="7" >7</option>
-                    <option value="8" >8</option>
-                    <option value="9" >9</option>
-                </select>
-            </div>
-                 
-
-            <div>
-                <h3 for="status">Definir status de inicio</h3>
-                <select name="qtd" id="qtd" v-model="status">
-                    <option value="aberto">aberto</option>
-                    <option value="fechado">fechado</option>
-                </select>
-            </div>
-                
-           
-            <button class="btn-criar" @click="criar">CRIAR</button>
-        
+    <div class="new-session-box">
+        <h3>Iniciar nova sesão</h3>
+        <div class="input-field">
+          <label for="max">Data de criação:</label>
+          <p>{{data_atual}}</p>
         </div>
-            
+        <div class="input-field">
+          <label for="desc">Descrição da sessão:</label>
+          <input type="text" v-model="desc_session" required placeholder="Descrição da sessão" name="desc" id="desc" maxlength="50">
         </div>
+        <div class="input-field">
+          <label for="max">Quantidade máxima de jogadores: </label>
+          <input type="number" v-model="qtd_session"  placeholder="0" name="max" id="desc" max="10" min="3">
+        </div>
+        <button @click="save_session()">Salvar</button>
+      </div>
 </template>
 <script>
+import axios from 'axios';
+axios.defaults.headers.common['Authorization'] = `Bearer ${sessionStorage.getItem('token')}}`
+
 export default {
-    props:{
-        displaySessao: String,
-        id: Number
-    },
     data(){
         return{
-            displayModel: 'display: block;',
-            qtdMaxima: 0,
-            status: 'aberto',
-            statusbool: 1
+            data_atual : null,
+            qtd_session : 3
         }
     }, methods:{
         async postSessao(){
@@ -67,142 +45,97 @@ export default {
             });
             console.log(dJson, this.status)
         },
-        getData(){
-            var date = new Date();
-            var dia = String(date.getDate()).padStart(2, '0');
-            var mes = String(date.getMonth() + 1).padStart(2, '0');
-            var ano = date.getFullYear();
-            var dataAtual = `${ano}-${mes}-${dia}`;
-            return dataAtual
+        get_now(){
+            let now = new Date();
+            let formatter = new Intl.DateTimeFormat('pt-BR', {weekday: 'long', day: 'numeric', month: 'long', hour: 'numeric', minute: 'numeric'});
+            let formattedDate = formatter.format(now);
+            this.data_atual = formattedDate;
         },
-        sair(){
-            this.$emit('updateDisplayS', 'display:none;')
-        },
-        criar(){
-            this.postSessao()
- 
-            this.$emit('updateDisplayS', 'display:none;')
-        }
-    }, mounted(){
+        save_session(){
+            if(sessionStorage.getItem("token")){
+                
+                const url = "http://192.168.100.26:8000/session/";
+            
   
-    }, watch:{
-        status(newValue){
-            if(newValue == 'aberto'){
-                this.statusbool = 1
-                console.log(newValue)
-            }else{
-                console.log(newValue)
-                this.statusbool = 0
+                const body_session = {
+                    fk_mestre : parseInt(sessionStorage.getItem("user_id")), 
+                    data_criacao : this.data_atual,
+                    qtd_max : this.qtd_session,
+                    status : true
+                }
+                console.table(body_session)
+                const headers = {'Authorization': 'Token ' + sessionStorage.getItem('token') };
+
+                axios.post(url, body_session, { headers : headers })
+                .then( res => {
+                    console.log(res)
+                  //  window.location.reload()
+                })
+                .catch( error => { 
+                    console.log(error)
+                })
             }
         }
+        
+    }, mounted(){
+        // GET HORA ATUAL
+        this.get_now()
+        setInterval(() => {
+          this.get_now()
+        }, 1000);
     }
 }
 
 </script>
-<style scoped>
-.modal-dado{
-    background-color: rgba(0 0 0 / 0.7);
-    text-align:center;
-    position:relative;
-    padding: 0;
-    border: 2px solid #898;
-    margin: 0 auto;
-    margin-top: 10%;
-    width: 30%;
-    height: 40%;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-}
-.caixa-c{
-    display: block;
-}
-.modal-dado p{
-    display: none;
-    transition: background 0.5s ;
-    font-size: 30px;
-    border: 2px solid rgb(277 277 277 / 52%);
-    margin: 10px auto;
-}
-
-.modal-dado h2{
-    font-size: 20px;
-    margin: 0 auto;
-    margin-top: 10px;
-    color: white;}
-.modal-dado h4{
-    font-size: 30px;
-    margin: 0 auto;
-    margin-top: 10px;
-    color: white;}
-
-.conteiner-periciaD button{
-    background-color: rgba(39, 39, 39, 0.5);
-    border: 2px solid #1f1f1f;
-    color:#fff;
-    width: 40px;
-    height: 40px;
-    font-size: 18px;
-}
-.conteiner-periciaD button:hover{
-    background-color: #404040;
-    border:#1f1f1f;
-    color:#fff;
-    width: 40px;
-    height: 40px;
-    font-size: 18px;
-}
-.conteiner-periciaD h6, .conteiner-periciaD h5{
-    width: 45px;
-    height: 28px;
-    margin: 0px;
-    padding-top: 12px;
-    font-size: 18px;
-}
-.conteiner-periciaD h5{
-    color: bisque;
-}
-.conteiner-periciaD h6{
-    color: #ffff;
-}
-.btnX{
+<style> 
+.modal-session{
+    background-color: rgba(0  0  0 / 0.7);
+    width: 100%;
+    height: 100%;
+    position: fixed;
+  
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .new-session-box{
     background-color: #1b1b1b;
-    position:flex;
-    float: right;
-    border: 2px solid #1b1b1b;
-}
-.btnX:hover{
-    background-color: #9a2525;
+    padding: 1em;
+    border: 1px solid bisque;
+    background-color: rgba(0  0  0 / 0.7);
+    width: auto;
+    height: auto;
+    box-shadow: 0px 0px 3px #858585;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-items: center;
+  }.new-session-box:hover{
+  box-shadow: 0px 0px 5px #fff;
+  transition: ease 0.5s;
+  }
+  .new-session-box h3{
+    text-align: center;
+  }
+  .new-session-box button{
+    color: #1b1b1b;
+  }
+  .new-session-box button:hover{
+    color: #1b1b1b;
+    background-color: #b3b3b3;
+    transition: ease 1s;
+    border: 2px solid #b3b3b3;
+  }
+  .input-field{
+    width: 100%;
+    display: flex;
+    gap: 1em;
+    padding: 0.5em 0;
+  }
+  .input-field label{
     color: #fff;
-    border: 2px solid rgb(135, 60, 60)
-}
-h3{
-    margin: 5px 0;
-    color: bisque
-}
-select{
+  }
+  .input-field p{
     margin: 0;
-    background-color: rgba(39, 39, 39, 0.3);
-    border:1px solid #141414;
-    color:#fff;
-    height: 25px;
-    font-size: 15px;
-    font-family: 'Consolas';
-}
-.select-atributos option{
-    background-color: rgba(39, 39, 39, 0.3);
-    color: #fff;
-}
-.btn-criar{
-    background-color: rgba(255 255 255 / 0.2);
-    position: relative;
-    bottom: 0;
-    margin-top: 20px;
-    padding: 5px;
-    width: 100px;
-}
-.btn-criar:hover{
-    background-color: rgba(84, 243, 70, 0.6);
-}
+  }
 </style>
