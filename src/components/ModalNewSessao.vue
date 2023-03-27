@@ -24,7 +24,8 @@ export default {
     data(){
         return{
             data_atual : null,
-            qtd_session : 3
+            qtd_session : 3,
+            desc_session : ''
         }
     }, methods:{
         async postSessao(){
@@ -54,13 +55,14 @@ export default {
         save_session(){
             if(sessionStorage.getItem("token")){
                 
-                const url = "http://192.168.100.26:8000/session/";
+                const url = `http://192.168.100.26:8000/session/?fk_mestre=${sessionStorage.getItem("user_id")}`;
             
   
                 const body_session = {
                     fk_mestre : parseInt(sessionStorage.getItem("user_id")), 
                     data_criacao : this.data_atual,
                     qtd_max : this.qtd_session,
+                    descricao : this.desc_session,
                     status : true
                 }
                 console.table(body_session)
@@ -69,7 +71,7 @@ export default {
                 axios.post(url, body_session, { headers : headers })
                 .then( res => {
                     console.log(res)
-                  //  window.location.reload()
+                    window.location.reload()
                 })
                 .catch( error => { 
                     console.log(error)

@@ -1,6 +1,5 @@
 <template>
   <div>
-    
     <div class="modal-session" v-if="modal_session_opened === true">
       <button class="btn-x" @click="open_modal()">X</button>
       <ModalSessao />
@@ -14,7 +13,6 @@
               <p>Ferramentas</p>
               <p>Perfil</p>
           </div>
-          
       </div>
       
       <div class="home">
@@ -24,52 +22,24 @@
             <div class="content-new-session" @click="add_session">
               <h4>+</h4>
               </div>
-              <p>Não há sessões abertas.</p>
           </div>
-          <div class="content-session-open" style="display: none">
-              <h3>Suas sessões em aberto</h3>
+          <div class="text-nao-sessao" v-if="no_session === false">
+            <p>Não há sessões abertas.</p>
+          </div>
+          <div class="content-session-open" v-else style="display: block">
+              <h3>Sessões ativas</h3>
               <ul>
-                <li :style="styleStatusM" v-for="(sessao, index) in sessoeCarregadas" :key="index"  >
-                <div @click="abrirSessao(sessao.idSessao)">
+                <li v-for="(session, index) in list_sessions" :key="session.id"  >
+                <div @click="abrirsession(session.idsession)">
                   <p>N°: {{index+1}}</p>
                   
                   <p>mestre: {{Usuario}}</p>
+                  <p>descrição : {{session.descricao}}</p>
+                  <p>data de inicio: {{session.data_criacao}}</p>
                   
-                  <p>Jogadores ativos: 0/{{sessao.qtdMaxima}}</p>
-                  
-                  <p>data de inicio: {{sessao.dataInicio}}</p>
-                  
-                  <p>Tempo decorrido: {{sessao.tempoDecorrido}}</p>
-                  <label  for="status">status:</label>
+                 <!-- <p>Tempo decorrido: {{session.tempoDecorrido}}</p> -->
+                  <label  for="status">status: {{session.status}}</label>
                 </div>
-                  
-                  <select v-if="sessao.status === 0" name="status" id="status">
-                    <option value="aberto" >aberto</option>
-                    <option value="fechado" select>fechado</option>
-                  </select>
-                  <select v-if="sessao.status === 1" name="status" id="status">
-                    <option value="aberto" select>aberto</option>
-                    <option value="fechado" >fechado</option>
-                  </select>
-                </li>
-              </ul>
-          </div>
-          <div class="content-session-open" style="display: none">
-              <h3>Suas missões</h3>
-              <ul>
-                <li :style="styleStatusM" v-for="(sessao, index) in missoes" :key="index">
-                  <p>N°: {{index+1}}</p>
-                  
-                  <p>mestre: {{nome}}</p>
-                  
-                  <p>Jogadores ativos: 0/{{sessao.qtdMaxima}}</p>
-                  
-                  <p>data de inicio: {{sessao.dataInicio}}</p>
-                  
-                  <p>Tempo decorrido: {{sessao.tempoDecorrido}}</p>
-                  <p v-if="sessao.status == 1">status: aberto</p>
-                  <p v-else>status: fechado</p>
-        
                 </li>
               </ul>
           </div>
@@ -96,8 +66,10 @@
     
   </template>
   <script>
+  import axios from 'axios';
   import ModalSessao from '../components/ModalNewSessao.vue'
   import SessaoPersonagens from '../components/SessaoPersonagens.vue'
+
   export default {
       components: {ModalSessao, SessaoPersonagens},
       props:{
@@ -139,7 +111,9 @@
 
               email : sessionStorage.getItem('email'),
               data_atual : null,
-              modal_session_opened : false
+              modal_session_opened : false,
+              list_sessions : [],
+              no_session : false
   
           }
       },
@@ -150,27 +124,28 @@
         add_session(){
           this.modal_session_opened = true
         },
-        async postSession(){
-            const url = "http://192.168.100.26:8000/session";
+        async get_session(){
+            const url = "http://192.168.100.26:8000/session/";
             const now = Date()
-            const headers = { "Content-Type": "application/json"};
-            const body = {
-                fk_mestre: sessionStorage.getItem("user_id"),
-                data_criacao: now,
-                status: false
-            }
-            axios.post(url, body)
+            const headers = {'Authorization': 'Token ' + sessionStorage.getItem('token') };
+          
+            axios.get(url, { headers : headers })
             .then( res => {
-                console.log(res)
+              
+              this.list_sessions = res.data.session
+              this.no_session = true;
+  
             })
             .catch( error => { 
-                console.log(error)
+              console.log(error)
             })
         },  
       },
       mounted(){
-        //this.getJogadores();
-        //this.getSessoes();
+        if(!sessionStorage.getItem('token')){ this.$router.push({name:"login"}) }
+
+        this.get_session();
+
         setInterval(() => {
           let now = new Date();
           let formatter = new Intl.DateTimeFormat('pt-BR', {weekday: 'long', day: 'numeric', month: 'long', hour: 'numeric', minute: 'numeric'});
@@ -242,6 +217,12 @@
   }
   .content-new-session h4{
     font-size: 2em;
+    margin: 0;
+    padding: 0;
+  }
+  .text-nao-sessao p{
+    font-size: 1.5em;
+    text-align: center;
     margin: 0;
     padding: 0;
   }
@@ -485,12 +466,10 @@
       background-color: rgba(19, 82, 29, 0.7);
   }
   .content-session-open{
+    cursor: pointer;
     text-align: center;
     font-family: 'Consolas';
     width: 100%;
-    
-    
-  
   }
   .content-session-open ul{
     padding: 0;
@@ -520,7 +499,7 @@
     margin: 5px 0; 
     padding: 0 20px;
     border-right: 1px solid rgba( 255 255 255 / 0.7);
-  
+    cursor: pointer;
   }
   .content-session-open ul li label{
     border: none;
