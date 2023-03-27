@@ -28,24 +28,6 @@ export default {
             desc_session : ''
         }
     }, methods:{
-        async postSessao(){
-            console.log(this.getData())
-            const dJson = JSON.stringify({
-                dataInicio: this.getData(),
-                
-                tempoDecorrido: 1,
-                qtdMaxima: Number(this.qtdMaxima),
-                fk_idMestre: this.id,
-                status: this.statusbool
-
-            });
-            const req = await fetch(`http://localhost:5000/newsessao`, {
-                method: 'POST',
-                headers: { "Content-Type": "application/json"},
-                body: dJson
-            });
-            console.log(dJson, this.status)
-        },
         get_now(){
             let now = new Date();
             let formatter = new Intl.DateTimeFormat('pt-BR', {weekday: 'long', day: 'numeric', month: 'long', hour: 'numeric', minute: 'numeric'});
@@ -55,7 +37,7 @@ export default {
         save_session(){
             if(sessionStorage.getItem("token")){
                 
-                const url = `http://192.168.100.26:8000/session/?fk_mestre=${sessionStorage.getItem("user_id")}`;
+                const url = `http://170.10.0.50:8000/session/?fk_mestre=${sessionStorage.getItem("user_id")}`;
             
   
                 const body_session = {

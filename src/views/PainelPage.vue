@@ -1,7 +1,12 @@
 <template>
   <div>
+    <div class="modal-session" v-if="modal_contact_opened === true">
+      <button class="btn-x" @click="close_modal_contact()">X</button>
+      <ModalFriend />
+    </div>
+    
     <div class="modal-session" v-if="modal_session_opened === true">
-      <button class="btn-x" @click="open_modal()">X</button>
+      <button class="btn-x" @click="close_modal_session()">X</button>
       <ModalSessao />
     </div>
     <div class="container-g">
@@ -19,9 +24,9 @@
           
         <div class="content-right">
           <div class="container-new-session">
-            <div class="content-new-session" @click="add_session">
+            <div class="content-new-session btn-large" @click="open_modal_session">
               <h4>+</h4>
-              </div>
+            </div>
           </div>
           <div class="text-nao-sessao" v-if="no_session === false">
             <p>Não há sessões abertas.</p>
@@ -47,8 +52,16 @@
         </div>
         <div class="conteiner-b">
           <div class="caixa-btn-sessao">
-             <button id="btn-sessao" @click="newSessao">NOVO</button>
-             <h2>CONTATOS</h2>
+            <div class="flex">
+              <div class="content-ico">
+                <img v-bind:src="require('@/assets/ico/social_ico.svg')" alt="Social_Img">
+              </div>
+              <h2>Social</h2>
+            </div>
+
+              <div class="content-new-session btn-small" @click="open_modal_contact()">
+                <h4>+</h4>
+              </div>
           </div>
           
            
@@ -68,10 +81,11 @@
   <script>
   import axios from 'axios';
   import ModalSessao from '../components/ModalNewSessao.vue'
+  import ModalFriend from '../components/ModalNewFriend.vue'
   import SessaoPersonagens from '../components/SessaoPersonagens.vue'
 
   export default {
-      components: {ModalSessao, SessaoPersonagens},
+      components: {ModalSessao, ModalFriend, SessaoPersonagens},
       props:{
           data : Object,
           vida : Object,
@@ -112,20 +126,28 @@
               email : sessionStorage.getItem('email'),
               data_atual : null,
               modal_session_opened : false,
+              modal_contact_opened : false,
               list_sessions : [],
               no_session : false
   
           }
       },
       methods:{
-        open_modal(){
-          this.modal_session_opened = false
-        },
-        add_session(){
+        open_modal_session(){
           this.modal_session_opened = true
         },
+        open_modal_contact(){
+          this.modal_contact_opened = true
+        },
+        close_modal_session(){
+          this.modal_session_opened = false
+        },
+        close_modal_contact(){
+          this.modal_contact_opened = false
+        },
+        
         async get_session(){
-            const url = "http://192.168.100.26:8000/session/";
+            const url = "http://170.10.0.50:8000/session/";
             const now = Date()
             const headers = {'Authorization': 'Token ' + sessionStorage.getItem('token') };
           
@@ -168,6 +190,14 @@
 }
   </script>
   <style scoped>
+  .flex{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5em;
+
+    
+  }
   .container-g{
     margin: 0 auto;
     height: 100vh;
@@ -204,6 +234,16 @@
     margin: 1em;
 
   }
+  .btn-large{
+    width: 60%;
+    margin: 0 auto; 
+  }
+  .btn-small{
+    width: 10%;
+    position: absolute;
+    right: 0;
+    margin: 0 1em; 
+  }
   .content-new-session{
     background-color: #4d4d4d83;
     border-radius: 0.5em;
@@ -211,25 +251,33 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 60%;
-    margin: 0 auto; 
+   
     cursor: pointer;
+    
   }
-  .content-new-session h4{
-    font-size: 2em;
-    margin: 0;
-    padding: 0;
-  }
-  .text-nao-sessao p{
-    font-size: 1.5em;
-    text-align: center;
-    margin: 0;
-    padding: 0;
-  }
-  .content-new-session:hover{
-    background-color: #88888883;
-    border: 1px dashed rgba(82, 82, 82, 0.4);
-  }
+.content-new-session h4{
+  font-size: 2em;
+  margin: 0;
+  padding: 0;
+}
+.text-nao-sessao p{
+  font-size: 1.5em;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+}
+.content-new-session:hover{
+  background-color: #88888883;
+  border: 1px dashed rgba(82, 82, 82, 0.4);
+}
+.content-ico{
+  height: 2em;
+  aspect-ratio: 1/1;
+}
+
+
+
+
   #app{
     background: black;
     background-image: url('../img/background.webp');
@@ -443,10 +491,12 @@
     background-color: rgba(61, 114, 17, 0.3)
   }
   .caixa-btn-sessao{
+    position: relative;
     display: flex;
-    padding: 1em 0;
+    padding: 0.6em 0;
     align-items: center;
-    justify-content: space-evenly ;
+    justify-content: center ;
+    gap: 0.6em;
     border-top: 1px solid rgba(190, 190, 190, 0.6);
     border-bottom: 1px solid rgba(190, 190, 190, 0.6);
     width: 100%;
