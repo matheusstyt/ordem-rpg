@@ -10,7 +10,7 @@
         <div v-if="display_contact === true" class="new_contact">
             <p>{{new_contact}}</p>
             <div class="content-ico check">
-                <check @click="search_user()" />
+                <check @click="enviar()" />
               </div>
         </div>
         <button @click="save_session()">Fechar</button>
@@ -62,6 +62,32 @@ export default {
             .catch( error => { 
                 console.log(error)
             })
+        },
+        enviar(){
+            if(sessionStorage.getItem("token")){
+                
+                const url = `http://170.10.0.50:8000/ask/`;
+
+                const body_ask = {
+                    origem : parseInt(sessionStorage.getItem("user_id")), 
+                    destino : this.id_contact,
+                    status : false
+
+                }
+                console.table(body_ask)
+                const headers = {'Authorization': 'Token ' + sessionStorage.getItem('token') };
+
+                axios.post(url, body_ask, { headers : headers })
+                .then( res => {
+                    this.search_username = ''
+                    this.new_contact = ''
+                    this.id_contact = 0
+                    this.this.display_contact = false
+                })
+                .catch( error => { 
+                    console.log(error)
+                })
+            }
         }
         
     }, mounted(){

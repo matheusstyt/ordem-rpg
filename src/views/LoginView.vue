@@ -49,7 +49,7 @@ export default {
             .then( res => {
                 sessionStorage.setItem('token' , res.data.token);
                 sessionStorage.setItem('user_id' , res.data.user_id);
-                sessionStorage.setItem('email' , res.data.email);
+                sessionStorage.setItem('email' , res.data.username);
 
                 this.$router.push({name:"painel"});
             })

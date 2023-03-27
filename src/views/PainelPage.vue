@@ -63,7 +63,15 @@
                 <h4>+</h4>
               </div>
           </div>
-          
+          <div class="content-social pendentes">
+            <h3>Pendente</h3>
+            <ul>
+              <li v-for="(item, index) in list_pendente" >
+                <p>{{item.destino}}</p>
+                <div id="status"></div>
+              </li>
+            </ul>
+          </div>
            
     
         </div>
@@ -128,6 +136,7 @@
               modal_session_opened : false,
               modal_contact_opened : false,
               list_sessions : [],
+              list_pendente : [],
               no_session : false
   
           }
@@ -162,12 +171,28 @@
               console.log(error)
             })
         },  
+        async get_pendente(){
+            const url = "http://170.10.0.50:8000/ask/";
+            const now = Date()
+            const headers = {'Authorization': 'Token ' + sessionStorage.getItem('token') };
+          
+            axios.get(url, { headers : headers })
+            .then( res => {
+              console.log(res.data)
+              this.list_pendente = res.data.ask
+    
+  
+            })
+            .catch( error => { 
+              console.log(error)
+            })
+        },  
       },
       mounted(){
         if(!sessionStorage.getItem('token')){ this.$router.push({name:"login"}) }
 
         this.get_session();
-
+        this.get_pendente();
         setInterval(() => {
           let now = new Date();
           let formatter = new Intl.DateTimeFormat('pt-BR', {weekday: 'long', day: 'numeric', month: 'long', hour: 'numeric', minute: 'numeric'});
@@ -274,7 +299,45 @@
   height: 2em;
   aspect-ratio: 1/1;
 }
+.content-social{
+  width: 100%;
+}
 
+.content-social{
+  background-color: rgb(43  43  43 / 0.7);
+  width: 100%;
+}
+.content-social ul{
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+.content-social ul li{
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.content-social ul li:hover{
+  background-color: rgb(43  43  43 / 0.7);
+
+}
+#status{
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  background-color: #04e04e;
+  
+  margin: 0;
+  margin-right: 1em;
+}
+.pendentes h3{
+  background-color: #f80a0a3a;
+  padding-bottom: 5px;
+  margin: 0;
+  text-align: center;
+  border: 1px dashed rgba(0  0  0 / 0.4);
+}
 
 
 
