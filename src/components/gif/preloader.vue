@@ -1,10 +1,21 @@
 <template>
-    <div class="preloader">
-      <div class="spinner"></div>
+    <div class="modal-preloader">
+        <div class="preloader">
+            <div class="spinner"></div>
+        </div>
     </div>
+    
   </template>
   
   <style>
+  .modal-preloader{
+    background-color: rgba(0, 0, 0, 1);
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+    position: fixed;
+    z-index: 4;
+  }
   .preloader {
     display: flex;
     justify-content: center;
@@ -13,8 +24,8 @@
   }
   
   .spinner {
-    border: 4px solid rgba(0, 0, 0, 0.1);
-    border-top-color: #09f;
+    border: 6px solid rgba(0, 0, 0, 0.1);
+    border-top-color: rgb(255, 200, 148);
     border-radius: 50%;
     width: 40px;
     height: 40px;

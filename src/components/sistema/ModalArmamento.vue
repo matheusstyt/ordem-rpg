@@ -1,30 +1,60 @@
 <template>
-    <div class="new-contact-box">
-        <h3>Novo contato</h3>
-        <div class="input-field">
-          <input type="search" v-model="search_username" required placeholder="Nome do indivíduo" name="username" id="username" maxlength="50">
-          <div class="content-ico">
-            <search @click="search_user()" fill="#fff" />
-          </div>
+    <div class="novo-armamento">
+        
+
+        <h3>cadastrar novo armamentos</h3>
+        <div class="container-add-armamentos">
+            <div class="input-field">
+                <label for="desc_armamento">Descrição</label>
+                <input type="text" name="desc_armamento" id="desc_armamento">
+            </div>
+            <div class="input-field">
+                <label for="categoria_1">Categoria I</label>
+                <input type="text" name="categoria_1" id="categoria_1">
+            </div>
+            <div class="input-field">
+                <label for="categoria_2">Categoria II</label>
+                <input type="text" name="categoria_2" id="categoria_2">
+            </div>
+            <div class="input-field">
+                <label for="categoria_3">Categoria III</label>
+                <input type="text" name="categoria_3" id="categoria_3">
+            </div>
+            <div class="input-field">
+                <label for="alcance">Alcance</label>
+                <input type="text" name="alcance" id="alcance">
+            </div>
+            <div class="input-field">
+                <label for="dano_passivo">Dano Passivo</label>
+                <input type="text" name="dano_passivo" id="dano_passivo">
+            </div>
+            <div class="input-field">
+                <label for="dano_ativo">Dano Ativo</label>
+                <input type="text" name="dano_ativo" id="dano_ativo">
+            </div>
+            <div class="input-field">
+                <label for="tipo">Tipo</label>
+                <input type="text" name="tipo" id="tipo">
+            </div>
+            <div class="input-field">
+                <label for="espaco_armamento">Espaço</label>
+                <input type="text" name="espaco_armamento" id="espaco_armamento">
+            </div>
         </div>
-        <div v-if="display_contact === true" class="new_contact">
-            <p>{{new_contact}}</p>
-            <div class="content-ico check">
-                <check @click="enviar()" />
-              </div>
-        </div>
-        <button @click="save_session()">Fechar</button>
+
+        <button @click="save_session()">Salvar</button>
+        <h3 id="carregar-armamento">carregar armamentos - ordem paranormal</h3>
+        
       </div>
 </template>
 <script>
 import axios from 'axios';
-import search from './svg/search.vue'
-import check from './svg/check.vue'
+
 axios.defaults.headers.common['Authorization'] = `Bearer ${sessionStorage.getItem('token')}}`
 
 export default {
     components :{
-        search, check
+ 
     },
     data(){
         return{
@@ -101,58 +131,86 @@ export default {
 }
 
 </script>
-<style scoped> 
-::-webkit-search-cancel-button {
-    -webkit-appearance: none;
-    height: 1em;
-    width: 1em;
-    background-color: transparent;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10'%3E%3Cline x1='0' y1='10' x2='10' y2='0' stroke='red' stroke-width='2'/%3E%3Cline x1='0' y1='0' x2='10' y2='10' stroke='red' stroke-width='2'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-size: contain;
-    cursor: pointer;
-  }
-  
-  .new-contact-box{
+<style scoped lang="scss"> 
+.novo-armamento {
     background-color: #1b1b1b;
-    padding: 1em;
+    padding: 0;
     border: 1px solid bisque;
     background-color: rgba(0  0  0 / 0.7);
     min-width: 50%;
     max-width: 60%;
     height: auto;
-    box-shadow: 0px 0px 3px #858585;
+    box-shadow: 0px 0px 3px #f3eacd;
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-items: center;
-  }.new-contact-box:hover{
-  box-shadow: 0px 0px 5px #fff;
-  transition: ease 0.5s;
+    max-height: 80%;
+    overflow-y: scroll;
+
+    h3 {
+        margin: 0;
+        padding: 0.5em 0;
+        position: sticky;
+        top: 0;
+        text-align: center;
+        border-bottom: 1px dashed rgba(46, 46, 46, 0.418);
+        background-color: #5f5f5fc5;
+        width: 100%;
+        color: white;
+    }
+
+
+    button{
+        padding: 0.4em;
+        margin-bottom: 2em;
+        color: #1b1b1b;
+    }
+    button:hover{
+        color: #1b1b1b;
+        background-color: bisque;
+        transition: ease 0.5s;
+        border: 2px solid rgb(224, 184, 135);
+    }
+    #carregar-armamento{
+        cursor: pointer;
+        background-color: rgba(84, 245, 89, 0.5);
+    }
+    #carregar-armamento:hover{
+        background-color: rgba(84, 245, 89, 0.8);
+        cursor: pointer;
+    }
   }
-  .new-contact-box h3{
-    text-align: center;
-  }
-  .new-contact-box button{
-    margin-top: 1em;
-    color: #1b1b1b;
-  }
-  .new-contact-box button:hover{
-    color: #1b1b1b;
-    background-color: #b3b3b3;
-    transition: ease 1s;
-    border: 2px solid #b3b3b3;
-  }
-  .input-field{
-    
-    background-color: #ffffffcc;
-    width: 100%;
+.novo-armamento:hover{
+    box-shadow: 0px 0px 5px #fff;
+    transition: ease 0.5s;
+}
+.container-add-armamentos{
+    padding: 1em 0;
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: space-evenly;
-    gap: 1em;
-    padding: 0.2em 0;
-  }
+    justify-content: space-between;
+    min-width: 70%;
+    
+    .input-field{
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0.5em 0;
+
+        input{
+            font-size: 1em;
+            font-family: "Consolas";
+            padding: 0.4em 1em;
+            color: #292929;
+            
+        }
+    }
+}
+  
   .input-field input[type="search"]{
     font-size: 1em;
     font-family: "Consolas";

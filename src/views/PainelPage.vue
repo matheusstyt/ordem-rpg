@@ -9,13 +9,13 @@
       <button class="btn-x" @click="close_modal_session()">X</button>
       <ModalSessao />
     </div>
+    <preloader v-if="loading" />
     <div class="container-g">
-      
       <div class="header">
           <div class="header-content">
               <p>Início</p>
               <h3>{{email}}</h3>
-              <p>Ferramentas</p>
+              <p>Meu Sistema</p>
               <p>Perfil</p>
               <logout @click="logout()"/>
           </div>
@@ -23,7 +23,7 @@
       
       <div class="container-home">
           
-        <div class="content-right">
+        <div class="content-right" v-if="system == false">
           <div class="content-session-add flex" v-if="list_sessions.length === 0">
             <h3>Não há sessões abertas.</h3>
             <div class="btn-add-session flex" @click="open_modal_session">
@@ -55,7 +55,7 @@
           </div>
   
         </div>
-        <div class="content-left">
+        <div class="content-left" v-if="system == false">
           <div class="caixa-btn-sessao">
             <div class="flex">
               <div class="content-ico">
@@ -68,7 +68,7 @@
                 <h4>+</h4>
               </div>
           </div>
-          <div class="content-social ativos" v-if="list_contact === null">
+          <div class="content-social ativos" v-if="list_contact !== null">
             <h3>Ativos</h3>
             <ul>
               <li v-for="(item, index) in list_contact" >
@@ -79,8 +79,8 @@
               </li>
             </ul>
           </div>
-          <div class="content-social pendentes" v-if="list_pendente === null">
-            <h3>Pendente</h3>
+          <div class="content-social pendentes" v-if="list_pendente !== null">
+            <h3>Pendentes</h3>
             <ul>
               <li v-for="(item, index) in list_pendente" >
                 <p>{{item.origem}}</p>
@@ -92,7 +92,9 @@
             </ul>
           </div>
         </div>
-        <div class="conteiner-c"></div>
+        <div class="conteiner-system" v-if="system == true">
+          <System />
+        </div>
       </div>
 
   </div>
@@ -103,13 +105,15 @@
   <script>
 
   import axios from 'axios';
+  import preloader from '../components/gif/preloader.vue'
   import logout from '../components/svg/logout.vue'
+  import System from '../components/sistema/ConfigSystem.vue'
   import ModalSessao from '../components/ModalNewSessao.vue'
   import ModalFriend from '../components/ModalNewFriend.vue'
   import SessaoPersonagens from '../components/SessaoPersonagens.vue'
 
   export default {
-      components: {ModalSessao, ModalFriend, SessaoPersonagens, logout},
+      components: {ModalSessao, ModalFriend, SessaoPersonagens, System, logout, preloader},
       props:{
           data : Object,
           vida : Object,
@@ -122,39 +126,41 @@
   
       },
       data(){
-          return{
-              id: 0,
-              idSe: 0,
-              Usuario: sessionStorage.getItem('email'),
-              sessoeCarregadas : [],
-              statusCarregados: [],
-              status_sessao: '',
-              styleStatus: 'background-color: rgba( 255 255 255 / 0.3);',
-              displaySessao: 'display:none;',
-              displaySessaoP: 'display:none;',
-              vida : {id: 0, atual: 6, maximo: 6},
-              sanidade : {id: 0, atual: 2, maximo: 10},
-              ocultismo : {id: 0, atual: 7, maximo: 16},
-              esforco : {id: 0, atual: 1, maximo: 12},
-              displayModalT: 'display:none;',
-              displayTesteTipo: 'display: none; transition: display 0.5s;',
-              displayTesteResultado: 'display: none; background-color: #0a0b0c;',
-              tipoTeste: '',
-              valorTeste: 0,
-              dados: [],
-              listVida: [],
-              listSanidade: [],
-              listOcultismo: [],
-              listEsforco: [],
+        return{
+          loading : true,
+          system : true,
+          id: 0,
+          idSe: 0,
+          Usuario: sessionStorage.getItem('email'),
+          sessoeCarregadas : [],
+          statusCarregados: [],
+          status_sessao: '',
+          styleStatus: 'background-color: rgba( 255 255 255 / 0.3);',
+          displaySessao: 'display:none;',
+          displaySessaoP: 'display:none;',
+          vida : {id: 0, atual: 6, maximo: 6},
+          sanidade : {id: 0, atual: 2, maximo: 10},
+          ocultismo : {id: 0, atual: 7, maximo: 16},
+          esforco : {id: 0, atual: 1, maximo: 12},
+          displayModalT: 'display:none;',
+          displayTesteTipo: 'display: none; transition: display 0.5s;',
+          displayTesteResultado: 'display: none; background-color: #0a0b0c;',
+          tipoTeste: '',
+          valorTeste: 0,
+          dados: [],
+          listVida: [],
+          listSanidade: [],
+          listOcultismo: [],
+          listEsforco: [],
 
-              email : sessionStorage.getItem('email'),
-              data_atual : null,
-              modal_session_opened : false,
-              modal_contact_opened : false,
-              list_sessions : false,
-              list_pendente : null,
-              list_contact : null,
-              no_session : false
+          email : sessionStorage.getItem('email'),
+          data_atual : null,
+          modal_session_opened : false,
+          modal_contact_opened : false,
+          list_sessions : false,
+          list_pendente : null,
+          list_contact : null,
+          no_session : false
   
           }
       },
@@ -200,7 +206,12 @@
             axios.get(url, { headers : headers })
             .then( res => {
               console.log(res.data)
-              this.list_pendente = res.data.ask
+              if(res.data.ask.length == 0){
+                this.list_pendente = null
+              }else{
+                this.list_pendente = res.data.ask
+              }
+              
             })
             .catch( error => { 
               console.log(error)
@@ -284,6 +295,9 @@
         }
       },
       mounted(){
+        setTimeout(() => {
+          this.loading = false
+        }, 500);
         if(!sessionStorage.getItem('token')){ this.$router.push({name:"login"}) }
 
         this.get_session();
@@ -310,7 +324,7 @@
   }
 }
   </script>
-  <style scoped lang="scss">
+  <style lang="scss">
   .flex{
     display: flex;
     justify-content: center;
@@ -363,23 +377,11 @@
     width: 100%;
     display: flex;
     margin: 0.6em auto;
-
-  }
-  .container-new-session p{
-    font-size: 2vmax;
-    text-align: center;
-    margin: 1em;
-
-  }
-  .btn-large{
-    width: 60%;
-    margin: 0 auto; 
-  }
-  .btn-small{
-    width: 10%;
-    position: absolute;
-    right: 0;
-    margin: 0 1em; 
+    p{
+      font-size: 2vmax;
+      text-align: center;
+      margin: 1em;
+    }
   }
   .content-session-add{
     margin: 0;
@@ -406,13 +408,6 @@
       padding: 0;
     }
   }
-
-.text-nao-sessao p{
-  font-size: 1.5em;
-  text-align: center;
-  margin: 0;
-  padding: 0;
-}
 .btn-add-session:hover{
   background-color: #88888883;
   border: 1px dashed rgba(82, 82, 82, 0.4);
@@ -425,38 +420,41 @@
 .content-social{
   background-color: rgb(43  43  43 / 0.7);
   width: 100%;
+  h3{
+    padding-bottom: 5px;
+    margin: 0;
+    text-align: center;
+    border-bottom: 1px dashed rgba(0  0  0 / 0.4);
+  }
+  ul{
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    li{
+      list-style: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      #status{
+        height: 20px;
+        width: 20px;
+        border-radius: 50%;
+        background-color: #04e04e;   
+        margin: 0;
+        margin-right: 1em;
+      }
+    }
+    li:hover{
+      background-color: rgb(43  43  43 / 0.7);
+      #status{
+        background-color: #09aa31;   
+ 
+      }
+      
+    }
+  }
 }
-.content-social h3{
-  padding-bottom: 5px;
-  margin: 0;
-  text-align: center;
-  border-bottom: 1px dashed rgba(0  0  0 / 0.4);
-  
-}
-.content-social ul{
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-}
-.content-social ul li{
-  list-style: none;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.content-social ul li:hover{
-  background-color: rgb(43  43  43 / 0.7);
 
-}
-#status{
-  height: 20px;
-  width: 20px;
-  border-radius: 50%;
-  background-color: #04e04e;
-  
-  margin: 0;
-  margin-right: 1em;
-}
 .ativos h3{
   background-color: #00f75259;
 }
@@ -485,14 +483,6 @@
 }
 
 
-  #app{
-    background: black;
-    background-image: url('../img/background.webp');
-    background-position: center ;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-size: contain;
-  }
   
 .btn-x{
   background-color: rgb(0  0  0 / 0.0);
@@ -505,12 +495,6 @@
   background-color: rgba(223, 17, 17, 0.7);
 }
   
-  .content-right{
-    border: 1px solid rgba(110, 110, 110, 0.918);
-    background-color: rgba(23, 23, 23, 0.7);
-    height: 100%;
-    width:100%;
-  }
   .container-home{
     /* background-image: url('../img/background.webp'); */
     background-color: rgba(0  0  0 / 0.0);
@@ -521,182 +505,31 @@
     display: flex;
     gap: 1em;
     height: 88vh;
-  
-  }
-  .content-left{
-    background-color: rgba(23, 23, 23, 0.5);
-    height: 100%;
-    width:70%;
-    border: 1px solid rgba(88, 88, 88, 0.7);;
-  }
-
-  .conteiner-c{
-    grid-area: ladoC;
-    background-color: rgb(181, 217, 177);
-  }
-  .caixa-personagem-demo{
-    background-color: rgba(217  217  217 / 0.2);
-    border-radius: 5px;
-    padding: 5px 0;
-  }
-  .containerJogadores{
-  
-    width: 100%;
-    overflow: hidden;
-  }
-  
-  .containerJogadores ul{
-    padding: 0;
-    padding-left: 20px;
-    list-style: none;
-    width: 100%;
-    display:flex;
-    flex-flow: row wrap;
-    justify-content: center;
-    padding-left: 0px;
-  }
-  .containerJogadores ul li{
-    float:left;
-    display: flex;
-    border-radius: 5px;
-    opacity: 1;
-    flex-direction: column;
-    text-align:center;
-    width: 200px;
-    height: 470px;
-    padding-left: 10px;
-    padding-right: 10px;
-    padding-top: 10px;
-    background-color: rgba(0  0  0 / 0.2);
-    border: 1px solid rgb(26, 26, 26);
-    margin-right: 10px;
-    margin-bottom: 10px;
-  }
-  .containerJogadores ul li:hover{
-    background-color: rgb(43, 43, 43);
-    border: 1px solid rgb(85, 85, 85)
-  }
-  #btnAdd{
-    border-radius: 5px;
-    height: 482px;
-    width: 222px;
-    padding: 10px;
-    background-color: rgb(0  0  0 / 0.7);
-    border: 1px solid rgb(26, 26, 26);
-    color: #fff;
-    margin-right: 10px;
-    font-size: 50px;
-  }
-  #btnAdd:hover{
-    background-color: rgb(43  43  43 / 0.7);
-    border: 1px solid rgb(85, 85, 85)
-  }
-  h2{
-    font-size: 20px;
-    color: #ffff;
-  }
-  h6{
-    font-size: 15px;
-    background-color: #272727a1;
-    color: #ffff;
-    margin: 0 auto;
-  
-  }
-  #imgPerfil{
-    width: 120px;
-    height: 120px;
-  }
-  .container-avatar{
-      height:140px;
-      background-color: rgb(41  41  41 / 0.6);
-      border-radius: 20px;
-      padding: 10px;
-      }
-  .container-avatar img{
-      width: 120px;
-      height: 120px;}
-  .box-perfil{
-      margin: 0 auto;
-      background-color: #a2a2a2;
-      width: 120px;
-      height: 120px;
-      border-radius: 50%;
-      border: 2px solid rgba(190, 190, 190, 0.6);
-      overflow:hidden;
-  
-  }
-  .box-perfil:hover{
-      background-color: #a2a2a2;
-       border: 2px solid rgb(233, 233, 233);
-  }
-  .caixa-bar h3{
-    color: bisque;
-    font-family: "Consolas";
-    margin: 10px 0;
-  }
-  .contagemBarra {
+    .conteiner-system{
       width: 100%;
-      margin-left: 10px;}
-  .contagemBarra{
-      font-size: 20px;}
-  .barra-p{
-      margin-top: 0;
-      margin-bottom: 0;
       height: 100%;
-      transition: width 2s;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;}
+      background-color: rgba(0, 0, 0, 0.3);
+    }
+    .content-left, .content-right{
+      h2{
+        text-align: center;
+      }  
+    }
+    .content-left{
+      background-color: rgba(23, 23, 23, 0.5);
+      height: 100%;
+      width:70%;
+      border: 1px solid rgba(88, 88, 88, 0.7);;
+    }
+    
+    .content-right{
+      border: 1px solid rgba(110, 110, 110, 0.918);
+      background-color: rgba(23, 23, 23, 0.7);
+      height: 100%;
+      width:100%;
+    }
+  }
   
-  .barraP{
-      margin-top: 0;
-      margin-bottom: 7px;
-      width: 100%;
-      height: 20px;}
-  .barraVida{
-      background-color: rgb(71, 18, 18);}
-  .barra-vida{
-      background-color: #940909;
-      border-right: 2px solid #ff7777;}
-  .barraSanidade{
-      background-color: rgb(11, 14, 70);
-  
-      display:block;}
-  .barra-sanidade{
-      background-color: #203f94;
-      border-right: 2px solid #638cdd;}
-  .barraOcultismo{
-      background-color: rgb(24, 2, 22);}
-  .barra-ocultismo{
-      background-color: #580b7f;
-      border-right: 2px solid #ab65b5;}
-  .barraEsforco{
-      background-color: rgb(2, 24, 7);}
-  .barra-esforco{
-      background-color: #296e3d;
-      border-right: 2px solid #65b580;}
-  #box-barra-padrao h4{
-      margin: 0 auto;
-      font-size: 20px;
-      color: bisque;
-  }
-  .content-left h2, .content-right h2 {
-    text-align: center;
-  }
-  .menuMestre{
-    list-style: none;
-  }
-  .menuMestre li{
-    font-size: 20px;
-    height: 40px;
-    width: 200px;
-    margin-top:5px;
-    border-bottom: 1px solid rgba(190, 190, 190, 0.6)
-  }
-  .menuMestre li:hover{
-    background-color: rgba(61, 114, 17, 0.3)
-  }
   .caixa-btn-sessao{
     position: relative;
     display: flex;
@@ -707,10 +540,11 @@
     border-top: 1px solid rgba(190, 190, 190, 0.6);
     border-bottom: 1px solid rgba(190, 190, 190, 0.6);
     width: 100%;
+    h2{
+      margin: 0;
+    }
   }
-  .caixa-btn-sessao h2{
-    margin: 0;
-  }
+ 
   #btn-sessao{
       background-color: rgba(87, 241, 151, 0.7);
       color: #fff;
