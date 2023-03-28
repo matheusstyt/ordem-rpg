@@ -22,6 +22,7 @@
         <p>Atenciosamente: Matheus Galdino</p>
     </div>
     <p id="author">author: matheus da silva galdino :D</p>
+
 </div>
 
 </template>
@@ -59,7 +60,7 @@ export default {
             }
         },
         cadastrar(){
-            this.$router.push({name:"cadastro"});
+            this.$router.push({name:"registrar"});
         },
         login(){
             this.$router.push({name:"login"});

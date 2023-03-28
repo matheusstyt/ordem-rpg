@@ -2,7 +2,7 @@
 <div class="geral-login">
     <div class="caixa-login">
         <button id="login" @click="login">Entrar</button>
-        <form @submit="checkUser($event)">
+        <form @submit="validation($event)">
             <h2>Sign in</h2>
             <div>
                 <label for="user">Seu nome</label>
@@ -18,11 +18,11 @@
             </div>
             <div>
                 <label for="pass">Senha</label>
-                <input type="password" name="pass" id="pass" v-model="pass1" :style="passErr">
+                <input type="password" name="pass" id="pass" v-model="first_pass" :style="passErr">
             </div>
             <div>
                 <label for="pass">Confirmar senha</label>
-                <input type="password" name="pass" id="pass" v-model="pass2" :style="passErr">
+                <input type="password" name="pass" id="pass" v-model="second_pass" :style="passErr">
             </div>
             
             <div id="box-entrar">
@@ -35,53 +35,55 @@
 
 </template>
 <script>
+import axios from 'axios';
 export default {
     
     data() {
         return{
             user:'',
-            pass1: '',
-            pass2: '',
+            first_pass: '',
+            second_pass: '',
             name: '',
             email: '',
             passErr: 'background-color: rgba(0  0  0 / 0.6);'
         }
     },
     methods:{
-        checkUser(e){
-            if(this.pass1 == this.pass2){
-                this.cadastrar();
-                this.user = '';
-                this.pass1 = '';
-                this.pass2 = '';
-                this.name = '';
-                this.email = '';
-                this.$router.push({name:"login"});
+        validation(e){
+            if(this.first_pass === this.second_pass){
+                this.registrar();
             }else{
                 alert('SENHA NÃO CONFERE!!')
                 this.passErr = 'background-color: rgba(238, 30, 30, 0.7);'
             }
             e.preventDefault()
         },
-        async cadastrar(){
-            let dataJson = JSON.stringify(
-                {
-                    nome: this.name,
-                    username: this.user,
-                    email: this.email,
-                    password: this.pass1,
-                    mestre: 0
-                });
-            const req = await fetch("http://localhost:5000/user/", {
-               //mode: 'no-cors', 
-               method: "POST",
-               headers: { "Content-Type": "application/json"},
-               body: dataJson
-            });
+        async registrar(){
+            const url = "http://170.10.0.50:8000/registrar/";
+            const body_user = {
+                username: this.user,
+                email: this.email,
+                password: this.first_pass,
+            };
+            console.table(body_user)
+            axios.post(url, body_user)
+            .then(res => {
+                this.clear();
+                alert("Registrado com sucesso");
+                this.$router.push({name:"login"});
+            })
+            .catch(error => {
+                alert('algo de errado não está certo')
+            })
         },
-        login(){
-            this.$router.push({name:"login"});
+        clear(){
+            this.user = '';
+            this.first_pass = '';
+            this.second_pass = '';
+            this.name = '';
+            this.email = '';
         }
+    
     }
 }
 </script>

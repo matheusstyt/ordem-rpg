@@ -21,19 +21,23 @@
           </div>
       </div>
       
-      <div class="home">
+      <div class="container-home">
           
         <div class="content-right">
-          <div class="container-new-session">
-            <div class="content-new-session btn-large" @click="open_modal_session">
+          <div class="content-session-add flex" v-if="list_sessions.length === 0">
+            <h3>Não há sessões abertas.</h3>
+            <div class="btn-add-session flex" @click="open_modal_session">
               <h4>+</h4>
             </div>
           </div>
-          <div class="text-nao-sessao" v-if="no_session === false">
-            <p>Não há sessões abertas.</p>
+          <div class="content-session-add flex" v-else>
+            <h3>Sessões ativas</h3>
+            <div class="btn-add-session" @click="open_modal_session">
+              <h4 class="flex">+</h4>
+            </div>
           </div>
-          <div class="content-session-open" v-else style="display: block">
-              <h3>Sessões ativas</h3>
+          <div class="content-session-open" v-if="no_session === true" style="display: block">
+              
               <ul>
                 <li v-for="(session, index) in list_sessions" :key="session.id"  >
                 <div @click="abrirsession(session.idsession)">
@@ -51,7 +55,7 @@
           </div>
   
         </div>
-        <div class="conteiner-b">
+        <div class="content-left">
           <div class="caixa-btn-sessao">
             <div class="flex">
               <div class="content-ico">
@@ -60,11 +64,11 @@
               <h2>Social</h2>
             </div>
 
-              <div class="content-new-session btn-small" @click="open_modal_contact()">
+              <div class="btn-add-session" @click="open_modal_contact()">
                 <h4>+</h4>
               </div>
           </div>
-          <div class="content-social ativos">
+          <div class="content-social ativos" v-if="list_contact === null">
             <h3>Ativos</h3>
             <ul>
               <li v-for="(item, index) in list_contact" >
@@ -147,9 +151,9 @@
               data_atual : null,
               modal_session_opened : false,
               modal_contact_opened : false,
-              list_sessions : [],
+              list_sessions : false,
               list_pendente : null,
-              list_contact : [],
+              list_contact : null,
               no_session : false
   
           }
@@ -177,8 +181,12 @@
             .then( res => {
               
               this.list_sessions = res.data.session
-              this.no_session = true;
-  
+              
+              if(res.data.session.lenght === 0){
+                this.no_session = false;
+              }else{
+                this.no_session = true;
+              }
             })
             .catch( error => { 
               console.log(error)
@@ -302,13 +310,12 @@
   }
 }
   </script>
-  <style scoped>
+  <style scoped lang="scss">
   .flex{
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 0.5em;
-
     
   }
   .container-g{
@@ -334,15 +341,29 @@
     border-bottom-right-radius: 2em;
     border-bottom-left-radius: 2em;
     margin: 0 auto;
+    p{
+      cursor: pointer;
+    }
+    p:hover{
+      color: rgb(255, 188, 188);
+    }
+    h3{
+      cursor: pointer;
+    }
+    h3:hover{
+      color: rgba(177, 177, 177, 0.8);
+    }
+    svg{
+      stroke: rgba(236, 139, 21, 0.829);
+      cursor: pointer;
+    }
   }
-  .header-content svg{
-    stroke: rgba(236, 139, 21, 0.829);
-  }
+  .header-content 
   .container-new-session{
     width: 100%;
+    display: flex;
     margin: 0.6em auto;
-    
-    
+
   }
   .container-new-session p{
     font-size: 2vmax;
@@ -360,34 +381,44 @@
     right: 0;
     margin: 0 1em; 
   }
-  .content-new-session{
+  .content-session-add{
+    margin: 0;
+    border-bottom: 1px solid rgba( 255 255 255 / 0.7);
+    position: relative;
+    width: 100%;
+    h3{
+      margin: 0;
+      padding: 0.5em 0;
+    }
+  }
+  .btn-add-session{
+    position: absolute;
+    right: 2%;
     background-color: #4d4d4d83;
     border-radius: 0.5em;
     border: 1px dashed rgba(0  0  0 / 0.4);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-   
+    padding: 0 0.5em;
     cursor: pointer;
-    
+
+    h4{
+      font-size: 2em;
+      margin: 0;
+      padding: 0;
+    }
   }
-.content-new-session h4{
-  font-size: 2em;
-  margin: 0;
-  padding: 0;
-}
+
 .text-nao-sessao p{
   font-size: 1.5em;
   text-align: center;
   margin: 0;
   padding: 0;
 }
-.content-new-session:hover{
+.btn-add-session:hover{
   background-color: #88888883;
   border: 1px dashed rgba(82, 82, 82, 0.4);
 }
 .content-ico{
-  height: 2em;
+  height: 1.5em;
   aspect-ratio: 1/1;
 }
 
@@ -427,7 +458,7 @@
   margin-right: 1em;
 }
 .ativos h3{
-  background-color: #00f7528e;
+  background-color: #00f75259;
 }
 .pendentes h3{
   background-color: #f80a0a3a;
@@ -462,18 +493,7 @@
     background-attachment: fixed;
     background-size: contain;
   }
-  .home{
-    /* background-image: url('../img/background.webp'); */
-    background-color: rgba(0  0  0 / 0.5);
-    background-position: center ;
-    background-repeat: repeat-x;
-    background-attachment: fixed;
-    background-size: contain;
-    display: flex;
-
-    height: 100vh;
   
-  }
 .btn-x{
   background-color: rgb(0  0  0 / 0.0);
   top: 1%;
@@ -488,12 +508,24 @@
   .content-right{
     border: 1px solid rgba(110, 110, 110, 0.918);
     background-color: rgba(23, 23, 23, 0.7);
-    height: 100vh;
+    height: 100%;
     width:100%;
   }
-  .conteiner-b{
+  .container-home{
+    /* background-image: url('../img/background.webp'); */
+    background-color: rgba(0  0  0 / 0.0);
+    background-position: center ;
+    background-repeat: repeat-x;
+    background-attachment: fixed;
+    background-size: contain;
+    display: flex;
+    gap: 1em;
+    height: 88vh;
+  
+  }
+  .content-left{
     background-color: rgba(23, 23, 23, 0.5);
-    height: 100vh;
+    height: 100%;
     width:70%;
     border: 1px solid rgba(88, 88, 88, 0.7);;
   }
@@ -649,9 +681,8 @@
       font-size: 20px;
       color: bisque;
   }
-  .conteiner-b h2, .content-right h2 {
+  .content-left h2, .content-right h2 {
     text-align: center;
-    margin: 20px auto;
   }
   .menuMestre{
     list-style: none;
@@ -709,7 +740,6 @@
     display:flex;
     background-color: rgba(0 0 0 / 0.3);
     border-bottom: 1px solid rgba( 255 255 255 / 0.7);
-    border-top: 1px solid rgba( 255 255 255 / 0.7)
   }
   .content-session-open ul li div{
     margin: 0;

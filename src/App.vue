@@ -1,8 +1,8 @@
 <template>
   <div class="app-div">
-      <div class="img-box" @click="inicio">
+      <!-- <div class="img-box" @click="inicio">
         <img src="/img/home1.png" alt="">
-      </div>
+      </div> -->
 
     <router-view/>
     <div class="status">
