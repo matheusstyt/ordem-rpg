@@ -13,10 +13,11 @@
       
       <div class="header">
           <div class="header-content">
-            <p>Início</p>
+              <p>Início</p>
               <h3>{{email}}</h3>
               <p>Ferramentas</p>
               <p>Perfil</p>
+              <logout @click="logout()"/>
           </div>
       </div>
       
@@ -63,22 +64,31 @@
                 <h4>+</h4>
               </div>
           </div>
-          <div class="content-social pendentes">
-            <h3>Pendente</h3>
+          <div class="content-social ativos">
+            <h3>Ativos</h3>
             <ul>
-              <li v-for="(item, index) in list_pendente" >
-                <p>{{item.destino}}</p>
+              <li v-for="(item, index) in list_contact" >
+                <p>{{item.fk_friend}}</p>
+                <div class="pendente-container-btn">
+                </div>
                 <div id="status"></div>
               </li>
             </ul>
           </div>
-           
-    
+          <div class="content-social pendentes" v-if="list_pendente === null">
+            <h3>Pendente</h3>
+            <ul>
+              <li v-for="(item, index) in list_pendente" >
+                <p>{{item.origem}}</p>
+                <div class="pendente-container-btn">
+                  <button id="contact-okay" @click="aceitar_pedido(item.fk_origem, item.fk_destino, item.id)">Confirmar</button>
+                  <button id="contact-delete" @click="excluir_pedido(item.id)">Excluir</button>
+                </div>
+              </li>
+            </ul>
+          </div>
         </div>
-       <!--    <NewSessao :displaySessao="displaySessao" @updateDisplayS="updateDisplayS" :id="id"/> -->
         <div class="conteiner-c"></div>
-    
-      <!-- <SessaoPersonagens :idSe="idSe" :displaySessao="displaySessaoP" @updateDisplayOpenS="updateDisplayOpenS" /> -->
       </div>
 
   </div>
@@ -87,13 +97,15 @@
     
   </template>
   <script>
+
   import axios from 'axios';
+  import logout from '../components/svg/logout.vue'
   import ModalSessao from '../components/ModalNewSessao.vue'
   import ModalFriend from '../components/ModalNewFriend.vue'
   import SessaoPersonagens from '../components/SessaoPersonagens.vue'
 
   export default {
-      components: {ModalSessao, ModalFriend, SessaoPersonagens},
+      components: {ModalSessao, ModalFriend, SessaoPersonagens, logout},
       props:{
           data : Object,
           vida : Object,
@@ -136,7 +148,8 @@
               modal_session_opened : false,
               modal_contact_opened : false,
               list_sessions : [],
-              list_pendente : [],
+              list_pendente : null,
+              list_contact : [],
               no_session : false
   
           }
@@ -180,19 +193,94 @@
             .then( res => {
               console.log(res.data)
               this.list_pendente = res.data.ask
-    
-  
             })
             .catch( error => { 
               console.log(error)
             })
-        },  
+        },
+        async get_contact(){
+          const url = "http://170.10.0.50:8000/contact/";
+            const headers = {'Authorization': 'Token ' + sessionStorage.getItem('token') };
+          
+            axios.get(url, { params : { fk_user : sessionStorage.getItem('token') }, headers : headers })
+            .then( res => {
+              console.log(res.data)
+              this.list_contact = res.data.list_contact
+            })
+            .catch( error => { 
+              console.log(error)
+            })
+        },
+        logout: function() {
+          this.$router.push('/login');
+          axios.post('http://170.10.0.50:8000/logout/', null, {
+            headers: {
+              Authorization: 'Token ' + sessionStorage.getItem('token')
+            }
+          })
+          .then(response => {
+
+            sessionStorage.clear();
+
+            this.$router.push('/login');
+          })
+          .catch(error => {
+            console.log(error);
+          });
+        },
+        aceitar_pedido(fk_origem, fk_destino, id){
+          let now = new Date();
+          let formatter = new Intl.DateTimeFormat('pt-BR', {weekday: 'long', day: 'numeric', month: 'long', hour: 'numeric', minute: 'numeric'});
+          let formattedDate = formatter.format(now);
+
+          if(sessionStorage.getItem("token")){
+            const url = `http://170.10.0.50:8000/contact/`;
+
+            const body_uni = {
+              fk_user : fk_destino, 
+              fk_friend : fk_origem,
+              data_inicio : String(formattedDate) 
+            }
+            const body_bi = {
+              fk_user : fk_origem, 
+              fk_friend : fk_destino,
+              data_inicio : String(formattedDate) 
+            }
+            console.table(body_uni)
+            const headers = {'Authorization': 'Token ' + sessionStorage.getItem('token') };
+            axios.post(url, body_uni, { headers : headers })
+            .then( res => {
+              axios.post(url, body_bi, { headers : headers })
+              .then( res => {
+                this.excluir_pedido(id)
+              })
+              .catch( error => { 
+                  console.log(error)
+              })
+            })
+            .catch( error => { 
+                console.log(error)
+            })
+          }
+        },
+        excluir_pedido(id){
+          const url = `http://170.10.0.50:8000/ask/${id}/`;
+              const headers = {'Authorization': 'Token ' + sessionStorage.getItem('token') };
+              axios.delete(url, { headers : headers })
+              .then(res => {
+                window.location.reload()
+              })
+              .catch( error => {
+                console.log(error)
+              })
+        }
       },
       mounted(){
         if(!sessionStorage.getItem('token')){ this.$router.push({name:"login"}) }
 
         this.get_session();
         this.get_pendente();
+        this.get_contact();
         setInterval(() => {
           let now = new Date();
           let formatter = new Intl.DateTimeFormat('pt-BR', {weekday: 'long', day: 'numeric', month: 'long', hour: 'numeric', minute: 'numeric'});
@@ -247,6 +335,9 @@
     border-bottom-left-radius: 2em;
     margin: 0 auto;
   }
+  .header-content svg{
+    stroke: rgba(236, 139, 21, 0.829);
+  }
   .container-new-session{
     width: 100%;
     margin: 0.6em auto;
@@ -299,13 +390,17 @@
   height: 2em;
   aspect-ratio: 1/1;
 }
-.content-social{
-  width: 100%;
-}
 
 .content-social{
   background-color: rgb(43  43  43 / 0.7);
   width: 100%;
+}
+.content-social h3{
+  padding-bottom: 5px;
+  margin: 0;
+  text-align: center;
+  border-bottom: 1px dashed rgba(0  0  0 / 0.4);
+  
 }
 .content-social ul{
   margin: 0;
@@ -331,14 +426,32 @@
   margin: 0;
   margin-right: 1em;
 }
+.ativos h3{
+  background-color: #00f7528e;
+}
 .pendentes h3{
   background-color: #f80a0a3a;
-  padding-bottom: 5px;
-  margin: 0;
-  text-align: center;
-  border: 1px dashed rgba(0  0  0 / 0.4);
+
 }
 
+.pendente-container-btn{
+  display: flex;
+  gap: 1em;
+  padding-right: 2em;
+}
+.pendente-container-btn button{
+  background-color: rgb(0  0  0 / 0.7);
+  padding: 0.4em 1em;
+}
+.pendente-container-btn button:hover{
+  background-color: rgba(59, 59, 59, 0.7);
+}
+#contact-okay:active{
+  background-color: rgba(35, 231, 78, 0.486);
+}
+#contact-delete:active{
+  background-color: rgba(231, 35, 35, 0.486);
+}
 
 
   #app{
