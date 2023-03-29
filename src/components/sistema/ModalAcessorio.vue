@@ -1,47 +1,23 @@
 <template>
-    <div class="novo-armamento">
-        <h3>cadastrar novo armamentos</h3>
-        <div class="container-add-armamentos">
+    <div class="novo-acessorio">
+        <h3>cadastrar novo acessório</h3>
+        <div class="container-add-acessorios">
             <div class="input-field">
-                <label for="desc_armamento">Descrição</label>
-                <input type="text" name="desc_armamento" v-model="desc_armamento" id="desc_armamento">
+                <label for="desc_acessorio">Descrição</label>
+                <input type="text" name="desc_acessorio" v-model="desc_acessorio" id="desc_acessorio">
             </div>
             <div class="input-field">
-                <label for="categoria_1">Categoria I</label>
-                <input type="text" name="categoria_1" v-model="categoria_1" id="categoria_1">
+                <label for="obs_acessorio">Observação</label>
+                <input type="text" name="obs_acessorio" v-model="obs_acessorio" id="obs_acessorio">
             </div>
             <div class="input-field">
-                <label for="categoria_2">Categoria II</label>
-                <input type="text" name="categoria_2" v-model="categoria_2" id="categoria_2">
-            </div>
-            <div class="input-field">
-                <label for="categoria_3">Categoria III</label>
-                <input type="text" name="categoria_3" v-model="categoria_3" id="categoria_3">
-            </div>
-            <div class="input-field">
-                <label for="alcance">Alcance</label>
-                <input type="text" name="alcance" v-model="alcance" id="alcance">
-            </div>
-            <div class="input-field">
-                <label for="dano_passivo">Dano Passivo</label>
-                <input type="text" name="dano_passivo" v-model="dano_passivo" id="dano_passivo">
-            </div>
-            <div class="input-field">
-                <label for="dano_ativo">Dano Ativo</label>
-                <input type="text" name="dano_ativo" v-model="dano_ativo" id="dano_ativo">
-            </div>
-            <div class="input-field">
-                <label for="tipo">Tipo</label>
-                <input type="text" name="tipo" v-model="tipo" id="tipo">
-            </div>
-            <div class="input-field">
-                <label for="espaco_armamento">Espaço</label>
-                <input type="text" name="espaco_armamento" v-model="espaco_armamento" id="espaco_armamento">
+                <label for="espaco_acessorio">Espaço</label>
+                <input type="text" name="espaco_acessorio" v-model="espaco_acessorio" id="espaco_acessorio">
             </div>
         </div>
 
-        <button @click="salvar_armamento()">Salvar</button>
-        <h3 id="carregar-armamento">carregar armamentos - ordem paranormal</h3>
+        <button @click="salvar_acessorio()">Salvar</button>
+        <h3 id="carregar-acessorio">carregar acessórios - ordem paranormal</h3>
         
       </div>
 </template>
@@ -57,15 +33,10 @@ export default {
     data(){
         return{
             user_id : sessionStorage.getItem('user_id'),
-            desc_armamento : '',
-            categoria_1 : '',
-            categoria_2 : '',
-            categoria_3 : '',
-            alcance : '',
-            dano_passivo : '',
-            dano_ativo : '',
-            tipo : '',
-            espaco_armamento : '',
+
+            desc_acessorio : '',
+            obs_acessorio : '',
+            espaco_acessorio : '',
 
             display_contact : false
         }
@@ -77,29 +48,22 @@ export default {
             let formattedDate = formatter.format(now);
             this.data_atual = formattedDate;
         },
-        salvar_armamento(){
+        salvar_acessorio(){
             
-            const url = "http://170.10.0.50:8000/armamento/";
+            const url = "http://170.10.0.50:8000/acessorios/";
             
             const headers = {'Authorization': 'Token ' + sessionStorage.getItem('token') };
             
-            const body_armamento = {
-                descricao : this.desc_armamento,
-                categoria_1 : this.categoria_1,
-                categoria_2 : this.categoria_2,
-                categoria_3 : this.categoria_3,
-                alcance : this.alcance,
-                dano_passivo :  this.dano_passivo,
-                dano_ativo : parseInt(this.dano_ativo) ,
-                tipo : this.tipo,
-                espaco : parseInt(this.espaco_armamento) ,
-                fk_user : this.user_id
-
-
+            const body_acessorio = {
+                descricao : this.desc_acessorio,
+                obs : this.obs_acessorio,
+                espaco : parseInt(this.espaco_acessorio) ,
+                fk_user : parseInt( this.user_id )
             }
-            console.table(body_armamento)
-            axios.post(url, body_armamento, { headers : headers })
+            console.table(body_acessorio)
+            axios.post(url, body_acessorio, { headers : headers })
             .then( res => {
+                console.log(res)
                 this.clean_input()
                 window.location.reload()
             })
@@ -107,37 +71,10 @@ export default {
                 console.log(error)
             })
         },
-        salvar_armamento_user(id){
-            const url = "http://170.10.0.50:8000/armamentoUser/";
-            
-            const headers = {'Authorization': 'Token ' + sessionStorage.getItem('token') };
-            
-            const body_armamento_user = {
-                fk_user : parseInt(sessionStorage.getItem('user_id')),
-                fk_armamento : id,
-            }
-            console.table(body_armamento_user)
-            axios.post(url, body_armamento_user, { headers : headers })
-            .then( res => {
-
-              
-
-            })
-            .catch( error => { 
-                console.log(error)
-            })
-
-        },
         clean_input() {
-
             this.descricao = "";
-            this.categoria_1 = "";
-            this.categoria_2 = "";
-            this.categoria_3 = "";
-            this.alcance = "";
-            this.dano_passivo = "";
-            this.dano_ativo = "";
-            this.espaco = "";
+            this.obs_acessorio = "";
+            this.espaco_acessorio = "";
         },
 
         
@@ -152,7 +89,7 @@ export default {
 
 </script>
 <style scoped lang="scss"> 
-.novo-armamento {
+.novo-acessorio {
     background-color: #1b1b1b;
     padding: 0;
     border: 1px solid bisque;
@@ -193,20 +130,20 @@ export default {
         transition: ease 0.5s;
         border: 2px solid rgb(224, 184, 135);
     }
-    #carregar-armamento{
+    #carregar-acessorio{
         cursor: pointer;
         background-color: rgba(84, 245, 89, 0.5);
     }
-    #carregar-armamento:hover{
+    #carregar-acessorio:hover{
         background-color: rgba(84, 245, 89, 0.8);
         cursor: pointer;
     }
   }
-.novo-armamento:hover{
+.novo-acessorio:hover{
     box-shadow: 0px 0px 5px #fff;
     transition: ease 0.5s;
 }
-.container-add-armamentos{
+.container-add-acessorios{
     padding: 1em 0;
     display: flex;
     flex-direction: column;

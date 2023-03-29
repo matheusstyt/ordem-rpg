@@ -1,47 +1,45 @@
 <template>
     <div class="novo-armamento">
-        <h3>cadastrar novo armamentos</h3>
+        <h3>cadastrar novo ritual</h3>
         <div class="container-add-armamentos">
             <div class="input-field">
-                <label for="desc_armamento">Descrição</label>
-                <input type="text" name="desc_armamento" v-model="desc_armamento" id="desc_armamento">
+                <label for="desc_ritual">Descrição</label>
+                <input type="text" name="desc_ritual" v-model="desc_ritual" id="desc_ritual">
             </div>
             <div class="input-field">
-                <label for="categoria_1">Categoria I</label>
-                <input type="text" name="categoria_1" v-model="categoria_1" id="categoria_1">
+                <label for="obs_ritual">Observação</label>
+                <input type="text" name="obs_ritual" v-model="obs_ritual" id="obs_ritual">
             </div>
             <div class="input-field">
-                <label for="categoria_2">Categoria II</label>
-                <input type="text" name="categoria_2" v-model="categoria_2" id="categoria_2">
+                <label for="alcance_ritual">Alcance</label>
+                <input type="text" name="alcance_ritual" v-model="alcance_ritual" id="alcance_ritual">
             </div>
             <div class="input-field">
-                <label for="categoria_3">Categoria III</label>
-                <input type="text" name="categoria_3" v-model="categoria_3" id="categoria_3">
+                <label for="dano_passivo_ritual">Dano Passivo</label>
+                <input type="text" name="dano_passivo_ritual" v-model="dano_passivo_ritual" id="dano_passivo_ritual">
             </div>
             <div class="input-field">
-                <label for="alcance">Alcance</label>
-                <input type="text" name="alcance" v-model="alcance" id="alcance">
+                <label for="dano_ativo_ritual">Dano Ativo</label>
+                <input type="text" name="dano_ativo_ritual" v-model="dano_ativo_ritual" id="dano_ativo_ritual">
             </div>
-            <div class="input-field">
-                <label for="dano_passivo">Dano Passivo</label>
-                <input type="text" name="dano_passivo" v-model="dano_passivo" id="dano_passivo">
-            </div>
-            <div class="input-field">
-                <label for="dano_ativo">Dano Ativo</label>
-                <input type="text" name="dano_ativo" v-model="dano_ativo" id="dano_ativo">
-            </div>
+            
             <div class="input-field">
                 <label for="tipo">Tipo</label>
                 <input type="text" name="tipo" v-model="tipo" id="tipo">
             </div>
+
             <div class="input-field">
-                <label for="espaco_armamento">Espaço</label>
-                <input type="text" name="espaco_armamento" v-model="espaco_armamento" id="espaco_armamento">
+                <label for="ocultismo">Ocultismo</label>
+                <input type="text" name="ocultismo" v-model="ocultismo" id="ocultismo">
+            </div>
+            <div class="input-field">
+                <label for="categoria">Categoria</label>
+                <input type="text" name="categoria" v-model="categoria" id="categoria">
             </div>
         </div>
 
-        <button @click="salvar_armamento()">Salvar</button>
-        <h3 id="carregar-armamento">carregar armamentos - ordem paranormal</h3>
+        <button @click="salvar_ritual()">Salvar</button>
+        <h3 id="carregar-armamento">carregar rituais - ordem paranormal</h3>
         
       </div>
 </template>
@@ -57,15 +55,15 @@ export default {
     data(){
         return{
             user_id : sessionStorage.getItem('user_id'),
-            desc_armamento : '',
-            categoria_1 : '',
-            categoria_2 : '',
-            categoria_3 : '',
+            desc_ritual : '',
+            obs_ritual : '',
+            alcance_ritual : '',
+            ocultismo : '',
             alcance : '',
-            dano_passivo : '',
-            dano_ativo : '',
+            dano_passivo_ritual : '',
+            dano_ativo_ritual : '',
             tipo : '',
-            espaco_armamento : '',
+            categoria : '',
 
             display_contact : false
         }
@@ -77,28 +75,27 @@ export default {
             let formattedDate = formatter.format(now);
             this.data_atual = formattedDate;
         },
-        salvar_armamento(){
+        salvar_ritual(){
             
-            const url = "http://170.10.0.50:8000/armamento/";
+            const url = "http://170.10.0.50:8000/rituais/";
             
             const headers = {'Authorization': 'Token ' + sessionStorage.getItem('token') };
             
-            const body_armamento = {
-                descricao : this.desc_armamento,
-                categoria_1 : this.categoria_1,
-                categoria_2 : this.categoria_2,
-                categoria_3 : this.categoria_3,
-                alcance : this.alcance,
-                dano_passivo :  this.dano_passivo,
-                dano_ativo : parseInt(this.dano_ativo) ,
+            const body_ritual = {
+                descricao : this.desc_ritual,
+                obs : this.obs_ritual,
+                alcance : this.alcance_ritual,
+                dano_passivo :  this.dano_passivo_ritual,
+                dano_ativo : parseInt(this.dano_ativo_ritual) ,
                 tipo : this.tipo,
-                espaco : parseInt(this.espaco_armamento) ,
-                fk_user : this.user_id
+                ocultismo : parseInt(this.ocultismo),
+                categoria : this.categoria,
+                fk_user : parseInt(this.user_id)
 
 
             }
-            console.table(body_armamento)
-            axios.post(url, body_armamento, { headers : headers })
+            console.table(body_ritual)
+            axios.post(url, body_ritual, { headers : headers })
             .then( res => {
                 this.clean_input()
                 window.location.reload()
@@ -107,37 +104,16 @@ export default {
                 console.log(error)
             })
         },
-        salvar_armamento_user(id){
-            const url = "http://170.10.0.50:8000/armamentoUser/";
-            
-            const headers = {'Authorization': 'Token ' + sessionStorage.getItem('token') };
-            
-            const body_armamento_user = {
-                fk_user : parseInt(sessionStorage.getItem('user_id')),
-                fk_armamento : id,
-            }
-            console.table(body_armamento_user)
-            axios.post(url, body_armamento_user, { headers : headers })
-            .then( res => {
-
-              
-
-            })
-            .catch( error => { 
-                console.log(error)
-            })
-
-        },
         clean_input() {
 
-            this.descricao = "";
-            this.categoria_1 = "";
-            this.categoria_2 = "";
-            this.categoria_3 = "";
-            this.alcance = "";
-            this.dano_passivo = "";
-            this.dano_ativo = "";
-            this.espaco = "";
+            this.desc_ritual = "";
+            this.obs_ritual = "";
+            this.alcance_ritual = "";
+            this.dano_passivo_ritual = "";
+            this.dano_ativo_ritual = "";
+            this.tipo = "";
+            this.ocultismo = "";
+            this.categoria = "";
         },
 
         
