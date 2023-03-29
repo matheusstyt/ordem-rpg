@@ -23,6 +23,7 @@
 
         <div class="item largura">
             <div  class="content-session-add flex">
+                <img src="" alt="">
                 <h3>acessórios</h3>
                 <div class="btn-add-session" @click="open_acessorio()">
                     <h4 class="flex">+</h4>

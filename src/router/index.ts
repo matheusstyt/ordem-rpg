@@ -35,6 +35,12 @@ const routes: Array<RouteRecordRaw> = [
   }
   ,
   {
+    path: '/sistema',
+    name: 'sistema',
+    component: () => import(/* webpackChunkName: "sistema" */ '../views/MeuSistemaPage.vue')
+  }
+  ,
+  {
     path: '/ritual',
     name: 'ritual',
     component: () => import(/* webpackChunkName: "ritual" */ '../views/RitualView.vue')

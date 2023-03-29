@@ -20,7 +20,6 @@
               <logout @click="logout()"/>
           </div>
       </div>
-      
       <div class="container-home">
           
         <div class="content-right" v-if="system == false">

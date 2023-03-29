@@ -1,17 +1,17 @@
 <template>
   <div class="app-div">
-      <!-- <div class="img-box" @click="inicio">
-        <img src="/img/home1.png" alt="">
-      </div> -->
+    <div class="header">
+      <div class="header-content">
+        <p @click="go_inicio">Início</p>
+        <p @click="go_sessoes">Sessões</p>
+        <p @click="go_meu_sistema">Meu Sistema</p>
+        <h3>{{email}}</h3>
+        <logout @click="logout()"/>
+        </div>
+    </div>
 
     <router-view/>
-    <div class="status">
-      <p>usuário: matheus</p>
-      <hr>
-      <p>jogadores na sessão: 4</p>
-      <hr>
-      <p></p>
-    </div>
+    
   </div>
 
 
@@ -19,10 +19,19 @@
 <script>
 export default {
    methods:{
-    inicio(){
+    go_inicio(){
       this.$router.push({name:"home"})
-    }
-
+    },
+    go_sessoes(){
+      this.$router.push({name:"painel"})
+    },
+    go_meu_sistema(){
+      this.$router.push({name:"home"})
+    },
+    set_email(){
+      this.$router.push({name:"home"})
+    },
+    
   }
 }
 </script>
