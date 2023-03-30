@@ -1,5 +1,6 @@
 <template>
-    <div class="content-system">
+    <preloader v-if="loading" />
+    <div class="content-system" v-else>
         <div class="modal-system" v-if="display_modal_armamento === true">
             <h5 class="close_modal" @click="close_armamentos()">
                 X
@@ -22,10 +23,10 @@
         </div>
 
         <div class="item largura">
-            <div  class="content-session-add flex">
+            <div  class="content-add flex">
                 <img src="" alt="">
                 <h3>acessórios</h3>
-                <div class="btn-add-session" @click="open_acessorio()">
+                <div class="btn-add" @click="open_acessorio()">
                     <h4 class="flex">+</h4>
                 </div>
             </div>
@@ -43,9 +44,9 @@
             </table>
         </div>
         <div class="armamento largura">
-            <div  class="content-session-add flex">
+            <div  class="content-add flex">
                 <h3>armamentos</h3>
-                <div class="btn-add-session">
+                <div class="btn-add">
                     <h4 class="flex" @click="open_armamentos()">+</h4>
                 </div>
             </div>
@@ -66,9 +67,9 @@
 
         </div>
         <div class="magia largura">
-            <div  class="content-session-add flex">
+            <div  class="content-add flex">
                 <h3>rituais</h3>
-                <div class="btn-add-session" @click="open_ritual()">
+                <div class="btn-add" @click="open_ritual()">
                     <h4 class="flex">+</h4>
                 </div>
             </div>
@@ -96,10 +97,10 @@ import armamentos from '@/json/armamentos'
 import ModalArmamento from '@/components/sistema/ModalArmamento'
 import ModalAcessorio from '@/components/sistema/ModalAcessorio'
 import ModalRitual from '@/components/sistema/ModalRitual'
-
+import preloader from '../gif/preloader.vue'
 export default {
     components:{
-        ModalArmamento, ModalAcessorio, ModalRitual
+        ModalArmamento, ModalAcessorio, ModalRitual, preloader
     },
     data(){
         return{
@@ -109,6 +110,7 @@ export default {
             list_armamentos : null,
             list_acessorios : null,
             list_rituais : null,
+            loading : true
         }
     },
     methods:{
@@ -130,22 +132,6 @@ export default {
         open_ritual(){
             this.display_modal_ritual = true
         },
-
-        get_list_armamentos(){
-            const url = "http://170.10.0.50:8000/armamento/";
-            
-            const headers = {'Authorization': 'Token ' + sessionStorage.getItem('token') };
-
-            axios.get(url, { params : { fk_user : parseInt( sessionStorage.getItem("user_id") ) }, headers : headers })
-            .then( res => {
-                this.list_armamentos = res.data
-                console.log(res.data)
-            })
-            .catch( error => { 
-                console.log(error)
-            })
-
-        },
         get_list_acessorios(){
             const url = "http://170.10.0.50:8000/acessorios/";
             
@@ -156,6 +142,25 @@ export default {
                 this.list_acessorios = res.data
                 console.log('acessorios')
                 console.log(res.data)
+
+                this.get_list_armamentos();
+
+            })
+            .catch( error => { 
+                console.log(error)
+            })
+
+        },
+        get_list_armamentos(){
+            const url = "http://170.10.0.50:8000/armamento/";
+            
+            const headers = {'Authorization': 'Token ' + sessionStorage.getItem('token') };
+
+            axios.get(url, { params : { fk_user : parseInt( sessionStorage.getItem("user_id") ) }, headers : headers })
+            .then( res => {
+                this.list_armamentos = res.data
+                console.log(res.data)
+                this.get_list_rituais();
             })
             .catch( error => { 
                 console.log(error)
@@ -171,6 +176,7 @@ export default {
             .then( res => {
                 this.list_rituais = res.data
                 console.log(res.data)
+                this.loading = false
             })
             .catch( error => { 
                 console.log(error)
@@ -179,9 +185,11 @@ export default {
         },
     },
     mounted(){
-        this.get_list_armamentos();
+        
         this.get_list_acessorios();
-        this.get_list_rituais();
+        
+        
+        
     }
 
 }
@@ -214,7 +222,46 @@ export default {
     background-color: #777;
     border-radius: 6px;
   }
-  
+
+  .container-new{
+    width: 100%;
+    display: flex;
+    margin: 0.6em auto;
+    p{
+      font-size: 2vmax;
+      text-align: center;
+      margin: 1em;
+    }
+  }
+  .content-add{
+    margin: 0;
+    border-bottom: 1px solid rgba( 255 255 255 / 0.7);
+    position: relative;
+    width: 100%;
+    h3{
+      margin: 0;
+      padding: 0.5em 0;
+    }
+  }
+  .btn-add{
+    position: absolute;
+    right: 2%;
+    background-color: #4d4d4d83;
+    border-radius: 0.5em;
+    border: 1px dashed rgba(0  0  0 / 0.4);
+    padding: 0 0.5em;
+    cursor: pointer;
+
+    h4{
+      font-size: 2em;
+      margin: 0;
+      padding: 0;
+    }
+  }
+  .btn-add:hover{
+    background-color: #88888883;
+    border: 1px dashed rgba(82, 82, 82, 0.4);
+  }
 .content-system{
     position: relative;
     width: 100%;
@@ -246,6 +293,7 @@ export default {
     }
     .largura{
         width: 33.333%;
+        border: 0.5px solid rgba(134, 134, 134, 0.185);
         table{
             width: 100%;
             text-align: center;

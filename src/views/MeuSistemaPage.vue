@@ -1,21 +1,22 @@
 <template>
-    <div>
-      <div class="modal-session" v-if="modal_contact_opened === true">
-        <button class="btn-x" @click="close_modal_contact()">X</button>
-        <ModalFriend />
-      </div>
-      
-      <div class="modal-session" v-if="modal_session_opened === true">
-        <button class="btn-x" @click="close_modal_session()">X</button>
-        <ModalSessao />
-      </div>
-      <preloader v-if="loading" />
-      <div class="conteiner-system" v-if="system == true">
-        <System />
-      </div>
+  
+  <div class="sistema-geral">
+
+    <div class="modal-session" v-if="modal_contact_opened === true">
+      <button class="btn-x" @click="close_modal_contact()">X</button>
+      <ModalFriend />
     </div>
-      
-      
+    
+    <div class="modal-session" v-if="modal_session_opened === true">
+      <button class="btn-x" @click="close_modal_session()">X</button>
+      <ModalSessao />
+    </div>
+    
+    <div class="conteiner-system">
+      <System />
+    </div>
+  </div>
+        
     </template>
     <script>
   
@@ -44,8 +45,6 @@
           return{
             loading : true,
             system : true,
-            id: 0,
-            idSe: 0,
             Usuario: sessionStorage.getItem('email'),
             sessoeCarregadas : [],
             statusCarregados: [],
@@ -92,132 +91,14 @@
           close_modal_contact(){
             this.modal_contact_opened = false
           },
-          
-          async get_session(){
-              const url = "http://170.10.0.50:8000/session/";
-              const now = Date()
-              const headers = {'Authorization': 'Token ' + sessionStorage.getItem('token') };
-            
-              axios.get(url, { headers : headers })
-              .then( res => {
-                
-                this.list_sessions = res.data.session
-                
-                if(res.data.session.lenght === 0){
-                  this.no_session = false;
-                }else{
-                  this.no_session = true;
-                }
-              })
-              .catch( error => { 
-                console.log(error)
-              })
-          },  
-          async get_pendente(){
-              const url = "http://170.10.0.50:8000/ask/";
-              const now = Date()
-              const headers = {'Authorization': 'Token ' + sessionStorage.getItem('token') };
-            
-              axios.get(url, { headers : headers })
-              .then( res => {
-                console.log(res.data)
-                if(res.data.ask.length == 0){
-                  this.list_pendente = null
-                }else{
-                  this.list_pendente = res.data.ask
-                }
-                
-              })
-              .catch( error => { 
-                console.log(error)
-              })
-          },
-          async get_contact(){
-            const url = "http://170.10.0.50:8000/contact/";
-              const headers = {'Authorization': 'Token ' + sessionStorage.getItem('token') };
-            
-              axios.get(url, { params : { fk_user : sessionStorage.getItem('token') }, headers : headers })
-              .then( res => {
-                console.log(res.data)
-                this.list_contact = res.data.list_contact
-              })
-              .catch( error => { 
-                console.log(error)
-              })
-          },
-          logout: function() {
-            this.$router.push('/login');
-            axios.post('http://170.10.0.50:8000/logout/', null, {
-              headers: {
-                Authorization: 'Token ' + sessionStorage.getItem('token')
-              }
-            })
-            .then(response => {
-  
-              sessionStorage.clear();
-  
-              this.$router.push('/login');
-            })
-            .catch(error => {
-              console.log(error);
-            });
-          },
-          aceitar_pedido(fk_origem, fk_destino, id){
-            let now = new Date();
-            let formatter = new Intl.DateTimeFormat('pt-BR', {weekday: 'long', day: 'numeric', month: 'long', hour: 'numeric', minute: 'numeric'});
-            let formattedDate = formatter.format(now);
-  
-            if(sessionStorage.getItem("token")){
-              const url = `http://170.10.0.50:8000/contact/`;
-  
-              const body_uni = {
-                fk_user : fk_destino, 
-                fk_friend : fk_origem,
-                data_inicio : String(formattedDate) 
-              }
-              const body_bi = {
-                fk_user : fk_origem, 
-                fk_friend : fk_destino,
-                data_inicio : String(formattedDate) 
-              }
-              console.table(body_uni)
-              const headers = {'Authorization': 'Token ' + sessionStorage.getItem('token') };
-              axios.post(url, body_uni, { headers : headers })
-              .then( res => {
-                axios.post(url, body_bi, { headers : headers })
-                .then( res => {
-                  this.excluir_pedido(id)
-                })
-                .catch( error => { 
-                    console.log(error)
-                })
-              })
-              .catch( error => { 
-                  console.log(error)
-              })
-            }
-          },
-          excluir_pedido(id){
-            const url = `http://170.10.0.50:8000/ask/${id}/`;
-                const headers = {'Authorization': 'Token ' + sessionStorage.getItem('token') };
-                axios.delete(url, { headers : headers })
-                .then(res => {
-                  window.location.reload()
-                })
-                .catch( error => {
-                  console.log(error)
-                })
-          }
+   
         },
         mounted(){
           setTimeout(() => {
-            this.loading = false
+           // this.loading = false
           }, 500);
           if(!sessionStorage.getItem('token')){ this.$router.push({name:"login"}) }
-  
-          this.get_session();
-          this.get_pendente();
-          this.get_contact();
+
           setInterval(() => {
             let now = new Date();
             let formatter = new Intl.DateTimeFormat('pt-BR', {weekday: 'long', day: 'numeric', month: 'long', hour: 'numeric', minute: 'numeric'});
@@ -240,6 +121,13 @@
   }
     </script>
     <style lang="scss">
+    .sistema-geral{
+      position: relative;
+      max-width: 80vw;
+      height: 90vh;
+      margin: 0 auto;
+      background-color: rgb(0  0  0 / 0.1);
+    }
     .flex{
       display: flex;
       justify-content: center;
@@ -259,146 +147,6 @@
       height: 2.5em;
       margin-bottom: 1em;
     }
-    .header-content{
-      background-color: rgba(0  0  0 / 0.7);
-      width: 40%;
-      height: 100%;
-    
-      display: flex;
-      align-items: center;
-      justify-content: space-evenly;
-      border-bottom-right-radius: 2em;
-      border-bottom-left-radius: 2em;
-      margin: 0 auto;
-      p{
-        cursor: pointer;
-      }
-      p:hover{
-        color: rgb(255, 188, 188);
-      }
-      h3{
-        cursor: pointer;
-      }
-      h3:hover{
-        color: rgba(177, 177, 177, 0.8);
-      }
-      svg{
-        stroke: rgba(236, 139, 21, 0.829);
-        cursor: pointer;
-      }
-    }
-    .header-content 
-    .container-new-session{
-      width: 100%;
-      display: flex;
-      margin: 0.6em auto;
-      p{
-        font-size: 2vmax;
-        text-align: center;
-        margin: 1em;
-      }
-    }
-    .content-session-add{
-      margin: 0;
-      border-bottom: 1px solid rgba( 255 255 255 / 0.7);
-      position: relative;
-      width: 100%;
-      h3{
-        margin: 0;
-        padding: 0.5em 0;
-      }
-    }
-    .btn-add-session{
-      position: absolute;
-      right: 2%;
-      background-color: #4d4d4d83;
-      border-radius: 0.5em;
-      border: 1px dashed rgba(0  0  0 / 0.4);
-      padding: 0 0.5em;
-      cursor: pointer;
-  
-      h4{
-        font-size: 2em;
-        margin: 0;
-        padding: 0;
-      }
-    }
-  .btn-add-session:hover{
-    background-color: #88888883;
-    border: 1px dashed rgba(82, 82, 82, 0.4);
-  }
-  .content-ico{
-    height: 1.5em;
-    aspect-ratio: 1/1;
-  }
-  
-  .content-social{
-    background-color: rgb(43  43  43 / 0.7);
-    width: 100%;
-    h3{
-      padding-bottom: 5px;
-      margin: 0;
-      text-align: center;
-      border-bottom: 1px dashed rgba(0  0  0 / 0.4);
-    }
-    ul{
-      margin: 0;
-      display: flex;
-      flex-direction: column;
-      li{
-        list-style: none;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        #status{
-          height: 20px;
-          width: 20px;
-          border-radius: 50%;
-          background-color: #04e04e;   
-          margin: 0;
-          margin-right: 1em;
-        }
-      }
-      li:hover{
-        background-color: rgb(43  43  43 / 0.7);
-        #status{
-          background-color: #09aa31;   
-   
-        }
-        
-      }
-    }
-  }
-  
-  .ativos h3{
-    background-color: #00f75259;
-  }
-  .pendentes h3{
-    background-color: #f80a0a3a;
-  
-  }
-  
-  .pendente-container-btn{
-    display: flex;
-    gap: 1em;
-    padding-right: 2em;
-  }
-  .pendente-container-btn button{
-    background-color: rgb(0  0  0 / 0.7);
-    padding: 0.4em 1em;
-  }
-  .pendente-container-btn button:hover{
-    background-color: rgba(59, 59, 59, 0.7);
-  }
-  #contact-okay:active{
-    background-color: rgba(35, 231, 78, 0.486);
-  }
-  #contact-delete:active{
-    background-color: rgba(231, 35, 35, 0.486);
-  }
-  
-  
-    
   .btn-x{
     background-color: rgb(0  0  0 / 0.0);
     top: 1%;
@@ -409,110 +157,11 @@
   .btn-x:hover{
     background-color: rgba(223, 17, 17, 0.7);
   }
-    
-    .container-home{
-      /* background-image: url('../img/background.webp'); */
-      background-color: rgba(0  0  0 / 0.0);
-      background-position: center ;
-      background-repeat: repeat-x;
-      background-attachment: fixed;
-      background-size: contain;
-      display: flex;
-      gap: 1em;
-      height: 88vh;
-      .conteiner-system{
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.3);
-      }
-      .content-left, .content-right{
-        h2{
-          text-align: center;
-        }  
-      }
-      .content-left{
-        background-color: rgba(23, 23, 23, 0.5);
-        height: 100%;
-        width:70%;
-        border: 1px solid rgba(88, 88, 88, 0.7);;
-      }
-      
-      .content-right{
-        border: 1px solid rgba(110, 110, 110, 0.918);
-        background-color: rgba(23, 23, 23, 0.7);
-        height: 100%;
-        width:100%;
-      }
-    }
-    
-    .caixa-btn-sessao{
-      position: relative;
-      display: flex;
-      padding: 0.6em 0;
-      align-items: center;
-      justify-content: center ;
-      gap: 0.6em;
-      border-top: 1px solid rgba(190, 190, 190, 0.6);
-      border-bottom: 1px solid rgba(190, 190, 190, 0.6);
-      width: 100%;
-      h2{
-        margin: 0;
-      }
-    }
-   
-    #btn-sessao{
-        background-color: rgba(87, 241, 151, 0.7);
-        color: #fff;
-        font-size: 16px;
-        border: none;
-        border-radius: 5px;
-   
-    }
-    #btn-sessao:hover{
-        background-color: rgba(19, 82, 29, 0.7);
-    }
-    .content-session-open{
-      cursor: pointer;
-      text-align: center;
-      font-family: 'Consolas';
-      width: 100%;
-    }
-    .content-session-open ul{
-      padding: 0;
-      margin: 0;
-      list-style: none;
-      display:block;
-    }
-    .content-session-open ul li{
-      margin: 0;
-      padding: 0;
-      display:flex;
-      background-color: rgba(0 0 0 / 0.3);
-      border-bottom: 1px solid rgba( 255 255 255 / 0.7);
-    }
-    .content-session-open ul li div{
-      margin: 0;
-      padding: 0;
-      display:flex;
-    
-    }
-    .content-session-open ul li:hover{
-      background-color: rgba( 255 255 255 / 0.1);
-    }
-    
-    .content-session-open ul li p, .content-session-open ul li label{
-      margin: 5px 0; 
-      padding: 0 20px;
-      border-right: 1px solid rgba( 255 255 255 / 0.7);
-      cursor: pointer;
-    }
-    .content-session-open ul li label{
-      border: none;
-    }
-    .content-session-open ul li select{
-      background-color: rgba(0  0  0 / 0.4);
-      color: #fff;
-      font-family: "Consolas";
-      font-size: 14px;
-    }
+  .conteiner-system{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.3);
+  }
+
     </style>

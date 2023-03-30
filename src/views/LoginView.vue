@@ -34,7 +34,6 @@ export default {
     },
     methods:{
         check_user(e){ 
-            //this.checkPOST();
             this.get_token();
 
             e.preventDefault()
@@ -50,7 +49,7 @@ export default {
                 sessionStorage.setItem('token' , res.data.token);
                 sessionStorage.setItem('user_id' , res.data.user_id);
                 sessionStorage.setItem('email' , res.data.username);
-
+                sessionStorage.setItem('username' , res.data.username);
                 this.$router.push({name:"painel"});
             })
             .catch( error => { 

@@ -1,58 +1,96 @@
 <template>
+  <div class="header" v-if="isAuthenticated">
+    <div class="header-content">
+      <p @click="go_inicio">Início</p>
+      <p @click="go_sessoes">Sessões</p>
+      <p @click="go_meu_sistema">Meu Sistema</p>
+      <h3>{{ isAuthenticated }}</h3>
+      <logout @click="logout()"/>
+      </div>
+      
+  </div>
   <div class="app-div">
-    <div class="header">
-      <div class="header-content">
-        <p @click="go_inicio">Início</p>
-        <p @click="go_sessoes">Sessões</p>
-        <p @click="go_meu_sistema">Meu Sistema</p>
-        <h3>{{email}}</h3>
-        <logout @click="logout()"/>
-        </div>
-    </div>
-
     <router-view/>
-    
   </div>
 
 
 </template>
 <script>
+import logout from "./components/svg/logout.vue"
 export default {
+  components : {
+    logout
+  },
+  data(){
+    return{
+      user : sessionStorage.getItem("username"),
+      isAuthenticated : sessionStorage.getItem("username")
+    }
+  },
    methods:{
     go_inicio(){
-      this.$router.push({name:"home"})
+      window.location.redirect = "home"
     },
     go_sessoes(){
-      this.$router.push({name:"painel"})
+      window.location.redirect = "painel"
     },
     go_meu_sistema(){
-      this.$router.push({name:"home"})
+      window.location.redirect = "sistema"
+
     },
-    set_email(){
-      this.$router.push({name:"home"})
-    },
+
     
-  }
+  },
+  mounted() {
+    this.user = sessionStorage.getItem("username")
+    setInterval(() => {
+      isAuthenticated = sessionStorage.getItem("username")
+    }, 1000);
+  },
 }
 </script>
-<style>
+<style lang="scss">
 @import url('https://fonts.googleapis.com/css2?family=Itim&display=swap');
-
-.modalP{
-    position:fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(7  7  7 / 0.7);}
 
 
 h2, p, label, button{
   color: bisque;
   font-family: 'Itim', sans-serif;
 }
+.header{
+  width: 100%;
+  position: absolute;
+}
+.header-content{
+  background-color: rgba(0  0  0 / 0.7);
+  width: 40%;
+  height: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  border-bottom-right-radius: 2em;
+  border-bottom-left-radius: 2em;
+  margin: 0 auto;
+  p{
+    cursor: pointer;
+  }
+  p:hover{
+    color: rgb(255, 188, 188);
+  }
+  h3{
+    cursor: pointer;
+    color: #fff;
+  }
+  h3:hover{
+    color: rgba(177, 177, 177, 0.8);
+  }
+  svg{
+    stroke: rgba(236, 139, 21, 0.829);
+    cursor: pointer;
+  }
+}
+
 #app{
   background: black;
   background-image: url('./img/background.webp');
@@ -64,6 +102,11 @@ h2, p, label, button{
 }
 .app-div{
   height:100vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 1vmax;
 }
 body{
   background-color: rgb(0, 0, 0);
@@ -73,49 +116,4 @@ body{
   padding: 0;
 }
 
-.img-box{
-  border-radius: 50%;
-  border: 1px solid rgb(194, 194, 194);
-  width: 40px;
-  height: 40px;
-  text-align: center;
-  position: fixed;
-  top: 10px;
-  bottom: 0;
-  left: 10px;
-  right: 0;
-}
-.img-box img{
-  width: 80%;
-  height: 80%;
-  margin: 10% auto;
-  }
-  .img-box:hover{
-    background-color: rgb(90, 90, 90) ;
-    border: 1px solid #fff;
-
-  }
-  .img-box.router-link-exact-active{
-    background-color: #fff ;
-  }
-  a:-webkit-any-link{
-
-    width: 30px;
-    height: 30px;
-  }
-
-  .status{
-    width: 100%;
-    background-color: rgba(211, 211, 211, 0.7);
-    bottom: 0;
-    left: 0;
-    right: 0;
-    position: fixed;
-    display: none;
-    padding: 0 10px;
-  }
-  .status p{
-    margin: 0;
-
-  }
 </style>

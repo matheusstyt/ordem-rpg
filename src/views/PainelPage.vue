@@ -10,17 +10,7 @@
       <ModalSessao />
     </div>
     <preloader v-if="loading" />
-    <div class="container-g">
-      <div class="header">
-          <div class="header-content">
-              <p>Início</p>
-              <h3>{{email}}</h3>
-              <p>Meu Sistema</p>
-              <p>Perfil</p>
-              <logout @click="logout()"/>
-          </div>
-      </div>
-      <div class="container-home">
+    <div class="container-home"  v-else>
           
         <div class="content-right" v-if="system == false">
           <div class="content-session-add flex" v-if="list_sessions.length === 0">
@@ -94,7 +84,7 @@
         <div class="conteiner-system" v-if="system == true">
           <System />
         </div>
-      </div>
+
 
   </div>
   </div>
@@ -127,31 +117,9 @@
       data(){
         return{
           loading : true,
-          system : true,
-          id: 0,
-          idSe: 0,
-          Usuario: sessionStorage.getItem('email'),
-          sessoeCarregadas : [],
-          statusCarregados: [],
-          status_sessao: '',
-          styleStatus: 'background-color: rgba( 255 255 255 / 0.3);',
-          displaySessao: 'display:none;',
-          displaySessaoP: 'display:none;',
-          vida : {id: 0, atual: 6, maximo: 6},
-          sanidade : {id: 0, atual: 2, maximo: 10},
-          ocultismo : {id: 0, atual: 7, maximo: 16},
-          esforco : {id: 0, atual: 1, maximo: 12},
-          displayModalT: 'display:none;',
-          displayTesteTipo: 'display: none; transition: display 0.5s;',
-          displayTesteResultado: 'display: none; background-color: #0a0b0c;',
-          tipoTeste: '',
-          valorTeste: 0,
-          dados: [],
-          listVida: [],
-          listSanidade: [],
-          listOcultismo: [],
-          listEsforco: [],
+          system : false,
 
+          Usuario: sessionStorage.getItem('email'),
           email : sessionStorage.getItem('email'),
           data_atual : null,
           modal_session_opened : false,
@@ -192,6 +160,8 @@
               }else{
                 this.no_session = true;
               }
+              this.get_pendente();
+        
             })
             .catch( error => { 
               console.log(error)
@@ -210,7 +180,7 @@
               }else{
                 this.list_pendente = res.data.ask
               }
-              
+              this.get_contact();
             })
             .catch( error => { 
               console.log(error)
@@ -224,6 +194,8 @@
             .then( res => {
               console.log(res.data)
               this.list_contact = res.data.list_contact
+              
+              this.loading = false
             })
             .catch( error => { 
               console.log(error)
@@ -294,14 +266,11 @@
         }
       },
       mounted(){
-        setTimeout(() => {
-          this.loading = false
-        }, 500);
+
         if(!sessionStorage.getItem('token')){ this.$router.push({name:"login"}) }
 
         this.get_session();
-        this.get_pendente();
-        this.get_contact();
+        
         setInterval(() => {
           let now = new Date();
           let formatter = new Intl.DateTimeFormat('pt-BR', {weekday: 'long', day: 'numeric', month: 'long', hour: 'numeric', minute: 'numeric'});
@@ -328,12 +297,10 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 0.5em;
-    
+    gap: 0.5em; 
   }
   .container-g{
     margin: 0 auto;
-    height: 100vh;
     max-width: 75vw;
     display: block;
   }
@@ -342,8 +309,7 @@
     background-color: rgba(0  0  0 / 0.1);
     height: 2.5em;
     margin-bottom: 1em;
-  }
-  .header-content{
+    .header-content{
     background-color: rgba(0  0  0 / 0.7);
     width: 40%;
     height: 100%;
@@ -371,7 +337,8 @@
       cursor: pointer;
     }
   }
-  .header-content 
+  }
+  
   .container-new-session{
     width: 100%;
     display: flex;
@@ -427,13 +394,17 @@
   }
   ul{
     margin: 0;
+    padding: 0;
     display: flex;
     flex-direction: column;
+    box-shadow: 3px 0px 4px rgba(0, 0, 0, 0.726);
     li{
       list-style: none;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      padding-left: 1em;
+      background-color: rgba(22, 22, 22, 0.568);
       #status{
         height: 20px;
         width: 20px;
@@ -444,7 +415,7 @@
       }
     }
     li:hover{
-      background-color: rgb(43  43  43 / 0.7);
+      background-color: rgba(5, 5, 5, 0.568);
       #status{
         background-color: #09aa31;   
  
@@ -510,21 +481,20 @@
       background-color: rgba(0, 0, 0, 0.3);
     }
     .content-left, .content-right{
+      box-shadow: 0px 0px 5px rgba(15, 15, 15, 0.61);
+      background-color: rgba(23, 23, 23, 0.5);
+      border: 1px solid rgba(99, 99, 99, 0.877);
+      height: 100%;
       h2{
         text-align: center;
       }  
     }
     .content-left{
-      background-color: rgba(23, 23, 23, 0.5);
-      height: 100%;
+
       width:70%;
-      border: 1px solid rgba(88, 88, 88, 0.7);;
     }
-    
     .content-right{
-      border: 1px solid rgba(110, 110, 110, 0.918);
-      background-color: rgba(23, 23, 23, 0.7);
-      height: 100%;
+
       width:100%;
     }
   }

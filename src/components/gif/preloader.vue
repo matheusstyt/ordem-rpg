@@ -1,41 +1,41 @@
 <template>
     <div class="modal-preloader">
         <div class="preloader">
-            <div class="spinner"></div>
+          <img src="@/components/svg/spinner.svg" alt="" srcset="">
+            <!-- <div class="spinner"></div> -->
         </div>
     </div>
     
   </template>
-  
-  <style>
-  .modal-preloader{
-    background-color: rgba(0, 0, 0, 1);
-    height: 100vh;
-    width: 100vw;
-    overflow: hidden;
-    position: fixed;
-    z-index: 4;
+  <script>
+  export default {
+    components : {
+       
+    }
   }
-  .preloader {
+</script>
+  <style lang="scss">
+  .modal-preloader{
+    background-color: rgba(0, 0, 0, 0.6);
+    height: 100%;
+    width: 100%;
+    margin: auto 0;
+    overflow: hidden;
+    position: relative;
+    z-index: 4;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100%;
   }
-  
-  .spinner {
-    border: 6px solid rgba(0, 0, 0, 0.1);
-    border-top-color: rgb(255, 200, 148);
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    animation: spin 1s linear infinite;
-  }
-  
-  @keyframes spin {
-    to {
-      transform: rotate(360deg);
+  .preloader {
+    margin: auto 0;
+    height: 7vmax;
+    img{
+      height: 100%;
+      aspect-ratio: 1/1;
+
     }
   }
+ 
   </style>
   
