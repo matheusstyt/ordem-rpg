@@ -26,6 +26,9 @@ export default {
     components :{
         search, check
     },
+    props : {
+        session_id : Number
+    },
     data(){
         return{
             search_username : '',
@@ -69,7 +72,8 @@ export default {
                 const url = `http://170.10.0.50:8000/askplayer/`;
 
                 const body_ask = {
-                    origem : parseInt(sessionStorage.getItem("user_id")), 
+                    fk_sessao : parseInt(this.session_id),
+                    fk_mestre : parseInt(sessionStorage.getItem("user_id")), 
                     destino : this.id_contact,
                     status : false
 

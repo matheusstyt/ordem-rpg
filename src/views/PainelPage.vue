@@ -25,9 +25,8 @@
             </div>
           </div>
           <div class="content-session-open" v-if="no_session === true" style="display: block">
-              
               <ul>
-                <li v-for="(session, index) in list_sessions" :key="session.id"  >
+                <li v-for="(session, index) in list_sessions" :key="session.id" @click="open_session(session.id, session.descricao)" >
                 <div @click="abrirsession(session.idsession)">
                   <p>N°: {{index+1}}</p>
                   
@@ -83,10 +82,10 @@
             <h3>Novas partidas</h3>
             <ul>
               <li v-for="(item, index) in list_partidas" >
-                <p>{{item.origem}}</p>
+                <p>{{item.fk_sessao}}</p>
                 <div class="pendente-container-btn">
-                  <button id="contact-okay" @click="aceitar_pedido(item.fk_origem, item.fk_destino, item.id)">Confirmar</button>
-                  <button id="contact-delete" @click="excluir_pedido(item.id)">Excluir</button>
+                  <button id="contact-okay" @click="aceitar_pedido_partida(item.fk_origem, item.fk_destino, item.id)">Confirmar</button>
+                  <button id="contact-delete" @click="excluir_pedido_partida(item.id)">Excluir</button>
                 </div>
               </li>
             </ul>
@@ -292,6 +291,57 @@
               .catch( error => {
                 console.log(error)
               })
+        },
+        aceitar_pedido_partida(fk_origem, fk_destino, id){
+            let now = new Date();
+            let formatter = new Intl.DateTimeFormat('pt-BR', {weekday: 'long', day: 'numeric', month: 'long', hour: 'numeric', minute: 'numeric'});
+            let formattedDate = formatter.format(now);
+
+            if(sessionStorage.getItem("token")){
+              const url = `http://170.10.0.50:8000/players/`;
+
+              const body_uni = {
+                fk_user : fk_destino, 
+                fk_session : fk_origem,
+                data_inicio : String(formattedDate) 
+              }
+              const body_bi = {
+                fk_user : fk_origem, 
+                fk_friend : fk_destino,
+                data_inicio : String(formattedDate) 
+              }
+              console.table(body_uni)
+              const headers = {'Authorization': 'Token ' + sessionStorage.getItem('token') };
+              axios.post(url, body_uni, { headers : headers })
+              .then( res => {
+                axios.post(url, body_bi, { headers : headers })
+                .then( res => {
+                  this.excluir_pedido(id)
+                })
+                .catch( error => { 
+                    console.log(error)
+                })
+              })
+              .catch( error => { 
+                  console.log(error)
+              })
+            }
+        },
+        excluir_pedido_partida(id){
+          const url = `http://170.10.0.50:8000/askplayer/${id}/`;
+              const headers = {'Authorization': 'Token ' + sessionStorage.getItem('token') };
+              axios.delete(url, { headers : headers })
+              .then(res => {
+                window.location.reload()
+              })
+              .catch( error => {
+                console.log(error)
+              })
+        },
+        open_session(id, descricao){
+          sessionStorage.setItem("session_id", id);
+          sessionStorage.setItem("session_descricao", descricao);
+          window.location.href = "/sessao"
         }
       },
       mounted(){
@@ -504,6 +554,7 @@
   padding-top: 2vmax;
   gap: 1em;
   height: 88vh;
+  width: 80vw;
   .conteiner-system{
     width: 100%;
     height: 100%;

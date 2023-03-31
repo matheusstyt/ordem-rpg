@@ -1,7 +1,7 @@
 <template>
     <div class="modal-session" v-if="modal_contact_opened === true">
       <button class="btn-x" @click="close_modal_contact()">X</button>
-      <ModalJogador />
+      <ModalJogador :session_id="session_id" />
     </div>
     
     <div class="modal-session" v-if="modal_session_opened === true">
@@ -12,21 +12,13 @@
     <div class="container-home"  v-else>
           
         <div class="content-right" v-if="system == false">
-          <div class="content-session-add flex" v-if="list_sessions.length === 0">
-            <h3>Não há sessões abertas.</h3>
-            <div class="btn-add-session flex" @click="open_modal_session">
-              <h4>+</h4>
-            </div>
-          </div>
-          <div class="content-session-add flex" v-else>
-            <h3>Sessões ativas</h3>
-            <div class="btn-add-session" @click="open_modal_session">
-              <h4 class="flex">+</h4>
-            </div>
+
+          <div class="content-session-add flex">
+            <h3>{{ session_name}}</h3>
           </div>
           <div class="content-session-open" v-if="no_session === true" style="display: block">
               
-              <ul>
+              <!-- <ul>
                 <li v-for="(session, index) in list_sessions" :key="session.id"  >
                 <div @click="abrirsession(session.idsession)">
                   <p>N°: {{index+1}}</p>
@@ -35,11 +27,10 @@
                   <p>descrição : {{session.descricao}}</p>
                   <p>data de inicio: {{session.data_criacao}}</p>
                   
-                 <!-- <p>Tempo decorrido: {{session.tempoDecorrido}}</p> -->
                   <label  for="status">status: {{session.status}}</label>
                 </div>
                 </li>
-              </ul>
+              </ul> -->
           </div>
   
         </div>
@@ -52,7 +43,7 @@
               <h2>Jogadores</h2>
             </div>
 
-              <div class="btn-add-session" @click="open_modal_contact()">
+              <div class="btn-add-session" @click="open_modal_player()">
                 <h4>+</h4>
               </div>
           </div>
@@ -125,7 +116,8 @@
         return{
           loading : true,
           system : false,
-
+          session_name : sessionStorage.getItem("session_descricao"),
+          session_id : sessionStorage.getItem("session_id"),
           Usuario: sessionStorage.getItem('email'),
           email : sessionStorage.getItem('email'),
           data_atual : null,
@@ -142,7 +134,7 @@
         open_modal_session(){
           this.modal_session_opened = true
         },
-        open_modal_contact(){
+        open_modal_player(){
           this.modal_contact_opened = true
         },
         close_modal_session(){
@@ -486,6 +478,7 @@
   padding-top: 2vmax;
   gap: 1em;
   height: 88vh;
+  width: 75vw;
   .conteiner-system{
     width: 100%;
     height: 100%;
