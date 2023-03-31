@@ -1,7 +1,4 @@
 <template>
-  
-  <div class="sistema-geral">
-
     <div class="modal-session" v-if="modal_contact_opened === true">
       <button class="btn-x" @click="close_modal_contact()">X</button>
       <ModalFriend />
@@ -11,13 +8,10 @@
       <button class="btn-x" @click="close_modal_session()">X</button>
       <ModalSessao />
     </div>
-    
-    <div class="conteiner-system">
-      <System />
-    </div>
-  </div>
+    <System />
+
         
-    </template>
+  </template>
     <script>
   
     import axios from 'axios';
@@ -135,12 +129,7 @@
       gap: 0.5em;
       
     }
-    .container-g{
-      margin: 0 auto;
-      height: 100vh;
-      max-width: 75vw;
-      display: block;
-    }
+
     .header{
       width: 100%;    
       background-color: rgba(0  0  0 / 0.1);

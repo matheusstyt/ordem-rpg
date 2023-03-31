@@ -1,7 +1,7 @@
 <template>
     <div class="modal-session" v-if="modal_contact_opened === true">
       <button class="btn-x" @click="close_modal_contact()">X</button>
-      <ModalFriend />
+      <ModalJogador />
     </div>
     
     <div class="modal-session" v-if="modal_session_opened === true">
@@ -46,10 +46,10 @@
         <div class="content-left" v-if="system == false">
           <div class="caixa-btn-sessao">
             <div class="flex">
-              <div class="content-ico">
+              <!-- <div class="content-ico">
                 <img v-bind:src="require('@/assets/ico/social_ico.svg')" alt="Social_Img">
-              </div>
-              <h2>Social</h2>
+              </div> -->
+              <h2>Jogadores</h2>
             </div>
 
               <div class="btn-add-session" @click="open_modal_contact()">
@@ -57,7 +57,7 @@
               </div>
           </div>
           <div class="content-social ativos" v-if="list_contact !== null">
-            <h3>Ativos</h3>
+            <h3>Online</h3>
             <ul>
               <li v-for="(item, index) in list_contact" >
                 <p>{{item.fk_friend}}</p>
@@ -79,10 +79,10 @@
               </li>
             </ul>
           </div>
-          <div class="content-social partida">
+          <div class="content-social partida" >
             <h3>Novas partidas</h3>
             <ul>
-              <li v-for="(item, index) in list_partidas" >
+              <li v-for="(item, index) in list_pendente" >
                 <p>{{item.origem}}</p>
                 <div class="pendente-container-btn">
                   <button id="contact-okay" @click="aceitar_pedido(item.fk_origem, item.fk_destino, item.id)">Confirmar</button>
@@ -105,11 +105,11 @@
   import logout from '../components/svg/logout.vue'
   import System from '../components/sistema/ConfigSystem.vue'
   import ModalSessao from '../components/ModalNewSessao.vue'
-  import ModalFriend from '../components/ModalNewFriend.vue'
+  import ModalJogador from '../components/ModalNewJogador.vue'
   import SessaoPersonagens from '../components/SessaoPersonagens.vue'
 
   export default {
-      components: {ModalSessao, ModalFriend, SessaoPersonagens, System, logout, preloader},
+      components: {ModalSessao, ModalJogador, SessaoPersonagens, System, logout, preloader},
       props:{
           data : Object,
           vida : Object,
@@ -132,10 +132,8 @@
           modal_session_opened : false,
           modal_contact_opened : false,
           list_sessions : false,
-          list_partidas : false,
           list_pendente : null,
           list_contact : null,
-          
           no_session : false
   
           }
@@ -169,33 +167,13 @@
               }else{
                 this.no_session = true;
               }
-              this.get_partida();
+              this.get_pendente();
         
             })
             .catch( error => { 
               console.log(error)
             })
         },  
-        async get_partida(){
-            const url = "http://170.10.0.50:8000/askplayer/";
-            const now = Date()
-            const headers = {'Authorization': 'Token ' + sessionStorage.getItem('token') };
-          
-            axios.get(url, { headers : headers })
-            .then( res => {
-              console.log(res.data)
-
-              if(res.data.askplayer.length == 0){
-                this.list_partidas = null
-              }else{
-                this.list_partidas = res.data.askplayer
-              }
-              this.get_pendente();
-            })
-            .catch( error => { 
-              console.log(error)
-            })
-        },
         async get_pendente(){
             const url = "http://170.10.0.50:8000/ask/";
             const now = Date()
@@ -322,6 +300,9 @@
 }
   </script>
   <style lang="scss">
+  .modal-session{
+    z-index: 3;
+  }
   .flex{
     display: flex;
     justify-content: center;
@@ -457,6 +438,7 @@
 }
 .pendentes h3{
   background-color: #f80a0a3a;
+
 }
 .partida h3{
   background-color: #f8750a4f;

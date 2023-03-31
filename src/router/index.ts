@@ -13,11 +13,6 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import(/* webpackChunkName: "curriculo" */ '../views/Curriculo.vue')
   },
   {
-    path: '/mestre',
-    name: 'mestre',
-    component: () => import(/* webpackChunkName: "mestre" */ '../views/HomeMestreView.vue')
-  },
-  {
     path: '/painel',
     name: 'painel',
     component: () => import(/* webpackChunkName: "painel" */ '../views/PainelPage.vue')
@@ -43,6 +38,12 @@ const routes: Array<RouteRecordRaw> = [
     path: '/sistema',
     name: 'sistema',
     component: () => import(/* webpackChunkName: "sistema" */ '../views/MeuSistemaPage.vue')
+  }
+  ,
+  {
+    path: '/sessao',
+    name: 'sessao',
+    component: () => import(/* webpackChunkName: "sessao" */ '../views/SessaoPage.vue')
   }
   ,
   {

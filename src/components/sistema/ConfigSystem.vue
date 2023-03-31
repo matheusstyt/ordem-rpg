@@ -264,11 +264,13 @@ export default {
   }
 .content-system{
     position: relative;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
+    width: 75vw;
+    height: 90vh;
+
     display: flex;
     flex-direction: row;
+    padding-top: 2.4vmax;
+    gap: 0.3em;
     .modal-system{
         width: 100%;
         height: 100%;
@@ -293,6 +295,7 @@ export default {
     }
     .largura{
         width: 33.333%;
+        background-color: rgba(0, 0, 0, 0.63);
         border: 0.5px solid rgba(134, 134, 134, 0.185);
         table{
             width: 100%;
@@ -306,17 +309,8 @@ export default {
             }
         }
     }
-    .item{
-        background-color: rgba(0, 255, 255, 0.0);
-    }
-    .armamento{
-        background-color: rgba(72, 255, 0, 0.0);
-    }
-    .magia{
-        background-color: rgba(155, 57, 194, 0.0);
-    }
-    .item:hover, .armamento:hover, .magia:hover{
-        background-color: #2e2e2e1a;
+    .largura:hover{
+        background-color: rgba(0, 0, 0, 0.774);
     }
 
 }    

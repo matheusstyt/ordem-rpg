@@ -1,12 +1,22 @@
 <template>
   <div class="header" v-if="isAuthenticated">
     <div class="header-content">
-      <p @click="go_inicio">Início</p>
-      <p @click="go_sessoes">Sessões</p>
-      <p @click="go_meu_sistema">Meu Sistema</p>
-      <h3>{{ isAuthenticated }}</h3>
-      <logout @click="logout()"/>
+      <div class="nav-p" @click="go_inicio">
+        <p>Início</p>
       </div>
+      <div class="nav-p"  @click="go_sessoes">
+        <p>Sessões</p>
+      </div>
+      <div class="nav-p"  @click="go_meu_sistema">
+        <p>Meu Sistema</p>
+      </div>
+      <div class="nav-p">
+        <h3 >{{ isAuthenticated }}</h3>
+      </div>
+      <div class="nav-p" @click="logout()">
+        <logout/>
+      </div>
+    </div>
       
   </div>
   <div class="app-div">
@@ -29,13 +39,13 @@ export default {
   },
    methods:{
     go_inicio(){
-      window.location.redirect = "home"
+      window.location.href = "/home"
     },
     go_sessoes(){
-      window.location.redirect = "painel"
+      window.location.href = "/painel"
     },
     go_meu_sistema(){
-      window.location.redirect = "sistema"
+      window.location.href = "/sistema"
 
     },
 
@@ -44,7 +54,7 @@ export default {
   mounted() {
     this.user = sessionStorage.getItem("username")
     setInterval(() => {
-      isAuthenticated = sessionStorage.getItem("username")
+      this.isAuthenticated = sessionStorage.getItem("username")
     }, 1000);
   },
 }
@@ -57,6 +67,7 @@ h2, p, label, button{
   color: bisque;
   font-family: 'Itim', sans-serif;
 }
+
 .header{
   width: 100%;
   position: absolute;
@@ -72,22 +83,30 @@ h2, p, label, button{
   border-bottom-right-radius: 2em;
   border-bottom-left-radius: 2em;
   margin: 0 auto;
-  p{
+  .nav-p{
+    height: 100%;
     cursor: pointer;
-  }
-  p:hover{
-    color: rgb(255, 188, 188);
-  }
-  h3{
-    cursor: pointer;
-    color: #fff;
-  }
-  h3:hover{
-    color: rgba(177, 177, 177, 0.8);
-  }
-  svg{
-    stroke: rgba(236, 139, 21, 0.829);
-    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2;
+    p{
+      cursor: pointer;
+    }
+    p:hover{
+      color: rgb(255, 188, 188);
+    }
+    h3{
+      cursor: pointer;
+      color: #fff;
+    }
+    h3:hover{
+      color: rgba(177, 177, 177, 0.8);
+    }
+    svg{
+      stroke: rgba(236, 139, 21, 0.829);
+      cursor: pointer;
+    }
   }
 }
 
@@ -106,7 +125,7 @@ h2, p, label, button{
   display: flex;
   align-items: center;
   justify-content: center;
-  padding-top: 1vmax;
+
 }
 body{
   background-color: rgb(0, 0, 0);

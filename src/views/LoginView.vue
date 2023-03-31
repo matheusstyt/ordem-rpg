@@ -50,7 +50,8 @@ export default {
                 sessionStorage.setItem('user_id' , res.data.user_id);
                 sessionStorage.setItem('email' , res.data.username);
                 sessionStorage.setItem('username' , res.data.username);
-                this.$router.push({name:"painel"});
+                window.location.href = "/painel"
+
             })
             .catch( error => { 
                 console.log(error)
