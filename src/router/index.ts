@@ -8,6 +8,11 @@ const routes: Array<RouteRecordRaw> = [
     component: HomeView
   },
   {
+    path: '/build',
+    name: 'build',
+    component: () => import(/* webpackChunkName: "build" */ '../views/BuildPage.vue')
+  },
+  {
     path: '/curriculo',
     name: 'curriculo',
     component: () => import(/* webpackChunkName: "curriculo" */ '../views/Curriculo.vue')

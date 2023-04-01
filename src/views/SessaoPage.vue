@@ -16,8 +16,13 @@
           <div class="content-session-add flex">
             <h3>{{ session_name}}</h3>
           </div>
-          <div class="content-session-open" v-if="no_session === true" style="display: block">
-              
+          <div class="content-personagens-resumo" v-if="no_session === true" style="display: block">
+              <div class="content-add-person">+</div>
+            <ul>
+              <li>
+
+              </li>
+            </ul>
               <!-- <ul>
                 <li v-for="(session, index) in list_sessions" :key="session.id"  >
                 <div @click="abrirsession(session.idsession)">
@@ -47,11 +52,11 @@
                 <h4>+</h4>
               </div>
           </div>
-          <div class="content-social ativos" v-if="list_contact !== null">
+          <div class="content-social ativos" v-if="list_players !== null">
             <h3>Online</h3>
             <ul>
-              <li v-for="(item, index) in list_contact" >
-                <p>{{item.fk_friend}}</p>
+              <li v-for="(item, index) in list_players" >
+                <p>{{item.player}}</p>
                 <div class="pendente-container-btn">
                 </div>
                 <div id="status"></div>
@@ -60,18 +65,6 @@
           </div>
           <div class="content-social pendentes" v-if="list_pendente !== null">
             <h3>Pendentes</h3>
-            <ul>
-              <li v-for="(item, index) in list_pendente" >
-                <p>{{item.origem}}</p>
-                <div class="pendente-container-btn">
-                  <button id="contact-okay" @click="aceitar_pedido(item.fk_origem, item.fk_destino, item.id)">Confirmar</button>
-                  <button id="contact-delete" @click="excluir_pedido(item.id)">Excluir</button>
-                </div>
-              </li>
-            </ul>
-          </div>
-          <div class="content-social partida" >
-            <h3>Novas partidas</h3>
             <ul>
               <li v-for="(item, index) in list_pendente" >
                 <p>{{item.origem}}</p>
@@ -145,7 +138,7 @@
         },
         
         async get_session(){
-            const url = "http://170.10.0.50:8000/session/";
+            const url = "http://192.168.100.26:8000/session/";
             const now = Date()
             const headers = {'Authorization': 'Token ' + sessionStorage.getItem('token') };
           
@@ -167,7 +160,7 @@
             })
         },  
         async get_pendente(){
-            const url = "http://170.10.0.50:8000/ask/";
+            const url = "http://192.168.100.26:8000/ask/";
             const now = Date()
             const headers = {'Authorization': 'Token ' + sessionStorage.getItem('token') };
           
@@ -179,51 +172,35 @@
               }else{
                 this.list_pendente = res.data.ask
               }
-              this.get_contact();
+              this.get_players();
             })
             .catch( error => { 
               console.log(error)
             })
         },
-        async get_contact(){
-          const url = "http://170.10.0.50:8000/contact/";
+        async get_players(){
+          const url = "http://192.168.100.26:8000/players/";
             const headers = {'Authorization': 'Token ' + sessionStorage.getItem('token') };
           
-            axios.get(url, { params : { fk_user : sessionStorage.getItem('token') }, headers : headers })
+            axios.get(url, { params : { fk_session : sessionStorage.getItem("session_id") }, headers : headers })
             .then( res => {
               console.log(res.data)
-              this.list_contact = res.data.list_contact
-              
+              this.list_players = res.data.players
+                
               this.loading = false
             })
             .catch( error => { 
               console.log(error)
             })
         },
-        logout: function() {
-          this.$router.push('/login');
-          axios.post('http://170.10.0.50:8000/logout/', null, {
-            headers: {
-              Authorization: 'Token ' + sessionStorage.getItem('token')
-            }
-          })
-          .then(response => {
-
-            sessionStorage.clear();
-
-            this.$router.push('/login');
-          })
-          .catch(error => {
-            console.log(error);
-          });
-        },
+    
         aceitar_pedido(fk_origem, fk_destino, id){
           let now = new Date();
           let formatter = new Intl.DateTimeFormat('pt-BR', {weekday: 'long', day: 'numeric', month: 'long', hour: 'numeric', minute: 'numeric'});
           let formattedDate = formatter.format(now);
 
           if(sessionStorage.getItem("token")){
-            const url = `http://170.10.0.50:8000/contact/`;
+            const url = `http://192.168.100.26:8000/contact/`;
 
             const body_uni = {
               fk_user : fk_destino, 
@@ -253,7 +230,7 @@
           }
         },
         excluir_pedido(id){
-          const url = `http://170.10.0.50:8000/ask/${id}/`;
+          const url = `http://192.168.100.26:8000/ask/${id}/`;
               const headers = {'Authorization': 'Token ' + sessionStorage.getItem('token') };
               axios.delete(url, { headers : headers })
               .then(res => {
@@ -527,45 +504,57 @@
   #btn-sessao:hover{
       background-color: rgba(19, 82, 29, 0.7);
   }
-  .content-session-open{
+  .content-personagens-resumo{
     cursor: pointer;
     text-align: center;
     font-family: 'Consolas';
     width: 100%;
+    .content-add-person{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 20%;
+      background-color: #04e04d2d;
+      aspect-ratio: 9/16;
+    }
+    .content-add-person:hover{
+      background-color: #1a4b2a4f;
+
+    }
   }
-  .content-session-open ul{
+  .content-personagens-resumo ul{
     padding: 0;
     margin: 0;
     list-style: none;
     display:block;
   }
-  .content-session-open ul li{
+  .content-personagens-resumo ul li{
     margin: 0;
     padding: 0;
     display:flex;
     background-color: rgba(0 0 0 / 0.3);
     border-bottom: 1px solid rgba( 255 255 255 / 0.7);
   }
-  .content-session-open ul li div{
+  .content-personagens-resumo ul li div{
     margin: 0;
     padding: 0;
     display:flex;
   
   }
-  .content-session-open ul li:hover{
+  .content-personagens-resumo ul li:hover{
     background-color: rgba( 255 255 255 / 0.1);
   }
   
-  .content-session-open ul li p, .content-session-open ul li label{
+  .content-personagens-resumo ul li p, .content-personagens-resumo ul li label{
     margin: 5px 0; 
     padding: 0 20px;
     border-right: 1px solid rgba( 255 255 255 / 0.7);
     cursor: pointer;
   }
-  .content-session-open ul li label{
+  .content-personagens-resumo ul li label{
     border: none;
   }
-  .content-session-open ul li select{
+  .content-personagens-resumo ul li select{
     background-color: rgba(0  0  0 / 0.4);
     color: #fff;
     font-family: "Consolas";

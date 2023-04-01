@@ -5,12 +5,6 @@
                         <h2>DETALHES PESSOAIS</h2>
 
                         <div class="caixa-input">
-                            <label for="nome">Quem irá jogar?</label>
-                            <div>
-                                <input class="input-padrao0" type="text" name="nome" id="id-nome" v-model="localNome" :style="alertaNome">
-                            </div>
-                        </div>
-                        <div class="caixa-input">
                             <label for="jogador">Nome do Personagem</label>
                             <div>
                                 <input class="input-padrao0" type="text" name="jogador" id="id-jogador alerta" v-model="localJogador" spellcheck="false" :style="alertaJogador">

@@ -40,6 +40,23 @@
                 </li>
               </ul>
           </div>
+          <div class="content-session-open" style="display: block">
+            <ul>
+              <li v-for="(match, index) in list_matches" :key="match.id" @click="open_match(match.id, match.fk_mestre, match.descricao)" >
+              <div>
+                <p>N°: {{index+1}}</p>
+                
+                <p>mestre: {{match.mestre}}</p>
+                <p>descrição : {{match.descricao}}</p>
+                <p>data de inicio: {{match.data_criacao}}</p>
+                
+               <!-- <p>Tempo decorrido: {{match.tempoDecorrido}}</p> -->
+                <label  for="status">status: {{match.status}}</label>
+              </div>
+              </li>
+            </ul>
+        </div>
+
   
         </div>
         <div class="content-left" v-if="system == false">
@@ -82,9 +99,9 @@
             <h3>Novas partidas</h3>
             <ul>
               <li v-for="(item, index) in list_partidas" >
-                <p>{{item.fk_sessao}}</p>
+                <p>{{item.mestre}}</p>
                 <div class="pendente-container-btn">
-                  <button id="contact-okay" @click="aceitar_pedido_partida(item.fk_origem, item.fk_destino, item.id)">Confirmar</button>
+                  <button id="contact-okay" @click="aceitar_pedido_partida(item.fk_mestre, item.fk_sessao, item.fk_destino, item.id)">Confirmar</button>
                   <button id="contact-delete" @click="excluir_pedido_partida(item.id)">Excluir</button>
                 </div>
               </li>
@@ -131,6 +148,7 @@
           modal_session_opened : false,
           modal_contact_opened : false,
           list_sessions : false,
+          list_matches : [],
           list_partidas : false,
           list_pendente : null,
           list_contact : null,
@@ -152,9 +170,38 @@
         close_modal_contact(){
           this.modal_contact_opened = false
         },
+        async list_match(){
+          const url_session = "http://192.168.100.26:8000/session/";
+          const url = "http://192.168.100.26:8000/players/";
+          const now = Date()
+          const headers = {'Authorization': 'Token ' + sessionStorage.getItem('token') };
         
+          axios.get(url, { params : { fk_user : sessionStorage.getItem("user_id") }, headers : headers })
+          .then( res => {
+            
+            console
+            .log(res.data)
+            
+            res.data.players.forEach(element => {
+              axios.get(`http://192.168.100.26:8000/session/${element.fk_session}/`, { headers : headers })
+              .then(res => { 
+                console.log(res.data)
+
+                this.list_matches.push(res.data)
+
+              })
+              .catch(error => {
+
+              })
+            });
+      
+          })
+          .catch( error => { 
+            console.log(error)
+          })
+        },
         async get_session(){
-            const url = "http://170.10.0.50:8000/session/";
+            const url = "http://192.168.100.26:8000/session/";
             const now = Date()
             const headers = {'Authorization': 'Token ' + sessionStorage.getItem('token') };
           
@@ -174,9 +221,10 @@
             .catch( error => { 
               console.log(error)
             })
+
         },  
         async get_partida(){
-            const url = "http://170.10.0.50:8000/askplayer/";
+            const url = "http://192.168.100.26:8000/askplayer/";
             const now = Date()
             const headers = {'Authorization': 'Token ' + sessionStorage.getItem('token') };
           
@@ -196,7 +244,7 @@
             })
         },
         async get_pendente(){
-            const url = "http://170.10.0.50:8000/ask/";
+            const url = "http://192.168.100.26:8000/ask/";
             const now = Date()
             const headers = {'Authorization': 'Token ' + sessionStorage.getItem('token') };
           
@@ -215,7 +263,7 @@
             })
         },
         async get_contact(){
-          const url = "http://170.10.0.50:8000/contact/";
+          const url = "http://192.168.100.26:8000/contact/";
             const headers = {'Authorization': 'Token ' + sessionStorage.getItem('token') };
           
             axios.get(url, { params : { fk_user : sessionStorage.getItem('token') }, headers : headers })
@@ -231,7 +279,7 @@
         },
         logout: function() {
           this.$router.push('/login');
-          axios.post('http://170.10.0.50:8000/logout/', null, {
+          axios.post('http://192.168.100.26:8000/logout/', null, {
             headers: {
               Authorization: 'Token ' + sessionStorage.getItem('token')
             }
@@ -252,7 +300,7 @@
           let formattedDate = formatter.format(now);
 
           if(sessionStorage.getItem("token")){
-            const url = `http://170.10.0.50:8000/contact/`;
+            const url = `http://192.168.100.26:8000/contact/`;
 
             const body_uni = {
               fk_user : fk_destino, 
@@ -282,7 +330,7 @@
           }
         },
         excluir_pedido(id){
-          const url = `http://170.10.0.50:8000/ask/${id}/`;
+          const url = `http://192.168.100.26:8000/ask/${id}/`;
               const headers = {'Authorization': 'Token ' + sessionStorage.getItem('token') };
               axios.delete(url, { headers : headers })
               .then(res => {
@@ -292,35 +340,25 @@
                 console.log(error)
               })
         },
-        aceitar_pedido_partida(fk_origem, fk_destino, id){
+        aceitar_pedido_partida(fk_mestre, fk_sessao, fk_destino, id){
             let now = new Date();
             let formatter = new Intl.DateTimeFormat('pt-BR', {weekday: 'long', day: 'numeric', month: 'long', hour: 'numeric', minute: 'numeric'});
             let formattedDate = formatter.format(now);
 
             if(sessionStorage.getItem("token")){
-              const url = `http://170.10.0.50:8000/players/`;
+              const url = `http://192.168.100.26:8000/players/`;
 
               const body_uni = {
                 fk_user : fk_destino, 
-                fk_session : fk_origem,
-                data_inicio : String(formattedDate) 
-              }
-              const body_bi = {
-                fk_user : fk_origem, 
-                fk_friend : fk_destino,
-                data_inicio : String(formattedDate) 
+                fk_session : fk_sessao,
+                data_inicio : String(formattedDate) ,
+          
               }
               console.table(body_uni)
               const headers = {'Authorization': 'Token ' + sessionStorage.getItem('token') };
               axios.post(url, body_uni, { headers : headers })
               .then( res => {
-                axios.post(url, body_bi, { headers : headers })
-                .then( res => {
-                  this.excluir_pedido(id)
-                })
-                .catch( error => { 
-                    console.log(error)
-                })
+                this.excluir_pedido_partida(id);
               })
               .catch( error => { 
                   console.log(error)
@@ -328,7 +366,7 @@
             }
         },
         excluir_pedido_partida(id){
-          const url = `http://170.10.0.50:8000/askplayer/${id}/`;
+          const url = `http://192.168.100.26:8000/askplayer/${id}/`;
               const headers = {'Authorization': 'Token ' + sessionStorage.getItem('token') };
               axios.delete(url, { headers : headers })
               .then(res => {
@@ -342,12 +380,18 @@
           sessionStorage.setItem("session_id", id);
           sessionStorage.setItem("session_descricao", descricao);
           window.location.href = "/sessao"
+        },
+        open_match(id, fk_mestre, descricao){
+          sessionStorage.setItem("session_id", id);
+          sessionStorage.setItem("fk_mestre_ativo", fk_mestre);
+          sessionStorage.setItem("session_descricao", descricao);
+          window.location.href = "/sessao"
         }
       },
       mounted(){
 
         if(!sessionStorage.getItem('token')){ this.$router.push({name:"login"}) }
-
+        this.list_match()
         this.get_session();
         
         setInterval(() => {
@@ -481,7 +525,7 @@
       justify-content: space-between;
       align-items: center;
       padding-left: 1em;
-      background-color: rgba(22, 22, 22, 0.568);
+      background-color: rgba(3, 3, 3, 0.26);
       #status{
         height: 20px;
         width: 20px;
@@ -492,7 +536,7 @@
       }
     }
     li:hover{
-      background-color: rgba(5, 5, 5, 0.568);
+      background-color: rgba(0, 0, 0, 0.568);
       #status{
         background-color: #09aa31;   
  
