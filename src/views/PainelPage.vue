@@ -12,52 +12,58 @@
     <div class="container-home"  v-else>
           
         <div class="content-right" v-if="system == false">
-          <div class="content-session-add flex" v-if="list_sessions.length === 0">
-            <h3>Não há sessões abertas.</h3>
-            <div class="btn-add-session flex" @click="open_modal_session">
-              <h4>+</h4>
+          <div class="content-sessions-list">
+            <div class="content-session-add flex" v-if="list_sessions.length === 0">
+              <h3>Não há sessões abertas.</h3>
+              <div class="btn-add-session flex" @click="open_modal_session">
+                <h4>+</h4>
+              </div>
             </div>
-          </div>
-          <div class="content-session-add flex" v-else>
-            <h3>Sessões ativas</h3>
-            <div class="btn-add-session" @click="open_modal_session">
-              <h4 class="flex">+</h4>
+            <div class="content-session-add flex" v-else>
+              <h3>Sessões ativas</h3>
+              <div class="btn-add-session" @click="open_modal_session">
+                <h4 class="flex">+</h4>
+              </div>
             </div>
+            <div class="content-session-open" v-if="no_session === true" style="display: block">
+                <ul>
+                  <li v-for="(session, index) in list_sessions" :key="session.id" @click="open_session(session.id, session.descricao)" >
+                  <div @click="abrirsession(session.idsession)">
+                    <p>N°: {{index+1}}</p>  
+                    <p>mestre: {{session.mestre}}</p>
+                    <p>descrição : {{session.descricao}}</p>
+                    <p>data de inicio: {{session.data_criacao}}</p>
+                    <label  for="status">status: {{session.status}}</label>
+                  </div>
+                  </li>
+                </ul>
+            </div>
+
           </div>
-          <div class="content-session-open" v-if="no_session === true" style="display: block">
+          <div class="content-matches-list">
+            <div class="content-session-add flex" v-if="list_matches.length === 0">
+              <h3>Não há partidas ativas.</h3>
+            </div>
+            <div class="content-session-add flex" v-else>
+              <h3>Partidas ativas</h3>
+            </div>
+            <div class="content-session-open" style="display: block">
               <ul>
-                <li v-for="(session, index) in list_sessions" :key="session.id" @click="open_session(session.id, session.descricao)" >
-                <div @click="abrirsession(session.idsession)">
+                <li v-for="(match, index) in list_matches" :key="match.id" @click="open_match(match.id, match.fk_mestre, match.descricao)" >
+                <div>
                   <p>N°: {{index+1}}</p>
                   
-                  <p>mestre: {{Usuario}}</p>
-                  <p>descrição : {{session.descricao}}</p>
-                  <p>data de inicio: {{session.data_criacao}}</p>
+                  <p>mestre: {{match.mestre}}</p>
+                  <p>descrição : {{match.descricao}}</p>
+                  <p>data de inicio: {{match.data_criacao}}</p>
                   
-                 <!-- <p>Tempo decorrido: {{session.tempoDecorrido}}</p> -->
-                  <label  for="status">status: {{session.status}}</label>
+                 <!-- <p>Tempo decorrido: {{match.tempoDecorrido}}</p> -->
+                  <label  for="status">status: {{match.status}}</label>
                 </div>
                 </li>
               </ul>
           </div>
-          <div class="content-session-open" style="display: block">
-            <ul>
-              <li v-for="(match, index) in list_matches" :key="match.id" @click="open_match(match.id, match.fk_mestre, match.descricao)" >
-              <div>
-                <p>N°: {{index+1}}</p>
-                
-                <p>mestre: {{match.mestre}}</p>
-                <p>descrição : {{match.descricao}}</p>
-                <p>data de inicio: {{match.data_criacao}}</p>
-                
-               <!-- <p>Tempo decorrido: {{match.tempoDecorrido}}</p> -->
-                <label  for="status">status: {{match.status}}</label>
-              </div>
-              </li>
-            </ul>
-        </div>
-
-  
+          </div>  
         </div>
         <div class="content-left" v-if="system == false">
           <div class="caixa-btn-sessao">
@@ -108,9 +114,7 @@
             </ul>
           </div>
         </div>
-        <div class="conteiner-system" v-if="system == true">
-          <System />
-        </div>
+
   </div>
 
 </template>
@@ -141,7 +145,7 @@
         return{
           loading : true,
           system : false,
-
+          user_id : sessionStorage.getItem('user_id'),
           Usuario: sessionStorage.getItem('email'),
           email : sessionStorage.getItem('email'),
           data_atual : null,
@@ -172,22 +176,23 @@
         },
         async list_match(){
           const url_session = "http://192.168.100.26:8000/session/";
-          const url = "http://192.168.100.26:8000/players/";
+          const url_players = "http://192.168.100.26:8000/players/";
           const now = Date()
           const headers = {'Authorization': 'Token ' + sessionStorage.getItem('token') };
         
-          axios.get(url, { params : { fk_user : sessionStorage.getItem("user_id") }, headers : headers })
+          axios.get(`http://192.168.100.26:8000/players/`, { params : { fk_user : this.user_id }, headers : headers })
           .then( res => {
-            
+            console.log('players')
             console
             .log(res.data)
             
             res.data.players.forEach(element => {
               axios.get(`http://192.168.100.26:8000/session/${element.fk_session}/`, { headers : headers })
               .then(res => { 
+                console.log('match list')
                 console.log(res.data)
 
-                this.list_matches.push(res.data)
+                this.list_matches.push(res.data.session)
 
               })
               .catch(error => {
@@ -201,13 +206,13 @@
           })
         },
         async get_session(){
-            const url = "http://192.168.100.26:8000/session/";
+            const url_session = "http://192.168.100.26:8000/session/";
             const now = Date()
             const headers = {'Authorization': 'Token ' + sessionStorage.getItem('token') };
-          
-            axios.get(url, { headers : headers })
+            
+            axios.get(url_session, { params : { fk_mestre : this.user_id }, headers : headers })
             .then( res => {
-              
+              console.log(res.data)
               this.list_sessions = res.data.session
               
               if(res.data.session.lenght === 0){
@@ -595,6 +600,7 @@
   background-attachment: fixed;
   background-size: contain;
   display: flex;
+
   padding-top: 2vmax;
   gap: 1em;
   height: 88vh;
@@ -618,6 +624,13 @@
   }
   .content-right{
     width:70%;
+    .content-matches-list{
+      height: 50%;
+      border-top: 1px solid rgba(70, 70, 70, 0.7);
+    } 
+    .content-sessions-list{
+      height: 50%;
+    }
   }
 }
 

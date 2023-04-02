@@ -4,58 +4,40 @@
       <ModalJogador :session_id="session_id" />
     </div>
     
-    <div class="modal-session" v-if="modal_session_opened === true">
-      <button class="btn-x" @click="close_modal_session()">X</button>
-      <ModalSessao />
+    <div class="modal-session" v-if="modal_atributos_opened === true">
+      <button class="btn-x" @click="close_modal_atributos()">X</button>
+      <ModalAtributos />
     </div>
+
     <preloader v-if="loading" />
     <div class="container-home"  v-else>
-          
+        
         <div class="content-right" v-if="system == false">
 
           <div class="content-session-add flex">
-            <h3>{{ session_name}}</h3>
+            <h3> {{ sessao_atual.mestre}}</h3>
+            <h3>{{ sessao_atual.descricao}}</h3>
           </div>
-          <div class="content-personagens-resumo" v-if="no_session === true" style="display: block">
-              <div class="content-add-person">+</div>
-            <ul>
-              <li>
-
-              </li>
-            </ul>
-              <!-- <ul>
-                <li v-for="(session, index) in list_sessions" :key="session.id"  >
-                <div @click="abrirsession(session.idsession)">
-                  <p>N°: {{index+1}}</p>
-                  
-                  <p>mestre: {{Usuario}}</p>
-                  <p>descrição : {{session.descricao}}</p>
-                  <p>data de inicio: {{session.data_criacao}}</p>
-                  
-                  <label  for="status">status: {{session.status}}</label>
-                </div>
-                </li>
-              </ul> -->
-          </div>
+          <h5 class="content-add-person">+</h5>
+       
   
         </div>
-        <div class="content-left" v-if="system == false">
-          <div class="caixa-btn-sessao">
+        <div class="content-left" >
+          <div class="content-social-btn">
             <div class="flex">
-              <!-- <div class="content-ico">
-                <img v-bind:src="require('@/assets/ico/social_ico.svg')" alt="Social_Img">
-              </div> -->
+              <div class="content-ico">
+                <img v-bind:src="require('@/assets/ico/meet.svg')" alt="Social_Img">
+              </div> 
               <h2>Jogadores</h2>
             </div>
-
-              <div class="btn-add-session" @click="open_modal_player()">
-                <h4>+</h4>
-              </div>
+            <div class="btn-add-session" @click="open_modal_player()">
+              <h4>+</h4>
+            </div>
           </div>
-          <div class="content-social ativos" v-if="list_players !== null">
+          <div class="content-social ativos">
             <h3>Online</h3>
             <ul>
-              <li v-for="(item, index) in list_players" >
+              <li v-for="(item, index) in sessao_atual.players">
                 <p>{{item.player}}</p>
                 <div class="pendente-container-btn">
                 </div>
@@ -63,16 +45,15 @@
               </li>
             </ul>
           </div>
-          <div class="content-social pendentes" v-if="list_pendente !== null">
-            <h3>Pendentes</h3>
+          <div class="content-social config" >
+            <h3>Configurar</h3>
             <ul>
-              <li v-for="(item, index) in list_pendente" >
-                <p>{{item.origem}}</p>
-                <div class="pendente-container-btn">
-                  <button id="contact-okay" @click="aceitar_pedido(item.fk_origem, item.fk_destino, item.id)">Confirmar</button>
-                  <button id="contact-delete" @click="excluir_pedido(item.id)">Excluir</button>
-                </div>
-              </li>
+              <li @click="open_modal_atributos()">Atributos</li>
+              <li>Pericias</li>
+              <li>Resistencias a dano</li>
+              <li>Armamentos</li>
+              <li>Acessórios</li>
+              <li>Rituais</li>
             </ul>
           </div>
         </div>
@@ -88,12 +69,12 @@
   import preloader from '../components/gif/preloader.vue'
   import logout from '../components/svg/logout.vue'
   import System from '../components/sistema/ConfigSystem.vue'
-  import ModalSessao from '../components/ModalNewSessao.vue'
+  import ModalAtributos from '../components/sessao/ModalAtributos.vue'
   import ModalJogador from '../components/ModalNewJogador.vue'
   import SessaoPersonagens from '../components/SessaoPersonagens.vue'
 
   export default {
-      components: {ModalSessao, ModalJogador, SessaoPersonagens, System, logout, preloader},
+      components: {ModalAtributos, ModalJogador, SessaoPersonagens, System, logout, preloader},
       props:{
           data : Object,
           vida : Object,
@@ -114,9 +95,9 @@
           Usuario: sessionStorage.getItem('email'),
           email : sessionStorage.getItem('email'),
           data_atual : null,
-          modal_session_opened : false,
+          modal_atributos_opened : false,
           modal_contact_opened : false,
-          list_sessions : false,
+          sessao_atual : false,
           list_pendente : null,
           list_contact : null,
           no_session : false
@@ -124,60 +105,35 @@
           }
       },
       methods:{
-        open_modal_session(){
-          this.modal_session_opened = true
+        open_modal_atributos(){
+          this.modal_atributos_opened = true
         },
         open_modal_player(){
           this.modal_contact_opened = true
         },
-        close_modal_session(){
-          this.modal_session_opened = false
+        close_modal_atributos(){
+          this.modal_atributos_opened = false
         },
         close_modal_contact(){
           this.modal_contact_opened = false
         },
         
         async get_session(){
-            const url = "http://192.168.100.26:8000/session/";
+          const url_session = `http://192.168.100.26:8000/session/${sessionStorage.getItem('session_id')}/`;
             const now = Date()
             const headers = {'Authorization': 'Token ' + sessionStorage.getItem('token') };
-          
-            axios.get(url, { headers : headers })
+            
+            axios.get(url_session,{ headers : headers })
             .then( res => {
-              
-              this.list_sessions = res.data.session
-              
-              if(res.data.session.lenght === 0){
-                this.no_session = false;
-              }else{
-                this.no_session = true;
-              }
-              this.get_pendente();
-        
+              console.log('session')
+              console.log(res.data)
+              this.sessao_atual = res.data.session             
             })
             .catch( error => { 
               console.log(error)
             })
         },  
-        async get_pendente(){
-            const url = "http://192.168.100.26:8000/ask/";
-            const now = Date()
-            const headers = {'Authorization': 'Token ' + sessionStorage.getItem('token') };
-          
-            axios.get(url, { headers : headers })
-            .then( res => {
-              console.log(res.data)
-              if(res.data.ask.length == 0){
-                this.list_pendente = null
-              }else{
-                this.list_pendente = res.data.ask
-              }
-              this.get_players();
-            })
-            .catch( error => { 
-              console.log(error)
-            })
-        },
+
         async get_players(){
           const url = "http://192.168.100.26:8000/players/";
             const headers = {'Authorization': 'Token ' + sessionStorage.getItem('token') };
@@ -187,7 +143,7 @@
               console.log(res.data)
               this.list_players = res.data.players
                 
-              this.loading = false
+              
             })
             .catch( error => { 
               console.log(error)
@@ -242,7 +198,7 @@
         }
       },
       mounted(){
-
+        this.loading = false
         if(!sessionStorage.getItem('token')){ this.$router.push({name:"login"}) }
 
         this.get_session();
@@ -269,12 +225,19 @@
 }
   </script>
   <style lang="scss">
-  .modal-session{
+  .modal-session {
+    background-color: rgba(0 0 0 / 0.4);
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     z-index: 3;
-  }
+}
   .flex{
     display: flex;
-    justify-content: center;
+    justify-content: space-evenly;
     align-items: center;
     gap: 0.5em; 
   }
@@ -356,13 +319,17 @@
   border: 1px dashed rgba(82, 82, 82, 0.4);
 }
 .content-ico{
-  height: 1.5em;
+  height: 2em;
   aspect-ratio: 1/1;
 }
-
+.content-social-btn{
+  height: 5%;
+}
 .content-social{
-  background-color: rgb(43  43  43 / 0.7);
+  background-color: rgb(43  43  43 / 0.1);
   width: 100%;
+  height: 45%;
+  overflow: hidden;
   h3{
     padding-bottom: 5px;
     margin: 0;
@@ -404,13 +371,22 @@
 
 .ativos h3{
   background-color: #00f75259;
+  
 }
-.pendentes h3{
-  background-color: #f80a0a3a;
-
-}
-.partida h3{
-  background-color: #f8750a4f;
+.config{
+  h3{
+    background-color: #5b50bb50;
+    z-index: 2;
+  }
+  ul {
+    z-index: 1;
+    li{
+      cursor: pointer;
+      padding: 0.5em 1em;
+      border-bottom: 1px solid rgba(68, 68, 68, 0.4);
+      box-shadow: 0px 1px 5px #000;
+    }
+  }
 }
 .pendente-container-btn{
   display: flex;
@@ -478,7 +454,7 @@
   }
 }
 
-  .caixa-btn-sessao{
+  .content-social-btn{
     position: relative;
     display: flex;
     padding: 0.6em 0;
@@ -504,23 +480,24 @@
   #btn-sessao:hover{
       background-color: rgba(19, 82, 29, 0.7);
   }
+  .content-add-person{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20%;
+    background-color: #04e04d2d;
+    aspect-ratio: 9/16;
+  }
+  .content-add-person:hover{
+    background-color: #1a4b2a4f;
+
+  }
   .content-personagens-resumo{
     cursor: pointer;
     text-align: center;
     font-family: 'Consolas';
     width: 100%;
-    .content-add-person{
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 20%;
-      background-color: #04e04d2d;
-      aspect-ratio: 9/16;
-    }
-    .content-add-person:hover{
-      background-color: #1a4b2a4f;
-
-    }
+    
   }
   .content-personagens-resumo ul{
     padding: 0;
