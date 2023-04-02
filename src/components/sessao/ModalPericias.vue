@@ -1,23 +1,23 @@
 <template>
-    <div class="atributos-session">
-        <div class="atributo-sticky-content">
+    <div class="pericias-session">
+        <div class="pericia-sticky-content">
             <div class="content-save" >
-                <h3>Personalizar Atributos</h3>
-                <img src="@/assets/ico/save_ico.svg" @click="salvar_atributos()" alt="Salvar atributo" srcset="">
+                <h3>Personalizar Perícias</h3>
+                <img src="@/assets/ico/save_ico.svg" @click="salvar_pericias()" alt="Salvar pericia" srcset="">
                     
             </div>
             
-            <div class="content-atributo">  
+            <div class="content-pericia">  
                 <div class="input-field">
-                    <label for="nome_atributo">Nome</label>
-                    <input type="text" name="nome_atributo" v-model="nome_atributo"  id="nome_atributo">
-                    <button @click="adicionar_atributo()">Adicionar</button>
+                    <label for="nome_pericia">Nome</label>
+                    <input type="text" name="nome_pericia" v-model="nome_pericia"  id="nome_pericia">
+                    <button @click="adicionar_pericia()">Adicionar</button>
                 </div>
             </div>
         </div>
         
         <ul>
-            <li v-for="(item, index) in list_atributos" :key="index">
+            <li v-for="(item, index) in list_pericias" :key="index">
                 <p>{{item.nome}}</p>
                 <div class="conteiner-ico">
                     <div class="content-ico-op">
@@ -46,13 +46,13 @@ export default {
         return{
             user_id : sessionStorage.getItem('user_id'),
 
-            list_atributos : [
-                {nome: "força", valor : 0},
-                {nome: "inteligencia", valor : 0},
-                {nome: "agilidade", valor : 0},
+            list_pericias : [
+                {nome: "ocultismo", valor : 0},
+                {nome: "medicina", valor : 0},
+                {nome: "detetive", valor : 0},
 
             ],
-            nome_atributo : ""
+            nome_pericia : ""
         }
     }, 
     methods:{
@@ -62,43 +62,43 @@ export default {
             let formattedDate = formatter.format(now);
             this.data_atual = formattedDate;
         },
-        adicionar_atributo(){
+        adicionar_pericia(){
             var obj = {
-                nome : this.nome_atributo,
+                nome : this.nome_pericia,
                 valor : 0,
             }
-            this.list_atributos.push(obj);
+            this.list_pericias.push(obj);
             this.clean_input()
         },
         clean_input() {
-            this.nome_atributo = "";
+            this.nome_pericia = "";
         },
-        salvar_atributos(){      
+        salvar_pericias(){      
             const headers = {'Authorization': 'Token ' + sessionStorage.getItem('token') };
             
-            this.list_atributos.forEach(atributo => {
-                post_atributo(atributo)
+            this.list_pericias.forEach(pericia => {
+                post_pericia(pericia)
             });
 
-            function post_atributo(body) {
-                const url = "http://192.168.100.26:8000/atributo/";
+            function post_pericia(body) {
+                const url = "http://192.168.100.26:8000/pericia/";
 
                 axios.post(url, body, { headers : headers })
                 .then( res => {
                     console.log(res)
-                    post_atributos(res.data.id)
+                    post_pericias(res.data.id)
                 })
                 .catch( error => { 
                     console.log(error)
                 })
             }
-            function post_atributos(id) {
-                const url = "http://192.168.100.26:8000/atributos/";
-                const body_atributos = {
-                    fk_atributo : id,
+            function post_pericias(id) {
+                const url = "http://192.168.100.26:8000/pericias/";
+                const body_pericias = {
+                    fk_pericia : id,
                     fk_session : sessionStorage.getItem("session_id")
                 }
-                axios.post(url, body_atributos, { headers : headers })
+                axios.post(url, body_pericias, { headers : headers })
                 .then( res => {
                     alert('opa')
                     console.log(res)
@@ -122,7 +122,7 @@ export default {
 </script>
 <style scoped lang="scss"> 
 
-.atributos-session {
+.pericias-session {
     padding: 0;
     border: 1px solid bisque;
     background-color: rgba(0  0  0 / 0.5);
@@ -138,7 +138,7 @@ export default {
     max-height: 80%;
     overflow-y: auto;
     
-    .atributo-sticky-content{
+    .pericia-sticky-content{
         width: 100%;
         box-shadow: 1em 0px 5px #292929;
         position: sticky;
@@ -166,7 +166,7 @@ export default {
                 cursor: pointer;
             }
         }
-        .content-atributo{
+        .content-pericia{
             padding: 1em 0;
             display: flex;
             flex-direction: column;
@@ -245,7 +245,7 @@ export default {
         }
     }
 }
-.atributos-session:hover{
+.pericias-session:hover{
     box-shadow: 0px 0px 5px #fff;
     transition: ease 0.5s;
 }

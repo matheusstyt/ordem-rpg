@@ -8,6 +8,11 @@
       <button class="btn-x" @click="close_modal_atributos()">X</button>
       <ModalAtributos />
     </div>
+    <div class="modal-session" v-if="modal_pericias_opened === true">
+      <button class="btn-x" @click="close_modal_pericias()">X</button>
+      <ModalPericias />
+    </div>
+    
 
     <preloader v-if="loading" />
     <div class="container-home"  v-else>
@@ -49,7 +54,7 @@
             <h3>Configurar</h3>
             <ul>
               <li @click="open_modal_atributos()">Atributos</li>
-              <li>Pericias</li>
+              <li @click="open_modal_pericias()">Pericias</li>
               <li>Resistencias a dano</li>
               <li>Armamentos</li>
               <li>Acessórios</li>
@@ -69,12 +74,13 @@
   import preloader from '../components/gif/preloader.vue'
   import logout from '../components/svg/logout.vue'
   import System from '../components/sistema/ConfigSystem.vue'
+  import ModalPericias from '../components/sessao/ModalPericias.vue'
   import ModalAtributos from '../components/sessao/ModalAtributos.vue'
   import ModalJogador from '../components/ModalNewJogador.vue'
   import SessaoPersonagens from '../components/SessaoPersonagens.vue'
 
   export default {
-      components: {ModalAtributos, ModalJogador, SessaoPersonagens, System, logout, preloader},
+      components: {ModalAtributos, ModalPericias, ModalJogador, SessaoPersonagens, System, logout, preloader},
       props:{
           data : Object,
           vida : Object,
@@ -96,6 +102,8 @@
           email : sessionStorage.getItem('email'),
           data_atual : null,
           modal_atributos_opened : false,
+          modal_pericias_opened : false,
+          modal_resistencias_opened : false,
           modal_contact_opened : false,
           sessao_atual : false,
           list_pendente : null,
@@ -108,8 +116,14 @@
         open_modal_atributos(){
           this.modal_atributos_opened = true
         },
+        open_modal_pericias(){
+          this.modal_pericias_opened = true
+        },
         open_modal_player(){
           this.modal_contact_opened = true
+        },
+        close_modal_pericias(){
+          this.modal_pericias_opened = false
         },
         close_modal_atributos(){
           this.modal_atributos_opened = false
