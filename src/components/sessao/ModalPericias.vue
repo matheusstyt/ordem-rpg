@@ -20,10 +20,10 @@
             <li v-for="(item, index) in list_pericias" :key="index">
                 <p>{{item.nome}}</p>
                 <div class="conteiner-ico">
-                    <div class="content-ico-op">
-                        <img src="@/assets/ico/remove_ico.svg" alt="">
+                    <div class="content-ico-op" @click="delete_pericias(item.id)">
+                        <img src="@/assets/ico/remove_ico.svg" alt="" >
                     </div>
-                 <!---->   <div class="content-ico-op">
+                   <div class="content-ico-op">
                         <img src="@/assets/ico/edit_ico.svg" alt="">
                     </div>
 
@@ -45,13 +45,8 @@ export default {
     data(){
         return{
             user_id : sessionStorage.getItem('user_id'),
-
-            list_pericias : [
-                {nome: "ocultismo", valor : 0},
-                {nome: "medicina", valor : 0},
-                {nome: "detetive", valor : 0},
-
-            ],
+            pericias_session : [],
+            list_pericias : [],
             nome_pericia : ""
         }
     }, 
@@ -67,11 +62,41 @@ export default {
                 nome : this.nome_pericia,
                 valor : 0,
             }
-            this.list_pericias.push(obj);
-            this.clean_input()
+            if(this.nome_pericia.length > 2){
+                this.list_pericias.push(obj);
+                this.clean_input()
+            }
         },
         clean_input() {
             this.nome_pericia = "";
+        },
+        get_pericias(){
+            const headers = {'Authorization': 'Token ' + sessionStorage.getItem('token') };
+            const url = "http://192.168.100.26:8000/pericias/";
+
+            axios.get(url, { params : { fk_session : sessionStorage.getItem("session_id")}, headers : headers })
+            .then( res => {
+                this.pericias_session = res.data
+                res.data.forEach(pericias => {
+                    this.get_pericia(pericias.fk_pericia);
+                });
+            })
+            .catch( error => { 
+                console.log(error)
+            })
+        },
+        get_pericia(id) {
+            const headers = {'Authorization': 'Token ' + sessionStorage.getItem('token') };
+            const url = "http://192.168.100.26:8000/pericia/";
+
+            axios.get(url, { params : { id : id}, headers : headers })
+            .then( res => {
+                console.log(res.data)
+                this.list_pericias = this.list_pericias.concat(res.data);
+            })
+            .catch( error => { 
+                console.log(error)
+            })
         },
         salvar_pericias(){      
             const headers = {'Authorization': 'Token ' + sessionStorage.getItem('token') };
@@ -108,6 +133,26 @@ export default {
                 })
             }
             
+        },
+        delete_pericias(id){
+            console.log(id)
+            this.pericias_session.forEach(pericias => {
+                console.log(pericias)
+                if( id === pericias.fk_pericia ){
+                    const headers = {'Authorization': 'Token ' + sessionStorage.getItem('token') };
+                    const url = `http://192.168.100.26:8000/pericias/${pericias.id}/`;
+                    axios.delete(url, { headers : headers })
+                    .then( res => {
+                        this.list_pericias = []
+                        setTimeout(() => {
+                            this.get_pericias()
+                        }, 100);
+                    })
+                    .catch( error => { 
+                        console.log(error)
+                    });
+                }
+            }); 
         }
 
     }, mounted(){
@@ -116,7 +161,9 @@ export default {
         setInterval(() => {
           this.get_now()
         }, 1000);
+        this.get_pericias();
     }
+
 }
 
 </script>

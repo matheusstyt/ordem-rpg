@@ -20,10 +20,10 @@
             <li v-for="(item, index) in list_atributos" :key="index">
                 <p>{{item.nome}}</p>
                 <div class="conteiner-ico">
-                    <div class="content-ico-op">
-                        <img src="@/assets/ico/remove_ico.svg" alt="">
+                    <div class="content-ico-op" @click="delete_atributos(item.id)">
+                        <img src="@/assets/ico/remove_ico.svg" alt="" >
                     </div>
-                 <!---->   <div class="content-ico-op">
+                   <div class="content-ico-op">
                         <img src="@/assets/ico/edit_ico.svg" alt="">
                     </div>
 
@@ -45,13 +45,8 @@ export default {
     data(){
         return{
             user_id : sessionStorage.getItem('user_id'),
-
-            list_atributos : [
-                {nome: "força", valor : 0},
-                {nome: "inteligencia", valor : 0},
-                {nome: "agilidade", valor : 0},
-
-            ],
+            atributos_session : [],
+            list_atributos : [],
             nome_atributo : ""
         }
     }, 
@@ -67,11 +62,41 @@ export default {
                 nome : this.nome_atributo,
                 valor : 0,
             }
-            this.list_atributos.push(obj);
-            this.clean_input()
+            if(this.nome_atributo.length > 2){
+                this.list_atributos.push(obj);
+                this.clean_input()
+            }
         },
         clean_input() {
             this.nome_atributo = "";
+        },
+        get_atributos(){
+            const headers = {'Authorization': 'Token ' + sessionStorage.getItem('token') };
+            const url = "http://192.168.100.26:8000/atributos/";
+
+            axios.get(url, { params : { fk_session : sessionStorage.getItem("session_id")}, headers : headers })
+            .then( res => {
+                this.atributos_session = res.data
+                res.data.forEach(atributos => {
+                    this.get_atributo(atributos.fk_atributo);
+                });
+            })
+            .catch( error => { 
+                console.log(error)
+            })
+        },
+        get_atributo(id) {
+            const headers = {'Authorization': 'Token ' + sessionStorage.getItem('token') };
+            const url = "http://192.168.100.26:8000/atributo/";
+
+            axios.get(url, { params : { id : id}, headers : headers })
+            .then( res => {
+                console.log(res.data)
+                this.list_atributos = this.list_atributos.concat(res.data);
+            })
+            .catch( error => { 
+                console.log(error)
+            })
         },
         salvar_atributos(){      
             const headers = {'Authorization': 'Token ' + sessionStorage.getItem('token') };
@@ -108,6 +133,26 @@ export default {
                 })
             }
             
+        },
+        delete_atributos(id){
+            console.log(id)
+            this.atributos_session.forEach(atributos => {
+                console.log(atributos)
+                if( id === atributos.fk_atributo ){
+                    const headers = {'Authorization': 'Token ' + sessionStorage.getItem('token') };
+                    const url = `http://192.168.100.26:8000/atributos/${atributos.id}/`;
+                    axios.delete(url, { headers : headers })
+                    .then( res => {
+                        this.list_atributos = []
+                        setTimeout(() => {
+                            this.get_atributos()
+                        }, 100);
+                    })
+                    .catch( error => { 
+                        console.log(error)
+                    });
+                }
+            }); 
         }
 
     }, mounted(){
@@ -116,7 +161,9 @@ export default {
         setInterval(() => {
           this.get_now()
         }, 1000);
+        this.get_atributos();
     }
+
 }
 
 </script>
