@@ -1,26 +1,26 @@
 <template>
-    <div class="atributos-session">
-        <div class="atributo-sticky-content">
+    <div class="resistencias-session">
+        <div class="resistencia-sticky-content">
             <div class="content-save" >
-                <h3>Personalizar Atributos</h3>
-                <img src="@/assets/ico/save_ico.svg" @click="salvar_atributos()" alt="Salvar atributo" srcset="">
+                <h3>Personalizar Resistências</h3>
+                <img src="@/assets/ico/save_ico.svg" @click="salvar_resistencias()" alt="Salvar resistencia" srcset="">
                     
             </div>
             
-            <div class="content-atributo">  
+            <div class="content-resistencia">  
                 <div class="input-field">
-                    <label for="nome_atributo">Nome</label>
-                    <input type="text" name="nome_atributo" v-model="nome_atributo"  id="nome_atributo">
-                    <button @click="adicionar_atributo()">Adicionar</button>
+                    <label for="nome_resistencia">Nome</label>
+                    <input type="text" name="nome_resistencia" v-model="nome_resistencia"  id="nome_resistencia">
+                    <button @click="adicionar_resistencia()">Adicionar</button>
                 </div>
             </div>
         </div>
         
         <ul>
-            <li v-for="(item, index) in list_atributos" :key="index">
+            <li v-for="(item, index) in list_resistencias" :key="index">
                 <p>{{item.nome}}</p>
                 <div class="conteiner-ico">
-                    <div class="content-ico-op" @click="delete_atributos(item.id)">
+                    <div class="content-ico-op" @click="delete_resistencias(item.id)">
                         <img src="@/assets/ico/remove_ico.svg" alt="" >
                     </div>
                    <div class="content-ico-op">
@@ -45,9 +45,9 @@ export default {
     data(){
         return{
             user_id : sessionStorage.getItem('user_id'),
-            atributos_session : [],
-            list_atributos : [],
-            nome_atributo : ""
+            resistencias_session : [],
+            list_resistencias : [],
+            nome_resistencia : ""
         }
     }, 
     methods:{
@@ -57,73 +57,73 @@ export default {
             let formattedDate = formatter.format(now);
             this.data_atual = formattedDate;
         },
-        adicionar_atributo(){
+        adicionar_resistencia(){
             var obj = {
-                nome : this.nome_atributo,
+                nome : this.nome_resistencia,
                 valor : 0,
             }
-            if(this.nome_atributo.length > 2){
-                this.list_atributos.push(obj);
+            if(this.nome_resistencia.length > 2){
+                this.list_resistencias.push(obj);
                 this.clean_input()
             }
         },
         clean_input() {
-            this.nome_atributo = "";
+            this.nome_resistencia = "";
         },
-        get_atributos(){
+        get_resistencias(){
             const headers = {'Authorization': 'Token ' + sessionStorage.getItem('token') };
-            const url = "http://192.168.100.26:8000/atributos/";
+            const url = "http://192.168.100.26:8000/resistencias/";
 
             axios.get(url, { params : { fk_session : sessionStorage.getItem("session_id")}, headers : headers })
             .then( res => {
-                this.atributos_session = res.data
-                res.data.forEach(atributos => {
-                    this.get_atributo(atributos.fk_atributo);
+                this.resistencias_session = res.data
+                res.data.forEach(resistencias => {
+                    this.get_resistencia(resistencias.fk_resistencia);
                 });
             })
             .catch( error => { 
                 console.log(error)
             })
         },
-        get_atributo(id) {
+        get_resistencia(id) {
             const headers = {'Authorization': 'Token ' + sessionStorage.getItem('token') };
-            const url = "http://192.168.100.26:8000/atributo/";
+            const url = "http://192.168.100.26:8000/resistencia/";
 
             axios.get(url, { params : { id : id}, headers : headers })
             .then( res => {
                 console.log(res.data)
-                this.list_atributos = this.list_atributos.concat(res.data);
+                this.list_resistencias = this.list_resistencias.concat(res.data);
             })
             .catch( error => { 
                 console.log(error)
             })
         },
-        salvar_atributos(){      
+        salvar_resistencias(){      
             const headers = {'Authorization': 'Token ' + sessionStorage.getItem('token') };
             
-            this.list_atributos.forEach(atributo => {
-                post_atributo(atributo)
+            this.list_resistencias.forEach(resistencia => {
+                post_resistencia(resistencia)
             });
 
-            function post_atributo(body) {
-                const url = "http://192.168.100.26:8000/atributo/";
-
+            function post_resistencia(body) {
+                const url = "http://192.168.100.26:8000/resistencia/";
+                console.log(body)
                 axios.post(url, body, { headers : headers })
                 .then( res => {
                     console.log(res)
-                    post_atributos(res.data.id)
+                    post_resistencias(res.data.id)
                 })
                 .catch( error => { 
                     console.log(error)
                 })
             }
-            function post_atributos(id) {
-                const url = "http://192.168.100.26:8000/atributos/";
-                const body_atributos = {
-                    fk_atributo : id,
+            function post_resistencias(id) {
+                const url = "http://192.168.100.26:8000/resistencias/";
+                const body_resistencias = {
+                    fk_resistencia : id,
                     fk_session : sessionStorage.getItem("session_id")
                 }
-                axios.post(url, body_atributos, { headers : headers })
+                axios.post(url, body_resistencias, { headers : headers })
                 .then( res => {
                     window.location.reload()
                     console.log(res)
@@ -134,18 +134,18 @@ export default {
             }
             
         },
-        delete_atributos(id){
+        delete_resistencias(id){
             console.log(id)
-            this.atributos_session.forEach(atributos => {
-                console.log(atributos)
-                if( id === atributos.fk_atributo ){
+            this.resistencias_session.forEach(resistencias => {
+                console.log(resistencias)
+                if( id === resistencias.fk_resistencia ){
                     const headers = {'Authorization': 'Token ' + sessionStorage.getItem('token') };
-                    const url = `http://192.168.100.26:8000/atributos/${atributos.id}/`;
+                    const url = `http://192.168.100.26:8000/resistencias/${resistencias.id}/`;
                     axios.delete(url, { headers : headers })
                     .then( res => {
-                        this.list_atributos = []
+                        this.list_resistencias = []
                         setTimeout(() => {
-                            this.get_atributos()
+                            this.get_resistencias()
                         }, 100);
                     })
                     .catch( error => { 
@@ -161,7 +161,7 @@ export default {
         setInterval(() => {
           this.get_now()
         }, 1000);
-        this.get_atributos();
+        this.get_resistencias();
     }
 
 }
@@ -169,7 +169,7 @@ export default {
 </script>
 <style scoped lang="scss"> 
 
-.atributos-session {
+.resistencias-session {
     padding: 0;
     border: 1px solid bisque;
     background-color: rgba(0  0  0 / 0.5);
@@ -185,7 +185,7 @@ export default {
     max-height: 80%;
     overflow-y: auto;
     
-    .atributo-sticky-content{
+    .resistencia-sticky-content{
         width: 100%;
         box-shadow: 1em 0px 5px #292929;
         position: sticky;
@@ -213,7 +213,7 @@ export default {
                 cursor: pointer;
             }
         }
-        .content-atributo{
+        .content-resistencia{
             padding: 1em 0;
             display: flex;
             flex-direction: column;
@@ -292,7 +292,7 @@ export default {
         }
     }
 }
-.atributos-session:hover{
+.resistencias-session:hover{
     box-shadow: 0px 0px 5px #fff;
     transition: ease 0.5s;
 }

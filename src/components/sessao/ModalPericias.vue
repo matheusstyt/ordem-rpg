@@ -125,7 +125,7 @@ export default {
                 }
                 axios.post(url, body_pericias, { headers : headers })
                 .then( res => {
-                    alert('opa')
+                    window.location.reload()
                     console.log(res)
                 })
                 .catch( error => { 

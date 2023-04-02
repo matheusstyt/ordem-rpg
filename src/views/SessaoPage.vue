@@ -12,7 +12,10 @@
       <button class="btn-x" @click="close_modal_pericias()">X</button>
       <ModalPericias />
     </div>
-    
+    <div class="modal-session" v-if="modal_resistencias_opened === true">
+      <button class="btn-x" @click="close_modal_resistencias()">X</button>
+      <ModalResistencias />
+    </div>
 
     <preloader v-if="loading" />
     <div class="container-home"  v-else>
@@ -55,7 +58,7 @@
             <ul>
               <li @click="open_modal_atributos()">Atributos</li>
               <li @click="open_modal_pericias()">Pericias</li>
-              <li>Resistencias a dano</li>
+              <li @click="open_modal_resistencias()">Resistencias a dano</li>
               <li>Armamentos</li>
               <li>Acessórios</li>
               <li>Rituais</li>
@@ -74,13 +77,14 @@
   import preloader from '../components/gif/preloader.vue'
   import logout from '../components/svg/logout.vue'
   import System from '../components/sistema/ConfigSystem.vue'
+  import ModalResistencias from '../components/sessao/ModalResistencias.vue'
   import ModalPericias from '../components/sessao/ModalPericias.vue'
   import ModalAtributos from '../components/sessao/ModalAtributos.vue'
   import ModalJogador from '../components/ModalNewJogador.vue'
   import SessaoPersonagens from '../components/SessaoPersonagens.vue'
 
   export default {
-      components: {ModalAtributos, ModalPericias, ModalJogador, SessaoPersonagens, System, logout, preloader},
+      components: {ModalAtributos, ModalPericias, ModalResistencias, ModalJogador, SessaoPersonagens, System, logout, preloader},
       props:{
           data : Object,
           vida : Object,
@@ -119,8 +123,14 @@
         open_modal_pericias(){
           this.modal_pericias_opened = true
         },
+        open_modal_resistencias(){
+          this.modal_resistencias_opened = true
+        },
         open_modal_player(){
           this.modal_contact_opened = true
+        },
+        close_modal_resistencias(){
+          this.modal_resistencias_opened = false
         },
         close_modal_pericias(){
           this.modal_pericias_opened = false
