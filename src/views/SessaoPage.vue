@@ -16,7 +16,11 @@
       <button class="btn-x" @click="close_modal_resistencias()">X</button>
       <ModalResistencias />
     </div>
-
+    <div class="modal-session" v-if="modal_armamentos_opened === true">
+      <button class="btn-x" @click="close_modal_armamentos()">X</button>
+      <ModalArmamentos />
+    </div>
+    
     <preloader v-if="loading" />
     <div class="container-home"  v-else>
         
@@ -53,13 +57,13 @@
               </li>
             </ul>
           </div>
-          <div class="content-social config" >
+          <div class="content-social config" v-if="show_config === true">
             <h3>Configurar</h3>
             <ul>
               <li @click="open_modal_atributos()">Atributos</li>
               <li @click="open_modal_pericias()">Pericias</li>
               <li @click="open_modal_resistencias()">Resistencias a dano</li>
-              <li>Armamentos</li>
+              <li @click="open_modal_armamentos()">Armamentos</li>
               <li>Acessórios</li>
               <li>Rituais</li>
             </ul>
@@ -77,14 +81,19 @@
   import preloader from '../components/gif/preloader.vue'
   import logout from '../components/svg/logout.vue'
   import System from '../components/sistema/ConfigSystem.vue'
+
   import ModalResistencias from '../components/sessao/ModalResistencias.vue'
   import ModalPericias from '../components/sessao/ModalPericias.vue'
   import ModalAtributos from '../components/sessao/ModalAtributos.vue'
+
+  import ModalArmamentos from '../components/sessao/ModalArmamento.vue'
+
   import ModalJogador from '../components/ModalNewJogador.vue'
+
   import SessaoPersonagens from '../components/SessaoPersonagens.vue'
 
   export default {
-      components: {ModalAtributos, ModalPericias, ModalResistencias, ModalJogador, SessaoPersonagens, System, logout, preloader},
+      components: {ModalAtributos, ModalPericias, ModalResistencias, ModalArmamentos, ModalJogador, SessaoPersonagens, System, logout, preloader},
       props:{
           data : Object,
           vida : Object,
@@ -105,18 +114,28 @@
           Usuario: sessionStorage.getItem('email'),
           email : sessionStorage.getItem('email'),
           data_atual : null,
+
           modal_atributos_opened : false,
           modal_pericias_opened : false,
           modal_resistencias_opened : false,
+
+          modal_armamentos_opened : false,
+          modal_acessorios_opened : false,
+          modal_rituais_opened : false,
+
           modal_contact_opened : false,
           sessao_atual : false,
           list_pendente : null,
           list_contact : null,
-          no_session : false
+          no_session : false,
+          show_config : false
   
           }
       },
       methods:{
+        open_modal_armamentos(){
+          this.modal_armamentos_opened = true
+        },
         open_modal_atributos(){
           this.modal_atributos_opened = true
         },
@@ -138,6 +157,9 @@
         close_modal_atributos(){
           this.modal_atributos_opened = false
         },
+        close_modal_armamentos(){
+          this.modal_armamentos_opened = false
+        },
         close_modal_contact(){
           this.modal_contact_opened = false
         },
@@ -151,29 +173,14 @@
             .then( res => {
               console.log('session')
               console.log(res.data)
-              this.sessao_atual = res.data.session             
+              this.sessao_atual = res.data.session        
+              this.loading = false    
+              this.showConfig() 
             })
             .catch( error => { 
               console.log(error)
             })
         },  
-
-        async get_players(){
-          const url = "http://192.168.100.26:8000/players/";
-            const headers = {'Authorization': 'Token ' + sessionStorage.getItem('token') };
-          
-            axios.get(url, { params : { fk_session : sessionStorage.getItem("session_id") }, headers : headers })
-            .then( res => {
-              console.log(res.data)
-              this.list_players = res.data.players
-                
-              
-            })
-            .catch( error => { 
-              console.log(error)
-            })
-        },
-    
         aceitar_pedido(fk_origem, fk_destino, id){
           let now = new Date();
           let formatter = new Intl.DateTimeFormat('pt-BR', {weekday: 'long', day: 'numeric', month: 'long', hour: 'numeric', minute: 'numeric'});
@@ -219,10 +226,20 @@
               .catch( error => {
                 console.log(error)
               })
+        },
+        showConfig(){
+          console.log(sessionStorage.getItem("user_id"))
+          console.log(this.sessao_atual.fk_mestre)
+          if(parseInt(sessionStorage.getItem("user_id")) === this.sessao_atual.fk_mestre){
+            this.show_config = true
+          }
+
         }
       },
       mounted(){
-        this.loading = false
+
+        
+
         if(!sessionStorage.getItem('token')){ this.$router.push({name:"login"}) }
 
         this.get_session();
