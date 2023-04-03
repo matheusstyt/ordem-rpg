@@ -1,13 +1,13 @@
 <template>
-    <div class="resistencias-session">
-        <div class="resistencia-sticky-content">
+    <div class="resistencias-session session-content-p">
+        <div class="sticky-content">
             <div class="content-save" >
                 <h3>Personalizar Resistências</h3>
                 <img src="@/assets/ico/save_ico.svg" @click="salvar_resistencias()" alt="Salvar resistencia" srcset="">
                     
             </div>
             
-            <div class="content-resistencia">  
+            <div class="content-add">  
                 <div class="input-field">
                     <label for="nome_resistencia">Nome</label>
                     <input type="text" name="nome_resistencia" v-model="nome_resistencia"  id="nome_resistencia">
@@ -72,7 +72,7 @@ export default {
         },
         get_resistencias(){
             const headers = {'Authorization': 'Token ' + sessionStorage.getItem('token') };
-            const url = "http://192.168.100.26:8000/resistencias/";
+            const url = "http://170.10.0.50:8000/resistencias/";
 
             axios.get(url, { params : { fk_session : sessionStorage.getItem("session_id")}, headers : headers })
             .then( res => {
@@ -87,7 +87,7 @@ export default {
         },
         get_resistencia(id) {
             const headers = {'Authorization': 'Token ' + sessionStorage.getItem('token') };
-            const url = "http://192.168.100.26:8000/resistencia/";
+            const url = "http://170.10.0.50:8000/resistencia/";
 
             axios.get(url, { params : { id : id}, headers : headers })
             .then( res => {
@@ -106,7 +106,7 @@ export default {
             });
 
             function post_resistencia(body) {
-                const url = "http://192.168.100.26:8000/resistencia/";
+                const url = "http://170.10.0.50:8000/resistencia/";
                 console.log(body)
                 axios.post(url, body, { headers : headers })
                 .then( res => {
@@ -118,7 +118,7 @@ export default {
                 })
             }
             function post_resistencias(id) {
-                const url = "http://192.168.100.26:8000/resistencias/";
+                const url = "http://170.10.0.50:8000/resistencias/";
                 const body_resistencias = {
                     fk_resistencia : id,
                     fk_session : sessionStorage.getItem("session_id")
@@ -131,8 +131,7 @@ export default {
                 .catch( error => { 
                     console.log(error)
                 })
-            }
-            
+            }   
         },
         delete_resistencias(id){
             console.log(id)
@@ -140,7 +139,7 @@ export default {
                 console.log(resistencias)
                 if( id === resistencias.fk_resistencia ){
                     const headers = {'Authorization': 'Token ' + sessionStorage.getItem('token') };
-                    const url = `http://192.168.100.26:8000/resistencias/${resistencias.id}/`;
+                    const url = `http://170.10.0.50:8000/resistencias/${resistencias.id}/`;
                     axios.delete(url, { headers : headers })
                     .then( res => {
                         this.list_resistencias = []
@@ -154,7 +153,6 @@ export default {
                 }
             }); 
         }
-
     }, mounted(){
         // GET HORA ATUAL
         this.get_now()
@@ -163,139 +161,8 @@ export default {
         }, 1000);
         this.get_resistencias();
     }
-
 }
-
 </script>
 <style scoped lang="scss"> 
-
-.resistencias-session {
-    padding: 0;
-    border: 1px solid bisque;
-    background-color: rgba(0  0  0 / 0.5);
-    min-width: 28%;
-    max-width: 47%;
-    height: auto;
-    box-shadow: 0px 0px 3px #f3eacd;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    max-height: 80%;
-    overflow-y: auto;
-    
-    .resistencia-sticky-content{
-        width: 100%;
-        box-shadow: 1em 0px 5px #292929;
-        position: sticky;
-        top: 0;
-        background-color: rgba(0  0  0 / 0.6);
-        .content-save{
-            width: 80%; 
-            min-width: 78%;          
-            border-bottom: 1px dashed rgba(46, 46, 46, 0.418);
-            background-color: #1818184b;
-            padding: 0.5em 0;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            
-            h3 {
-                color: white;
-                margin: 0;
-                
-            }
-            img{
-                height: 1.4em;
-                aspect-ratio: 1/1;
-                cursor: pointer;
-            }
-        }
-        .content-resistencia{
-            padding: 1em 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: space-between;
-            min-width: 70%;
-            max-width: 80%;
-            margin: 0 auto;
-            .input-field{
-                width: 100%;
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                padding: 0.5em 0;
-        
-                input{
-                    
-                    font-size: 1em;
-                    font-family: "Consolas";
-                    padding: 0.4em 1em;
-                    color: #292929;
-                    
-                }
-                button{
-                    margin: 0;
-                    padding: 0.5em;
-                }
-            }
-        }
-    }
-    
-
-
-    button{
-        padding: 0.4em;
-        margin-bottom: 2em;
-        color: #1b1b1b;
-    }
-    button:hover{
-        color: #1b1b1b;
-        background-color: bisque;
-        transition: ease 0.5s;
-        border: 2px solid rgb(224, 184, 135);
-    }
-    ul{
-        width: 80%;
-        padding: 0;
-        li{
-            width: 100%;
-            display: flex;
-            padding: 0.5em 0;
-            align-items: center;
-            justify-content: space-between;
-            border-bottom: 1px solid rgba(46, 46, 46, 0.0);
-            gap: 1em;
-            p{
-                font-size: 1em;
-                margin: 0;
-            }
-            .conteiner-ico{
-                display: flex;
-    
-                gap: 1em;
-                .content-ico-op{
-                    height: 1.5em;
-                    aspect-ratio: 1/1;
-                    cursor: pointer;
-
-                   
-                }
-            }
-            
-        }
-        li:hover{
-            border-bottom: 1px solid rgba(83, 83, 83, 0.418);
-        }
-    }
-}
-.resistencias-session:hover{
-    box-shadow: 0px 0px 5px #fff;
-    transition: ease 0.5s;
-}
-
 
 </style>

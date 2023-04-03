@@ -165,7 +165,7 @@
         },
         
         async get_session(){
-          const url_session = `http://192.168.100.26:8000/session/${sessionStorage.getItem('session_id')}/`;
+          const url_session = `http://170.10.0.50:8000/session/${sessionStorage.getItem('session_id')}/`;
             const now = Date()
             const headers = {'Authorization': 'Token ' + sessionStorage.getItem('token') };
             
@@ -187,7 +187,7 @@
           let formattedDate = formatter.format(now);
 
           if(sessionStorage.getItem("token")){
-            const url = `http://192.168.100.26:8000/contact/`;
+            const url = `http://170.10.0.50:8000/contact/`;
 
             const body_uni = {
               fk_user : fk_destino, 
@@ -217,7 +217,7 @@
           }
         },
         excluir_pedido(id){
-          const url = `http://192.168.100.26:8000/ask/${id}/`;
+          const url = `http://170.10.0.50:8000/ask/${id}/`;
               const headers = {'Authorization': 'Token ' + sessionStorage.getItem('token') };
               axios.delete(url, { headers : headers })
               .then(res => {
@@ -270,9 +270,10 @@
     background-color: rgba(0 0 0 / 0.4);
     width: 100%;
     height: 100%;
-    position: fixed;
+    position: absolute;
     display: flex;
-    align-items: center;
+    top: 0vh;
+    align-items: flex-start;
     justify-content: center;
     z-index: 3;
 }
@@ -578,4 +579,139 @@
     font-family: "Consolas";
     font-size: 14px;
   }
+
+ //MODAL PARDRÃO
+  .session-content-p{
+    padding: 0;
+    border: 1px solid bisque;
+    background-color: rgba(0  0  0 / 0.5);
+    min-width: 34vw;
+    max-width: 36vw;
+    width: 35vw;
+    height: auto;
+    box-shadow: 0px 0px 3px #f3eacd;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    max-height: 80%;
+    overflow-y: auto;
+    
+    .sticky-content{
+        width: 100%;
+        box-shadow: 1em 0px 5px #292929;
+        position: sticky;
+        top: 0;
+        background-color: rgba(0  0  0 / 0.6);
+        .content-save{
+            width: 80%; 
+            min-width: 78%;          
+            border-bottom: 1px dashed rgba(46, 46, 46, 0.418);
+            background-color: #1818184b;
+            padding: 0.5em 0;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            
+            h3 {
+                color: white;
+                margin: 0;
+                
+            }
+            img{
+                height: 1.4em;
+                aspect-ratio: 1/1;
+                cursor: pointer;
+            }
+        }
+        .content-add{
+            padding: 1em 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            min-width: 70%;
+            max-width: 80%;
+            margin: 0 auto;
+            .input-field{
+                width: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 0.5em 0;
+        
+                input{
+                    width: 40%;
+                    font-size: 1em;
+                    font-family: "Consolas";
+                    padding: 0.4em 1em;
+                    color: #292929;
+                    
+                }
+                button{
+                    margin: 0;
+                    padding: 0.5em;
+                    img{
+                      height: 1em;
+                      aspect-ratio: 1/1;
+                    }
+                }
+            }
+        }
+    }
+    
+
+
+    button{
+        padding: 0.4em;
+        margin-bottom: 2em;
+        color: #1b1b1b;
+    }
+    button:hover{
+        color: #1b1b1b;
+        background-color: bisque;
+        transition: ease 0.5s;
+        border: 2px solid rgb(224, 184, 135);
+    }
+    ul{
+        width: 80%;
+        padding: 0;
+        li{
+            width: 100%;
+            display: flex;
+            padding: 0.5em 0;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid rgba(46, 46, 46, 0.0);
+            gap: 1em;
+            p{
+                font-size: 1em;
+                margin: 0;
+            }
+            .conteiner-ico{
+                display: flex;
+    
+                gap: 1em;
+                .content-ico-op{
+                    height: 1.5em;
+                    aspect-ratio: 1/1;
+                    cursor: pointer;
+
+                   
+                }
+            }
+            
+        }
+        li:hover{
+            border-bottom: 1px solid rgba(83, 83, 83, 0.418);
+        }
+    }
+}
+.session-content-p:hover{
+    box-shadow: 0px 0px 5px #fff;
+    transition: ease 0.5s;
+}
+
   </style>

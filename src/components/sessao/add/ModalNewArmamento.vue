@@ -78,34 +78,48 @@ export default {
             this.data_atual = formattedDate;
         },
         salvar_armamento(){
-            
-            const url = "http://170.10.0.50:8000/armamento/";
-            
             const headers = {'Authorization': 'Token ' + sessionStorage.getItem('token') };
-            
             const body_armamento = {
-                descricao : this.desc_armamento,
-                categoria_1 : this.categoria_1,
-                categoria_2 : this.categoria_2,
-                categoria_3 : this.categoria_3,
-                alcance : this.alcance,
-                dano_passivo :  this.dano_passivo,
-                dano_ativo : parseInt(this.dano_ativo) ,
-                tipo : this.tipo,
-                espaco : parseInt(this.espaco_armamento) ,
-                fk_user : this.user_id
+                    descricao : this.desc_armamento,
+                    categoria_1 : this.categoria_1,
+                    categoria_2 : this.categoria_2,
+                    categoria_3 : this.categoria_3,
+                    alcance : this.alcance,
+                    dano_passivo :  this.dano_passivo,
+                    dano_ativo : parseInt(this.dano_ativo) ,
+                    tipo : this.tipo,
+                    espaco : parseInt(this.espaco_armamento) ,
+                }
+                console.table(body_armamento)
+            post_armamento(body_armamento)
+            function post_armamento(body_armamento) {
+                const url = "http://170.10.0.50:8000/armamentoSession/";
 
-
+                
+                axios.post(url, body_armamento, { headers : headers })
+                .then( res => {
+                    console.log(res)
+                    post_armamentos(res.data.id)
+                })
+                .catch( error => { 
+                    console.log(error)
+                })
             }
-            console.table(body_armamento)
-            axios.post(url, body_armamento, { headers : headers })
-            .then( res => {
-                this.clean_input()
-                window.location.reload()
-            })
-            .catch( error => { 
-                console.log(error)
-            })
+            function post_armamentos(id) {
+                const url = "http://170.10.0.50:8000/armamentosSession/";
+                const body_atributos = {
+                    fk_armamento : id,
+                    fk_session : sessionStorage.getItem("session_id")
+                }
+                axios.post(url, body_atributos, { headers : headers })
+                .then( res => {
+                    //window.location.reload()
+                    console.log(res)
+                })
+                .catch( error => { 
+                    console.log(error)
+                })
+            }
         },
         salvar_armamento_user(id){
             const url = "http://170.10.0.50:8000/armamentoUser/";
@@ -153,6 +167,7 @@ export default {
 </script>
 <style scoped lang="scss"> 
 .novo-armamento {
+    top: 8vh;
     background-color: #1b1b1b;
     padding: 0;
     border: 1px solid bisque;

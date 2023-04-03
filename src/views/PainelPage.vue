@@ -175,19 +175,19 @@
           this.modal_contact_opened = false
         },
         async list_match(){
-          const url_session = "http://192.168.100.26:8000/session/";
-          const url_players = "http://192.168.100.26:8000/players/";
+          const url_session = "http://170.10.0.50:8000/session/";
+          const url_players = "http://170.10.0.50:8000/players/";
           const now = Date()
           const headers = {'Authorization': 'Token ' + sessionStorage.getItem('token') };
         
-          axios.get(`http://192.168.100.26:8000/players/`, { params : { fk_user : this.user_id }, headers : headers })
+          axios.get(`http://170.10.0.50:8000/players/`, { params : { fk_user : this.user_id }, headers : headers })
           .then( res => {
             console.log('players')
             console
             .log(res.data)
             
             res.data.players.forEach(element => {
-              axios.get(`http://192.168.100.26:8000/session/${element.fk_session}/`, { headers : headers })
+              axios.get(`http://170.10.0.50:8000/session/${element.fk_session}/`, { headers : headers })
               .then(res => { 
                 console.log('match list')
                 console.log(res.data)
@@ -206,7 +206,7 @@
           })
         },
         async get_session(){
-            const url_session = "http://192.168.100.26:8000/session/";
+            const url_session = "http://170.10.0.50:8000/session/";
             const now = Date()
             const headers = {'Authorization': 'Token ' + sessionStorage.getItem('token') };
             
@@ -229,7 +229,7 @@
 
         },  
         async get_partida(){
-            const url = "http://192.168.100.26:8000/askplayer/";
+            const url = "http://170.10.0.50:8000/askplayer/";
             const now = Date()
             const headers = {'Authorization': 'Token ' + sessionStorage.getItem('token') };
           
@@ -249,7 +249,7 @@
             })
         },
         async get_pendente(){
-            const url = "http://192.168.100.26:8000/ask/";
+            const url = "http://170.10.0.50:8000/ask/";
             const now = Date()
             const headers = {'Authorization': 'Token ' + sessionStorage.getItem('token') };
           
@@ -268,7 +268,7 @@
             })
         },
         async get_contact(){
-          const url = "http://192.168.100.26:8000/contact/";
+          const url = "http://170.10.0.50:8000/contact/";
             const headers = {'Authorization': 'Token ' + sessionStorage.getItem('token') };
           
             axios.get(url, { params : { fk_user : sessionStorage.getItem('token') }, headers : headers })
@@ -284,7 +284,7 @@
         },
         logout: function() {
           this.$router.push('/login');
-          axios.post('http://192.168.100.26:8000/logout/', null, {
+          axios.post('http://170.10.0.50:8000/logout/', null, {
             headers: {
               Authorization: 'Token ' + sessionStorage.getItem('token')
             }
@@ -305,7 +305,7 @@
           let formattedDate = formatter.format(now);
 
           if(sessionStorage.getItem("token")){
-            const url = `http://192.168.100.26:8000/contact/`;
+            const url = `http://170.10.0.50:8000/contact/`;
 
             const body_uni = {
               fk_user : fk_destino, 
@@ -335,7 +335,7 @@
           }
         },
         excluir_pedido(id){
-          const url = `http://192.168.100.26:8000/ask/${id}/`;
+          const url = `http://170.10.0.50:8000/ask/${id}/`;
               const headers = {'Authorization': 'Token ' + sessionStorage.getItem('token') };
               axios.delete(url, { headers : headers })
               .then(res => {
@@ -351,7 +351,7 @@
             let formattedDate = formatter.format(now);
 
             if(sessionStorage.getItem("token")){
-              const url = `http://192.168.100.26:8000/players/`;
+              const url = `http://170.10.0.50:8000/players/`;
 
               const body_uni = {
                 fk_user : fk_destino, 
@@ -371,7 +371,7 @@
             }
         },
         excluir_pedido_partida(id){
-          const url = `http://192.168.100.26:8000/askplayer/${id}/`;
+          const url = `http://170.10.0.50:8000/askplayer/${id}/`;
               const headers = {'Authorization': 'Token ' + sessionStorage.getItem('token') };
               axios.delete(url, { headers : headers })
               .then(res => {

@@ -1,13 +1,19 @@
 <template>
+    <div class="modal-session" v-if="modal_opened == true">
+        <button class="btn-x" @click="close_modal()">X</button>
+        <ModalNewArmamento />
+    </div>
     <div class="armamentos-session">
+        
+       
         <div class="armamento-sticky-content">
             <div class="content-save" >
                 <h3>Personalizar armamentos</h3>
-                <img src="@/assets/ico/save_ico.svg" @click="salvar_armamentos()" alt="Salvar armamento" srcset="">
+                <img src="@/assets/ico/add_white.svg" @click="open_modal()" alt="Salvar armamento" srcset="">
                     
             </div>
             
-            <div class="content-armamento">  
+            <!-- <div class="content-armamento">  
                 <div class="input-field">
                     <label for="desc_armamento">Descrição</label>
                     <input type="text" name="desc_armamento" v-model="desc_armamento" id="desc_armamento">
@@ -45,8 +51,8 @@
                     <input type="text" name="espaco_armamento" v-model="espaco_armamento" id="espaco_armamento">
                 </div>
           
-            </div>
-            <button @click="adicionar_armamento()">Adicionar</button>
+            </div> -->
+            <!-- <button @click="adicionar_armamento()">Adicionar</button> -->
 
         </div>
         <table>
@@ -61,7 +67,7 @@
                 <th>tipo</th>
                 <th>espaço</th>
             </tr>
-            <tr v-for="(item, index) in list_acessorios" :key="item.id"> 
+            <tr v-for="(item, index) in list_armamentos" :key="item.id"> 
                 <td>{{ item.descricao }}</td>
                 <td>{{ item.categoria_1 }}</td>
                 <td>{{ item.categoria_2 }}</td>
@@ -77,19 +83,20 @@
 </template>
 <script>
 import axios from 'axios';
-
+import ModalNewArmamento from './add/ModalNewArmamento'
 axios.defaults.headers.common['Authorization'] = `Bearer ${sessionStorage.getItem('token')}}`
 
 export default {
     components :{
- 
+        ModalNewArmamento
     },
     data(){
         return{
             user_id : sessionStorage.getItem('user_id'),
             armamentos_session : [],
             list_armamentos : [],
-            nome_armamento : ""
+            nome_armamento : "",
+            modal_opened : false
         }
     }, 
     methods:{
@@ -114,15 +121,15 @@ export default {
         },
         get_armamentos(){
             const headers = {'Authorization': 'Token ' + sessionStorage.getItem('token') };
-            const url = "http://192.168.100.26:8000/armamentos/";
+            const url = "http://170.10.0.50:8000/armamentosSession/";
 
             axios.get(url, { params : { fk_session : sessionStorage.getItem("session_id")}, headers : headers })
             .then( res => {
-                this.list_armamentos = res.data
-                //this.armamentos_session = res.data
-                //res.data.forEach(armamentos => {
-                //    this.get_armamento(armamentos.fk_armamento);
-                //});
+             //   this.list_armamentos = res.data
+                this.armamentos_session = res.data
+                res.data.forEach(armamentos => {
+                   this.get_armamento(armamentos.fk_armamento);
+                });
             })
             .catch( error => { 
                 console.log(error)
@@ -130,7 +137,7 @@ export default {
         },
         get_armamento(id) {
             const headers = {'Authorization': 'Token ' + sessionStorage.getItem('token') };
-            const url = "http://192.168.100.26:8000/armamento/";
+            const url = "http://170.10.0.50:8000/armamentoSession/";
 
             axios.get(url, { params : { id : id}, headers : headers })
             .then( res => {
@@ -149,7 +156,7 @@ export default {
             });
 
             function post_armamento(body) {
-                const url = "http://192.168.100.26:8000/armamento/";
+                const url = "http://170.10.0.50:8000/armamento/";
 
                 axios.post(url, body, { headers : headers })
                 .then( res => {
@@ -161,7 +168,7 @@ export default {
                 })
             }
             function post_armamentos(id) {
-                const url = "http://192.168.100.26:8000/armamentos/";
+                const url = "http://170.10.0.50:8000/armamentos/";
                 const body_armamentos = {
                     fk_armamento : id,
                     fk_session : sessionStorage.getItem("session_id")
@@ -183,7 +190,7 @@ export default {
                 console.log(armamentos)
                 if( id === armamentos.fk_armamento ){
                     const headers = {'Authorization': 'Token ' + sessionStorage.getItem('token') };
-                    const url = `http://192.168.100.26:8000/armamentos/${armamentos.id}/`;
+                    const url = `http://170.10.0.50:8000/armamentos/${armamentos.id}/`;
                     axios.delete(url, { headers : headers })
                     .then( res => {
                         this.list_armamentos = []
@@ -196,7 +203,13 @@ export default {
                     });
                 }
             }); 
-        }
+        },
+        open_modal(){
+          this.modal_opened = true
+        },
+        close_modal(){
+          this.modal_opened = false
+        },
 
     }, mounted(){
         // GET HORA ATUAL
@@ -211,7 +224,16 @@ export default {
 
 </script>
 <style scoped lang="scss"> 
-
+.modal-session {
+    background-color: rgba(0 0 0 / 0.4);
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    z-index: 5;
+}
 .armamentos-session {
     padding: 0;
     border: 1px solid bisque;
@@ -221,13 +243,15 @@ export default {
 
     height: auto;
     box-shadow: 0px 0px 3px #f3eacd;
-    position: relative;
+
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
     max-height: 80%;
     overflow-y: auto;
+    top: 8vh;
+    position: absolute;
     
     .armamento-sticky-content{
         width: 100%;
@@ -240,6 +264,7 @@ export default {
         background-color: rgba(0  0  0 / 0.6);
         .content-save{
             width: 80%; 
+            min-height: 5vmax;
             min-width: 78%;          
             border-bottom: 1px dashed rgba(46, 46, 46, 0.418);
             background-color: #1818184b;
@@ -311,7 +336,14 @@ export default {
     }
     table{
         width: 100%;
-   
+        min-height: 5vmax;
+        text-align: center;
+        td:nth-child(even){
+            background-color: rgba(46, 46, 46, 0.418);
+        }
+        td:nth-child(odd){
+            background-color: rgba(94, 94, 94, 0.418);
+        }
     }
     ul{
         width: 80%;
