@@ -1,6 +1,6 @@
 <template>
     <div class="new-contact-box">
-        <h3>Novo jogador</h3>
+        <h3>Novo contato</h3>
         <div class="input-field">
           <input type="search" v-model="search_username" required placeholder="Nome do indivíduo" name="username" id="username" maxlength="50">
           <div class="content-ico">
@@ -18,16 +18,13 @@
 </template>
 <script>
 import axios from 'axios';
-import search from './svg/search.vue'
-import check from './svg/check.vue'
+import search from '../svg/search.vue'
+import check from '../svg/check.vue'
 axios.defaults.headers.common['Authorization'] = `Bearer ${sessionStorage.getItem('token')}}`
 
 export default {
     components :{
         search, check
-    },
-    props : {
-        session_id : Number
     },
     data(){
         return{
@@ -69,11 +66,10 @@ export default {
         enviar(){
             if(sessionStorage.getItem("token")){
                 
-                const url = `http://170.10.0.50:8000/askplayer/`;
+                const url = `http://170.10.0.50:8000/ask/`;
 
                 const body_ask = {
-                    fk_sessao : parseInt(this.session_id),
-                    fk_mestre : parseInt(sessionStorage.getItem("user_id")), 
+                    origem : parseInt(sessionStorage.getItem("user_id")), 
                     destino : this.id_contact,
                     status : false
 

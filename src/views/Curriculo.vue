@@ -113,12 +113,12 @@ export default {
       html2pdf(element, {
         margin:       0,
         filename:     'curriculo_matheus_galdino.pdf',
-        image:        { type: 'jpeg', quality: 0.98 },
+        image:        { type: 'jpeg', quality: 1 },
         html2canvas:  { scale: 2 },
         jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' },
         beforePageContent: function(currentPage, doc) {
           if (currentPage === 1) {
-            doc.text('Meu currículo', 20, 20);
+            doc.text('Meu currículo', 0, 0);
           }
         }
       });
@@ -225,7 +225,7 @@ h4{
     li{
       margin-bottom: 0.5em;
       text-align: justify;
-      font-size: 0.99em;
+      font-size: 0.9em;
     }
   }
 }

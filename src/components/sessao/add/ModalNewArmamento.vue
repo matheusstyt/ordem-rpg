@@ -40,9 +40,7 @@
             </div>
         </div>
 
-        <button @click="salvar_armamento()">Salvar</button>
-        <h3 id="carregar-armamento">carregar armamentos - ordem paranormal</h3>
-        
+        <button @click="salvar_armamento()">Salvar</button>        
       </div>
 </template>
 <script>
@@ -54,6 +52,7 @@ export default {
     components :{
  
     },
+    emits : ["fecharModal"],
     data(){
         return{
             user_id : sessionStorage.getItem('user_id'),
@@ -89,37 +88,39 @@ export default {
                     dano_ativo : parseInt(this.dano_ativo) ,
                     tipo : this.tipo,
                     espaco : parseInt(this.espaco_armamento) ,
-                }
-                console.table(body_armamento)
-            post_armamento(body_armamento)
-            function post_armamento(body_armamento) {
-                const url = "http://170.10.0.50:8000/armamentoSession/";
+            }
+            console.table(body_armamento)
 
-                
-                axios.post(url, body_armamento, { headers : headers })
-                .then( res => {
-                    console.log(res)
-                    post_armamentos(res.data.id)
-                })
-                .catch( error => { 
-                    console.log(error)
-                })
+            const url = "http://170.10.0.50:8000/armamentoSession/";
+
+            
+            axios.post(url, body_armamento, { headers : headers })
+            .then( res => {
+                console.log(res)
+                this.post_armamentos(res.data.id)
+            })
+            .catch( error => { 
+                console.log(error)
+            })
+            
+        },
+        post_armamentos(id) {
+            const headers = {'Authorization': 'Token ' + sessionStorage.getItem('token') };
+
+            const url = "http://170.10.0.50:8000/armamentosSession/";
+            const body_atributos = {
+                fk_armamento : id,
+                fk_session : sessionStorage.getItem("session_id")
             }
-            function post_armamentos(id) {
-                const url = "http://170.10.0.50:8000/armamentosSession/";
-                const body_atributos = {
-                    fk_armamento : id,
-                    fk_session : sessionStorage.getItem("session_id")
-                }
-                axios.post(url, body_atributos, { headers : headers })
-                .then( res => {
-                    //window.location.reload()
-                    console.log(res)
-                })
-                .catch( error => { 
-                    console.log(error)
-                })
-            }
+            axios.post(url, body_atributos, { headers : headers })
+            .then( res => {
+                //window.location.reload()
+                console.log(res)
+                this.$emit("fecharModal")
+            })
+            .catch( error => { 
+                console.log(error)
+            })
         },
         salvar_armamento_user(id){
             const url = "http://170.10.0.50:8000/armamentoUser/";

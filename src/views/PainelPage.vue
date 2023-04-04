@@ -124,8 +124,8 @@
   import preloader from '../components/gif/preloader.vue'
   import logout from '../components/svg/logout.vue'
   import System from '../components/sistema/ConfigSystem.vue'
-  import ModalSessao from '../components/ModalNewSessao.vue'
-  import ModalFriend from '../components/ModalNewFriend.vue'
+  import ModalSessao from '@/components/painel/ModalNewSessao.vue'
+  import ModalFriend from '@/components/painel/ModalNewFriend.vue'
   import SessaoPersonagens from '../components/SessaoPersonagens.vue'
 
   export default {
@@ -593,12 +593,6 @@
 }
   
 .container-home{
-  /* background-image: url('../img/background.webp'); */
-  background-color: rgba(0  0  0 / 0.0);
-  background-position: center ;
-  background-repeat: repeat-x;
-  background-attachment: fixed;
-  background-size: contain;
   display: flex;
 
   padding-top: 2vmax;

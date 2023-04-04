@@ -53,7 +53,9 @@ h2{
     font-size:27px;
 }
 .geral-home{
-
+    position: absolute;
+    top: 0;
+    height: 100%;
     background-color: rgba( 0 0 0 / 0.3);
     text-align: center;
     .caixa-bemvindo{

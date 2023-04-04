@@ -20,6 +20,11 @@
       <button class="btn-x" @click="close_modal_armamentos()">X</button>
       <ModalArmamentos />
     </div>
+
+    <div class="modal-session" v-if="modal_acessorios_opened === true">
+      <button class="btn-x" @click="close_modal_acessorios()">X</button>
+      <ModalAcessorios />
+    </div>
     
     <preloader v-if="loading" />
     <div class="container-home"  v-else>
@@ -30,7 +35,10 @@
             <h3> {{ sessao_atual.mestre}}</h3>
             <h3>{{ sessao_atual.descricao}}</h3>
           </div>
-          <h5 class="content-add-person">+</h5>
+          <div class="container-personagens">
+            <h5 class="content-add-person">+</h5>
+          </div>
+          
        
   
         </div>
@@ -64,7 +72,7 @@
               <li @click="open_modal_pericias()">Pericias</li>
               <li @click="open_modal_resistencias()">Resistencias a dano</li>
               <li @click="open_modal_armamentos()">Armamentos</li>
-              <li>Acessórios</li>
+              <li @click="open_modal_acessorios()">Acessórios</li>
               <li>Rituais</li>
             </ul>
           </div>
@@ -82,18 +90,20 @@
   import logout from '../components/svg/logout.vue'
   import System from '../components/sistema/ConfigSystem.vue'
 
-  import ModalResistencias from '../components/sessao/ModalResistencias.vue'
-  import ModalPericias from '../components/sessao/ModalPericias.vue'
-  import ModalAtributos from '../components/sessao/ModalAtributos.vue'
+  import ModalResistencias from '@/components/sessao/ModalResistencias.vue'
+  import ModalPericias from '@/components/sessao/ModalPericias.vue'
+  import ModalAtributos from '@/components/sessao/ModalAtributos.vue'
 
-  import ModalArmamentos from '../components/sessao/ModalArmamento.vue'
+  import ModalArmamentos from '@/components/sessao/ModalArmamento.vue'
 
-  import ModalJogador from '../components/ModalNewJogador.vue'
+  import ModalAcessorios from '@/components/sessao/ModalAcessorios.vue'
 
-  import SessaoPersonagens from '../components/SessaoPersonagens.vue'
+  import ModalJogador from '@/components/sessao/add/ModalNewJogador.vue'
+
+  import SessaoPersonagens from '@/components/SessaoPersonagens.vue'
 
   export default {
-      components: {ModalAtributos, ModalPericias, ModalResistencias, ModalArmamentos, ModalJogador, SessaoPersonagens, System, logout, preloader},
+      components: {ModalAtributos, ModalPericias, ModalResistencias, ModalArmamentos, ModalAcessorios, ModalJogador, SessaoPersonagens, System, logout, preloader},
       props:{
           data : Object,
           vida : Object,
@@ -133,6 +143,9 @@
           }
       },
       methods:{
+        open_modal_acessorios(){
+          this.modal_acessorios_opened = true
+        },
         open_modal_armamentos(){
           this.modal_armamentos_opened = true
         },
@@ -159,6 +172,9 @@
         },
         close_modal_armamentos(){
           this.modal_armamentos_opened = false
+        },
+        close_modal_acessorios(){
+          this.modal_acessorios_opened = false
         },
         close_modal_contact(){
           this.modal_contact_opened = false
@@ -522,18 +538,29 @@
   #btn-sessao:hover{
       background-color: rgba(19, 82, 29, 0.7);
   }
-  .content-add-person{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 20%;
-    background-color: #04e04d2d;
-    aspect-ratio: 9/16;
-  }
-  .content-add-person:hover{
-    background-color: #1a4b2a4f;
+  .container-personagens {
+    padding: 1em;
+    h5{
+      width: 20%;
+      aspect-ratio: 9/16;
+      margin: 0;
 
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      
+      background-color: #080808ab;
+      font-size: 2em;
+      cursor: pointer;
+      
+    }
+    h5:hover{
+      background-color: #0000008e;
+  
+    }
   }
+
+ 
   .content-personagens-resumo{
     cursor: pointer;
     text-align: center;
@@ -582,6 +609,7 @@
 
  //MODAL PARDRÃO
   .session-content-p{
+    top: 4vmax;
     padding: 0;
     border: 1px solid bisque;
     background-color: rgba(0  0  0 / 0.5);
