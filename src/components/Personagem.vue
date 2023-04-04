@@ -1,97 +1,107 @@
 <template>
-    <div class="back">
-        <div id="modal-vida" class="modalP" :style="displayModalV">
-                <div class="conteinerModal" >
 
-                    <h2>MODIFICAR DE VIDA</h2>
-                    <form @submit="salvarVida($event)" class="formModal" id="changeLife" >
+    
+    <!-- <div class="modal_container">
+        <div class="modal-modificar" >
+            <h2>TESTE DE SANIDADE</h2>
+            <h3>Rolagem de dado</h3>
+            <h4 :style="displayTesteResultado">{{valorTeste}}</h4>
+            <p :style="displayTesteTipo">{{tipoTeste}}</p>
+        </div>
+    </div> -->
+<div class="geral-avatar">
+    <div class="modal_container" v-if="show_modal_vida == true">
+            <div class="modal-modificar"  >
+                <h2>MODIFICAR DE VIDA</h2>
+                <form @submit="salvar_vida($event)" class="formModal" id="changeLife" >
+                    <div class="field-input">
                         <label for="">Atual</label>
-                        <input type="number" id="vidaAtual" name="atual" min="0" v-model="vida.atual">
-                        <label for="">Máximo</label>
-                        <input type="number" id="vidaMaxima" name="maxima" min="0" v-model="vida.maximo">
-                        <input type="submit" value="Salvar">
-
-                    </form>
-                </div>
-
-            </div>
-            <div id="modal-sanidade" class="modalP" :style="displayModalS">
-                <div class="conteinerModal" >
-                    <h2>MODIFICAR SANIDADE</h2>
-                    <form @submit="salvarSanidade($event)" class="formModal" action="">
-                        <label for="">Atual</label>
-                        <input type="number" id="vidaAutal" name="atual" v-model="sanidade.atual">
-                        <label for="">Máximo</label>
-                        <input type="number" id="vidaMaxima" name="maxima" v-model="sanidade.maximo">
-                        <input type="submit" value="Salvar">
-
-                    </form>
-                </div>
-
-            </div>
-            <div :style="displayModalT"  class="modalP" >
-                <div class="conteinerModal" >
-                    <h2>TESTE DE SANIDADE</h2>
-                    <h3>Rolagem de dado</h3>
-                    <h4 :style="displayTesteResultado">{{valorTeste}}</h4>
-                    <p :style="displayTesteTipo">{{tipoTeste}}</p>
-                </div>
-            </div>
-            <div id="modal-ocultismo" class="modalP" :style="displayModalO">
-                <div class="conteinerModal" >
-                    <h2>MODIFICAR OCULTISMO</h2>
-                    <form @submit="salvarOcultismo($event)" class="formModal" >
-                        <label for="">Atual</label>
-                        <input type="number" id="ocultismoAtual" name="atual" min="0" v-model="ocultismo.atual">
-                        <label for="">Máximo</label>
-                        <input type="number" id="ocultismoMaxima" name="maxima" min="0" v-model="ocultismo.maximo">
-                        <input type="submit" value="Salvar">
-
-                    </form>
-                </div>
-
-            </div>
-            <div id="modal-esforco" class="modalP" :style="displayModalE">
-                <div class="conteinerModal" >
-                    <h2>MODIFICAR PONTOS DE ESFORÇO</h2>
-                    <form @submit="salvarEsforco($event)" class="formModal" >
-                        <label for="">Atual</label>
-                        <input type="number" id="esforcoAtual" name="atual" min="0" v-model="esforco.atual">
-                        <label for="">Máximo</label>
-                        <input type="number" id="esforcoMaxima" name="maxima" min="0" v-model="esforco.maximo">
-                        <input type="submit" value="Salvar">
-
-                    </form>
-                </div>
-
-            </div>
-            <div class="container-avatar" >
-                <div style="display: flex; width: auto; margin: 0 auto;">
-                     <div class="box-movi">
-                        <div >
-                            <h3>Ação / Reação</h3>
-                            <div class="barra-ar">
-                                <p>{{acao}}/{{reacao}}</p>
-                            </div>
-                        </div>
-                        <div >
-                            <h3>Movimento</h3>
-                            <p>{{movimento}}</p>
-
-                        </div>
+                        <input type="number" id="vidaAtual" name="atual" min="0" v-model="vida_l.atual">
                     </div>
-                    <div @click="toggleShow" class="box-perfil">
-                        <img :src="imgPadrao" alt="">
+                    <div class="field-input">
+                        <label for="">Máximo</label>
+                        <input type="number" id="vidaMaxima" name="maxima" min="0" v-model="vida_l.maximo">
                     </div>
-                    <!-- <div class="box-classe">
-                        <img src="/img/runa.jpg" alt="">
-                    </div> -->
-                    <div class="box-class">
+                    <input type="submit" value="Salvar">
 
+                </form>
+            </div>
+
+    </div>
+    <div class="modal_container" v-if="show_modal_sanidade == true">
+        <div class="modal-modificar" >
+            <h2>MODIFICAR SANIDADE</h2>
+            <form @submit="salvar_sanidade($event)" class="formModal" action="">
+                <label for="">Atual</label>
+                <input type="number" id="vidaAutal" name="atual" v-model="sanidade_l.atual">
+                <label for="">Máximo</label>
+                <input type="number" id="vidaMaxima" name="maxima" v-model="sanidade_l.maximo">
+                <input type="submit" value="Salvar">
+
+            </form>
+        </div>
+
+    </div>
+
+    <div class="modal_container" v-if="show_modal_ocultismo == true">
+        <div class="modal-modificar" >
+            <h2>MODIFICAR OCULTISMO</h2>
+            <form @submit="salvar_ocultismo($event)" class="formModal" >
+                <div class="field-input">
+                    <label for="">Atual</label>
+                    <input type="number" id="ocultismoAtual" name="atual" min="0" v-model="ocultismo_l.atual">
+                </div>
+                <div class="field-input">
+                    <label for="">Máximo</label>
+                    <input type="number" id="ocultismoMaxima" name="maxima" min="0" v-model="ocultismo_l.maximo">
+                </div>
+                <input type="submit" value="Salvar">
+
+            </form>
+        </div>
+
+    </div>
+    <div class="modal_container"  v-if="show_modal_esforco == true">
+        <div class="modal-modificar" >
+            <h2>MODIFICAR PONTOS DE ESFORÇO</h2>
+            <form @submit="salvar_esforco($event)" class="formModal" >
+                <label for="">Atual</label>
+                <input type="number" id="esforcoAtual" name="atual" min="0" v-model="esforco_l.atual">
+                <label for="">Máximo</label>
+                <input type="number" id="esforcoMaxima" name="maxima" min="0" v-model="esforco_l.maximo">
+                <input type="submit" value="Salvar">
+
+            </form>
+        </div>
+
+    </div>
+    <div class="container-avatar" >
+        <div style="display: flex; width: auto; margin: 0 auto;">
+                <div class="box-movi">
+                <div >
+                    <h3>Ação / Reação</h3>
+                    <div class="barra-ar">
+                        <p>{{acao}}/{{reacao}}</p>
                     </div>
                 </div>
+                <div >
+                    <h3>Movimento</h3>
+                    <p>{{movimento}}</p>
+
+                </div>
+            </div>
+            <div @click="toggleShow" class="box-perfil">
+                <img :src="imgPadrao" alt="">
+            </div>
+            <!-- <div class="box-classe">
+                <img src="/img/runa.jpg" alt="">
+            </div> -->
+            <div class="box-class">
 
             </div>
+        </div>
+
+    </div>
             <!-- <div>
                 <a class="btn" @click="toggleShow">set avatar</a>
                 <my-upload field="img"
@@ -112,64 +122,58 @@
                     </my-upload>
                 <img :src="imgDataUrl">
             </div> -->
-            <div id="box-barra-padrao">
-                    <h4>Vida</h4>
-                    <div class="barraVida barraP">
-                        <div @click="modalVida" class="barra-vida barra-p" :style="porcentagemVida">
-                            <p class="contagemBarra" id="contagemVida" >{{vida.atual}}/{{vida.maximo}}</p>
-                        </div>
-                    </div>
-                    <div >
-                            <input   type="checkbox" name="vidaStatus" id="vidaStatus01">
-                            <label for="vidaStatus01">Lesão Grave</label>
-                            <input type="checkbox" name="vidaStatus" id="vidaStatus02">
-                            <label for="vidaStatus02">Inconsciente</label>
-                            <input type="checkbox" name="vidaStatus" id="vidaStatus03">
-                            <label for="vidaStatus03">Morrendo</label>
-                    </div>
-            </div>
-            <div id="box-barra-padrao">
-                <h4>Sanidade</h4>
-                <div style="display:flex" >
-                    <div class="barraSanidade barraP">
-                        <div @click="modalSanidade" class="barra-sanidade barra-p" :style="porcentagemSanidade">
-                            <p class="contagemBarra">{{sanidade.atual}}/{{sanidade.maximo}}</p>
-                        </div>
-                    </div>
-                    <img id="imgSanidade" style="width:40px; height:40px;" src="/img/d20_2.png" @click="abrirModalTeste()">
-                </div>
-                <div>
-                    <input type="checkbox" name="vidaStatus" id="vidaStatus">
-                    <label for="vidaStatus">Traumarizado</label>
-                    <input type="checkbox" name="vidaStatus" id="vidaStatus">
-                    <label for="vidaStatus">Enlouquecendo</label>
+    <div id="content-barra">
+            <h4>Vida</h4>
+            <div class="barraVida barraP" @click="open_modal_vida">
+                <div class="barra-vida barra-p" :style="{ width : `${porcentagem_vida}%`}">
+                    <p class="percentual_barra" id="contagemVida" >{{vida_l.atual}}/{{vida_l.maximo}}</p>
                 </div>
             </div>
-            <div id="box-barra-padrao" :style="displayBarraOcultismo">
-                <h4>Ocultismo</h4>
-                <div class="barraOcultismo barraP">
-                    <div @click="modalOcultismo" class="barra-ocultismo barra-p" :style="porcentagemOcultismo">
-                        <p class="contagemBarra">{{ocultismo.atual}}/{{ocultismo.maximo}}</p>
-                    </div>
-                </div>
-
-            </div>
-            <div id="box-barra-padrao">
-                <h4>Esforço</h4>
-                <div class="barraEsforco barraP">
-                    <div @click="modalEsforco" class="barra-esforco barra-p" :style="porcentagemEsforco">
-                        <p class="contagemBarra">{{esforco.atual}}/{{esforco.maximo}}</p>
-                    </div>
-                </div>
-                <div>
-                    <label for="dano-extra">Dano Extra</label>
-                    <div id="input-padrao2">
-                        <input type="number" name="dano-extra" id="dano-extra ">
-                    </div>
-
-                </div>
+            <div >
+                    <input   type="checkbox" name="vidaStatus" id="vidaStatus01">
+                    <label for="vidaStatus01">Lesão Grave</label>
+                    <input type="checkbox" name="vidaStatus" id="vidaStatus02">
+                    <label for="vidaStatus02">Inconsciente</label>
+                    <input type="checkbox" name="vidaStatus" id="vidaStatus03">
+                    <label for="vidaStatus03">Morrendo</label>
             </div>
     </div>
+    <div id="content-barra">
+        <h4>Sanidade</h4>
+        <div style="display:flex; align-items : center; ">
+            <div class="barraSanidade barraP" @click="open_modal_sanidade">
+                <div class="barra-sanidade barra-p" :style="{ width : `${porcentagem_sanidade}%`}">
+                    <p class="percentual_barra">{{sanidade_l.atual}}/{{sanidade_l.maximo}}</p>
+                </div>
+            </div>
+            <img id="imgSanidade" style="width:40px; height:40px;" src="/img/d20_2.png" @click="open_modal_teste_esforco()">
+        </div>
+        <div>
+            <input type="checkbox" name="vidaStatus" id="vidaStatus">
+            <label for="vidaStatus">Traumarizado</label>
+            <input type="checkbox" name="vidaStatus" id="vidaStatus">
+            <label for="vidaStatus">Enlouquecendo</label>
+        </div>
+    </div>
+    <div id="content-barra" >
+        <h4>Ocultismo</h4>
+        <div class="barraOcultismo barraP" @click="open_modal_ocultismo">
+            <div  class="barra-ocultismo barra-p" :style="{ width : `${porcentagem_ocultismo}%`}">
+                <p class="percentual_barra">{{ocultismo_l.atual}}/{{ocultismo_l.maximo}}</p>
+            </div>
+        </div>
+
+    </div>
+    <div id="content-barra">
+        <h4>Esforço</h4>
+        <div class="barraEsforco barraP" @click="open_modal_esforco">
+            <div class="barra-esforco barra-p" :style="{ width : `${porcentagem_esforco}%`}">
+                <p class="percentual_barra">{{esforco_l.atual}}/{{esforco_l.maximo}}</p>
+            </div>
+        </div>
+  
+    </div>
+</div>
 
 </template>
 <script>
@@ -178,7 +182,6 @@ export default {
         
     },
     props:{
-        data : Object,
         vida : Object,
         sanidade : Object,
         ocultismo : Object,
@@ -190,16 +193,25 @@ export default {
     },
     data(){
         return{
+            vida_l : {atual: 5, maximo: 50},
+            sanidade_l : {atual: 5, maximo: 50},
+            ocultismo_l : {atual: 5, maximo: 50},
+            esforco_l : {atual: 5, maximo: 50},
+            acao_l : 1,
+            movimento_l : 1,
+            reacao_l : 1,
+
             imgPadrao: '/img/perfil1.jpg',
-            displayBarraOcultismo: 'display:none',
-            displayModalV:'display:none;',
-            porcentagemVida : 'width: 0%;',
-            displayModalS:'display:none;',
-            porcentagemSanidade: 'width: 0%;',
-            displayModalO:'display:none;',
-            porcentagemOcultismo: 'width: 0%;',
-            displayModalE:'display:none;',
-            porcentagemEsforco: 'width: 0%;',
+
+            show_modal_vida : false,
+            show_modal_sanidade : false,
+            show_modal_ocultismo : false,
+            show_modal_esforco : false,
+
+            porcentagem_vida : 100,
+            porcentagem_sanidade: 100,
+            porcentagem_ocultismo: 100,
+            porcentagem_esforco: 100,
             displayModalT: 'display:none;',
             displayTesteTipo: 'display: none; transition: display 0.5s;',
             displayTesteResultado: 'display: none; background-color: #0a0b0c;',
@@ -219,108 +231,108 @@ export default {
     methods:{
         started(){
             setTimeout(()=>{
-                console.log('width: '+valor+'%' )
-                var valor = (100 / this.vida.maximo)*this.vida.atual
-                this.porcentagemVida = String('width: '+valor+'%;')
-
-                var valor1 = (100 / this.sanidade.maximo)*this.sanidade.atual
-                this.porcentagemSanidade = 'width:'+valor1+'%;'
-
-                var valor2 = (100 / this.ocultismo.maximo)*this.ocultismo.atual
-                this.porcentagemOcultismo = 'width:'+valor2+'%;'
-                var valor3 = (100 / this.esforco.maximo)*this.esforco.atual
-                this.porcentagemEsforco = 'width:'+valor3+'%;'
+                let percent;
+                // percentual de vida
+                percent = (100 / this.vida_l.maximo)*this.vida_l.atual
+                this.porcentagem_vida = percent;
+                // percentual de sanidade
+                percent = (100 / this.sanidade_l.maximo)*this.sanidade_l.atual
+                this.porcentagem_sanidade = percent;
+                // percentual de ocultismo
+                percent = (100 / this.ocultismo_l.maximo)*this.ocultismo_l.atual
+                this.porcentagem_ocultismo = percent;
+                // percentual de esforço
+                percent = (100 / this.esforco_l.maximo)*this.esforco_l.atual
+                this.porcentagem_esforco = percent;
 
             },100)
         },
-      modalVida(){
-          this.displayModalV ='display:block;'
-      },salvarVida(e){
-
-            if(this.vida.atual > this.vida.maximo){
+      open_modal_vida(){
+          this.show_modal_vida = true
+      },salvar_vida(e){
+            let percent;
+            if(this.vida_l.atual > this.vida_l.maximo){
                 alert('A VIDA ATUAL NÃO PODE SER MAIOR QUE A MÁXIMA!!')
-                this.vida.atual = this.vida.maximo
-                var valor = 100
-            }else if(this.vida.atual < 0){
-                var valor = 0
+                this.vida_l.atual = this.vida_l.maximo
+                percent = 100
+            }else if(this.vida_l.atual < 0){
+                percent = 0
             }else{
-                var valor = (100 / this.vida.maximo)*this.vida.atual
+                percent = (100 / this.vida_l.maximo)*this.vida_l.atual
             }
-            const porcentagemV = 'width:'+valor+'%;'
-            console.log(porcentagemV)
-            this.porcentagemVida = porcentagemV
+ 
+            this.porcentagem_vida = percent
 
-            this.displayModalV = 'display:none;'
-            this.$emit('vidaU', {atual: this.vida.atual, maximo: this.vida.maximo})
+            this.show_modal_vida = false
+
             e.preventDefault();
-      },
-      modalSanidade(){
-          this.displayModalS ='display:block;'
-      },salvarSanidade(e){
-          if(this.sanidade.atual > this.sanidade.maximo){
+        },
+        open_modal_sanidade(){
+            this.show_modal_sanidade = true;
+        },
+        salvar_sanidade(e){
+            let percent;
+            if(this.sanidade_l.atual > this.sanidade_l.maximo){
                 alert('A SANIDADE ATUAL NÃO PODE SER MAIOR QUE A MÁXIMA!!')
-                this.sanidade.atual = this.sanidade.maximo
-                var valor = 100
-            }else if(this.sanidade.atual < 0){
-                var valor = 0
+                this.sanidade_l.atual = this.sanidade_l.maximo
+                percent = 100
+            }else if(this.sanidade_l.atual < 0){
+                percent = 0
 
             }else{
-                var valor = (100 / this.sanidade.maximo)*this.sanidade.atual
+                percent = (100 / this.sanidade_l.maximo)*this.sanidade_l.atual
             }
-            const porcentagemS = 'width:'+valor+'%;'
-            console.log(porcentagemS)
-            this.porcentagemSanidade = porcentagemS
 
-            this.displayModalS = 'display:none;'
-            this.$emit('sanidadeU', {atual: this.sanidade.atual, maximo: this.sanidade.maximo})
+            this.porcentagem_sanidade = percent
 
+            this.show_modal_sanidade = false;
             e.preventDefault();
-      },
-      modalOcultismo(){
-          this.displayModalO ='display:block;'
-      },salvarOcultismo(e){
-          if(this.ocultismo.atual > this.ocultismo.maximo){
+        },
+        open_modal_ocultismo(){
+            this.show_modal_ocultismo = true
+        },
+        salvar_ocultismo(e){
+            let percent;
+            if(this.ocultismo_l.atual > this.ocultismo_l.maximo){
                 alert('O OCULTISMO ATUAL NÃO PODE SER MAIOR QUE A MÁXIMA!!')
-                this.ocultismo.atual = this.ocultismo.maximo
-                var valor = 100
-            }else if(this.ocultismo.atual < 0){
-                var valor = 0
+                this.ocultismo_l.atual = this.ocultismo_l.maximo
+                percent = 100
+            }else if(this.ocultismo_l.atual < 0){
+                percent = 0
 
             }else{
-                var valor = (100 / this.ocultismo.maximo)*this.ocultismo.atual
+                percent = (100 / this.ocultismo_l.maximo)*this.ocultismo_l.atual
             }
-            const porcentagemO = 'width:'+valor+'%;'
-            console.log(porcentagemO)
-            this.porcentagemOcultismo = porcentagemO
 
-            this.displayModalO = 'display:none;'
-            this.$emit('ocultismoU', {atual: this.ocultismo.atual, maximo: this.ocultismo.maximo})
+            this.porcentagem_ocultismo = percent
+
+            this.show_modal_ocultismo = false
+
             e.preventDefault();
       },
-      modalEsforco(){
-          this.displayModalE ='display:block;'
-      },salvarEsforco(e){
-          if(this.esforco.atual > this.esforco.maximo){
+      open_modal_esforco(){
+          this.show_modal_esforco = true
+      },
+      salvar_esforco(e){
+        let percent;
+          if(this.esforco_l.atual > this.esforco_l.maximo){
                 alert('PONTOS DE ESFORÇO ATUAL NÃO PODE SER MAIOR QUE A MÁXIMA!!')
-                this.esforco.atual = this.esforco.maximo
-                var valor = 100
-            }else if(this.esforco.atual < 0){
-                var valor = 0
+                this.esforco_l.atual = this.esforco_l.maximo
+                percent = 100
+            }else if(this.esforco_l.atual < 0){
+                percent = 0
 
             }else{
-                var valor = (100 / this.esforco.maximo)*this.esforco.atual
+                percent = (100 / this.esforco_l.maximo)*this.esforco_l.atual
             }
-            const porcentagemE = 'width:'+valor+'%;'
-            console.log(porcentagemE)
-            this.porcentagemEsforco = porcentagemE
+            this.porcentagem_esforco = percent
 
-            this.displayModalE = 'display:none;'
-            this.$emit('esforcoU', {atual: this.esforco.atual, maximo: this.esforco.maximo})
-
+            this.show_modal_esforco = false
+  
             e.preventDefault();
       },
-      abrirModalTeste(){
-          var maximo = 100
+      open_modal_teste_esforco(){
+           var maximo = 100
            var total = 0
            var count = 1
            this.displayModalT = 'display:block;'
@@ -328,13 +340,10 @@ export default {
                total += Math.floor(Math.random()*maximo + 1)
            }
 
-           console.log('total: ',total, this.sanidade.atual)
-
            setTimeout(()=>{
                this.valorTeste = total
                this.displayTesteResultado = 'display: block;'
-
-          }, 2000)
+            }, 2000)
            setTimeout(()=>{
            if(this.sanidade.atual < total){
               this.tipoTeste = 'Sucesso'
@@ -400,7 +409,10 @@ export default {
 
 }
 </script>
-<style scoped>
+<style scoped lang="scss">
+.geral-avatar{
+    position: relative;
+}
 #imgSanidade{
     border: 1px solid rgba(255, 255, 255, 0);
     border-radius: 50%;
@@ -470,10 +482,10 @@ export default {
     height: 100%;
     margin: 0 auto;
 }
-.contagemBarra {
+.percentual_barra {
     width: 100%;
     margin-left: 10px;}
-.contagemBarra{
+.percentual_barra{
     font-size: 20px;}
 .barra-p{
     margin-top: 0;
@@ -512,7 +524,7 @@ export default {
 .barra-esforco{
     background-color: #296e3d;
     border-right: 2px solid #65b580;}
-#box-barra-padrao h4{
+#content-barra h4{
     margin: 0 auto;
     font-size: 20px;
     color: bisque;
@@ -532,5 +544,63 @@ export default {
 }
 .input-padrao2{
     background: rgba(7 7 7 / 0.5);
+}
+
+// modal modificar 
+.modal_container{
+    background-color: rgba(0, 0, 0, 0.486);
+    width: 100%;
+    height: 100%;
+    
+    position: absolute;
+    top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .modal-modificar{
+        background-color: rgba(0  0  0 / 0.7);
+        text-align:center;
+        border: 2px solid #898;
+        padding: 1em;
+        display: flex;
+        flex-direction: column;
+        
+        h2{
+            font-size: 1.2em;
+        }
+        form{
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            .field-input{
+                padding: 0.5em;
+                label{
+                    font-size: 1em;
+                    padding-right: 0.5em ;
+                }
+                input {
+                    text-align: center;
+                    border: none;
+                    border-bottom: 2px solid #a2a2a2;
+                    border-top-left-radius: 10px;
+                    border-bottom-right-radius: 10px;
+                    padding: 3px 4px;
+                    background: rgba(7 7 7 / 0.5);
+                    color: #fff;
+                    font-family: 'Itim', sans-serif;}
+                input[type="number"]:hover{
+                background-color: rgba(255, 255, 255, 1);
+                color: black;
+                }
+            }
+            input[type="submit"]{
+                width: 60%;
+                font-size: 1em;
+                font-family: "Consolas";
+                margin: 1em auto;
+                cursor: pointer;
+            }
+        }
+    }
 }
 </style>

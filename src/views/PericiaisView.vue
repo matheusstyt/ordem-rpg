@@ -68,19 +68,20 @@ export default {
     },
     methods:{
         btnNext(){
-            this.dataJ['pericias'] = this.pericias
-            var dataj = JSON.stringify(this.dataJ)
-            this.$router.push({name:"createresistencias", params:{dataJ: dataj}})
+            console.log(this.pericias)
+            // this.dataJ['pericias'] = this.pericias
+            // var dataj = JSON.stringify(this.dataJ)
+            // this.$router.push({name:"createresistencias", params:{dataJ: dataj}})
         },
         btnPrevious(){
-            this.dataJ['pericias'] = this.pericias
-            var dataj = JSON.stringify(this.dataJ)
-            this.$router.push({name:"createavatar", params:{dataJ: dataj}})
+            // this.dataJ['pericias'] = this.pericias
+            // var dataj = JSON.stringify(this.dataJ)
+            // this.$router.push({name:"createavatar", params:{dataJ: dataj}})
         }
     },
     created(){
-        this.dataJ = JSON.parse(this.$route.params.dataJ)
-        this.atributos = this.dataJ.atributos
+       // this.dataJ = JSON.parse(this.$route.params.dataJ)
+      //  this.atributos = this.dataJ.atributos
     },
     watch:{
         option(newValue){
@@ -91,6 +92,9 @@ export default {
                 this.displayP1 = 'display:none'
                 this.displayP2 = 'display:block'
             }
+        },
+        pericias(newValue){
+            console.log(newValue)
         }
     }
 }

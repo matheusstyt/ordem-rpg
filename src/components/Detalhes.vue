@@ -1,104 +1,80 @@
 <template>
-    <div id="caixa-form-detalhes">
-        <form @submit="verificar($event)" class="formDetalhes" action="">
+    <div class="caixa-form-detalhes">
+        <div class="detalhes-inputs" action="">
 
-                        <h2>DETALHES PESSOAIS</h2>
+            <h2>DETALHES PESSOAIS</h2>
 
-                        <div class="caixa-input">
-                            <label for="jogador">Nome do Personagem</label>
-                            <div>
-                                <input class="input-padrao0" type="text" name="jogador" id="id-jogador alerta" v-model="localJogador" spellcheck="false" :style="alertaJogador">
-                            </div>
-                        </div>
-                        <div class="caixa-input">
-                            <label for="ocupacao">Origem</label>
-                            <div>
-                                <select v-model="localOrigem" size="1" class="input-padrao0" >
-                                    <option v-for="origem in origens" :key="origem.id" :value="origem.origem">{{origem.origem}}</option>
+            <div class="input-field">
+                <label for="jogador">Nome do Personagem</label>
+                <input  type="text" name="jogador" id="id-jogador alerta" v-model="localJogador" spellcheck="false" :style="alertaJogador">
+            </div>
+            <div class="input-field">
+                <label for="ocupacao">Origem</label>
+                <select v-model="localOrigem" size="1"  >
+                    <option v-for="origem in origens" :key="origem.id" :value="origem.origem">{{origem.origem}}</option>
 
-                                </select>
-                            </div>
-                        </div>
-                        <div class="caixa-input">
-                            <label for="classe">Classe</label>
-                            <div>
-                                <select v-model="localClasse" size="1" class="input-padrao0" >
-                                    <option value="COMBATENTE">COMBATENTE</option>
-                                    <option value="OCULTISTA">OCULTISTA</option>
-                                    <option value="INTELECTUAL">INTELECTUAL</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="caixa-input">
-                            <div>
-                                <label for="classe">Nível de Exposição Paranormal(NEX)</label>
-                                <div>
-                                    <input  class="input-padrao0" type="number" v-model="localNEX">
+                </select>
+            </div>
+            <div class="input-field">
+                <label for="classe">Classe</label>
+                <select v-model="localClasse" size="1"  >
+                    <option value="COMBATENTE">COMBATENTE</option>
+                    <option value="OCULTISTA">OCULTISTA</option>
+                    <option value="INTELECTUAL">INTELECTUAL</option>
+                </select>
 
-                                </div>
-                            </div>
-                            <div>
-                                <label for="classe">Trilha (são necessários 10% de NEX)</label>
-                                <div>
-                                    <select v-model="localTrilha" v-if="localNEX < 10" size="1" class="input-padrao0" >
-                                        <option value="Sem Patente">Sem Patente</option>
-                                    </select>
-                                    <select v-else-if="localNEX >= 10 && localClasse === 'COMBATENTE'" v-model="localTrilha" size="1" class="input-padrao0" >
-                                        <option value="Sem Patente">Sem Patente</option>
-                                        <option v-for="(trilhac, index) in trilhasC" :key="index" value="trilhac.trilha">{{trilhac.trilha}}</option>
-                                    </select>
-                                    <select v-else-if="localNEX >= 10 && localClasse === 'INTELECTUAL'" v-model="localTrilha" size="1" class="input-padrao0" >
-                                        <option value="Sem Patente">Sem Patente</option>
-                                        <option v-for="(trilhae, index) in trilhasI" :key="index" :value="trilhae.trilha">{{trilhae.trilha}}</option>
-                                    </select>
-                                    <select v-model="localTrilha" v-else-if="localNEX >= 10 && localClasse === 'OCULTISTA'"  size="1" class="input-padrao0" >
-                                        <option value="Sem Patente">Sem Patente</option>
-                                        <option v-for="(trilhao, index) in trilhasO" :key="index" :value="trilhao.trilha">{{trilhao.trilha}}</option>
-                                    </select>
+            </div>
+            <div class="input-field">
+                <label for="classe">Nível de Exposição Paranormal(NEX)</label>
+                <input   type="number" v-model="localNEX">
+            </div>
+            <div class="input-field">
+                <label for="classe">Trilha (são necessários 10% de NEX)</label>
+                <select v-model="localTrilha" v-if="localNEX < 10" size="1"  >
+                    <option value="Sem Patente">Sem Patente</option>
+                </select>
+                <select v-else-if="localNEX >= 10 && localClasse === 'COMBATENTE'" v-model="localTrilha" size="1"  >
+                    <option value="Sem Patente">Sem Patente</option>
+                    <option v-for="(trilhac, index) in trilhasC" :key="index" value="trilhac.trilha">{{trilhac.trilha}}</option>
+                </select>
+                <select v-else-if="localNEX >= 10 && localClasse === 'INTELECTUAL'" v-model="localTrilha" size="1"  >
+                    <option value="Sem Patente">Sem Patente</option>
+                    <option v-for="(trilhae, index) in trilhasI" :key="index" :value="trilhae.trilha">{{trilhae.trilha}}</option>
+                </select>
+                <select v-model="localTrilha" v-else-if="localNEX >= 10 && localClasse === 'OCULTISTA'"  size="1"  >
+                    <option value="Sem Patente">Sem Patente</option>
+                    <option v-for="(trilhao, index) in trilhasO" :key="index" :value="trilhao.trilha">{{trilhao.trilha}}</option>
+                </select>
+            </div>
+            <div class="input-field">
+                <label for="classe">Patente</label>
+                <select v-model="localPatente" size="1"  >
+                    <option value="Sem Patente">Sem Patente</option>
+                    <option value="Recruta">Recruta</option>
+                    <option value="Operador">Operador</option>
+                    <option value="Agente Especial">Agente Especial</option>
+                    <option value="Oficial de Operações">Oficial de Operações</option>
+                    <option value="Agente de Elite">Agente de Elite</option>
+                </select>
 
-                                </div>
-                            </div>
-                            
-                        </div>
-                        <div class="caixa-input">
-                            <label for="classe">Patente</label>
-                            <div>
-                                <select v-model="localPatente" size="1" class="input-padrao0" >
-                                    <option value="Sem Patente">Sem Patente</option>
-                                    <option value="Recruta">Recruta</option>
-                                    <option value="Operador">Operador</option>
-                                    <option value="Agente Especial">Agente Especial</option>
-                                    <option value="Oficial de Operações">Oficial de Operações</option>
-                                    <option value="Agente de Elite">Agente de Elite</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="caixa-input">
-                            <label for="idade">Idade</label>
-                            <div>
-                                <input class="input-padrao0" type="number" name="idade" id="id-idade" v-model="localIdade" :style="alertaIdade">
-                            </div>
-                        </div>
-                        <div class="caixa-input">
-                            <label for="sexo">Sexo</label>
-                            <div>
-                                <input class="input-padrao0" type="text" name="sexo" id="id-sexo" v-model="localSexo" :style="alertaSexo">
-                            </div>
-                        </div>
-                        <div class="caixa-input">
-                            <label for="lnascimento">Local de nascimento</label>
-                            <div>
-                                <input class="input-padrao0" type="text" name="lnascimento" id="id-lnascimento" v-model="localLnascimento" :style="alertaLN">
-                            </div>
-
-                        </div>
-                        <div class="caixa-input">
-                            <label for="lresidencia">Local de residência</label>
-                            <div>
-                                <input class="input-padrao0" type="text" name="lresidencia" id="id-lresidencia" v-model="localLresidencia" :style="alertaLR">
-                            </div>
-                        </div>
-            </form>
+            </div>
+            <div class="input-field">
+                <label for="idade">Idade</label>
+                <input  type="number" name="idade" id="id-idade" v-model="localIdade" :style="alertaIdade">
+            </div>
+            <div class="input-field">
+                <label for="sexo">Sexo</label>
+                <input  type="text" name="sexo" id="id-sexo" v-model="localSexo" :style="alertaSexo">
+            </div>
+            <div class="input-field">
+                <label for="lnascimento">Local de nascimento</label>
+                <input  type="text" name="lnascimento" id="id-lnascimento" v-model="localLnascimento" :style="alertaLN">
+            </div>
+            <div class="input-field">
+                <label for="lresidencia">Local de residência</label>
+                <input  type="text" name="lresidencia" id="id-lresidencia" v-model="localLresidencia" :style="alertaLR">
+            </div>
+        </div>
     </div>
 </template>
 
@@ -290,7 +266,10 @@ export default {
 }
 
 </script>
-<style scoped>
+<style scoped lang="scss">
+
+
+
 .btnSalvar{
 margin-left: 5px;
 }

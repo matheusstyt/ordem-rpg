@@ -1243,12 +1243,7 @@ input:focus {
     opacity: 0.7;
 
 }
-#imgAtributo:hover{
-    opacity: 1;
-    border: 1px solid rgb(201, 201, 201);
-    background-color: #1b1b1b;
 
-}
 .box-perfil{
     background-color: #a2a2a2;
     width: 140px;

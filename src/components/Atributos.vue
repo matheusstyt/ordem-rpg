@@ -21,7 +21,7 @@
             </div>
 
         </div>
-        <div @click="fecharAtributosModal" id="modal-atributoAdd" class="modalP" :style="displayModalAddA">
+        <!-- <div @click="fecharAtributosModal" id="modal-atributoAdd" class="modalP" :style="displayModalAddA">
             <div class="modal-atributoAdd" >
                 <div>
                     <form id="atributoFormAdd" @submit="addATributoForm($event)">
@@ -56,9 +56,9 @@
 
             </div>
 
-        </div>
+        </div> -->
         <div class="containerAtributos">
-            <button id="btnEditar" @click="abrirModalAddA">EDITAR</button>
+            <!-- <button id="btnEditar" @click="abrirModalAddA">EDITAR</button> -->
 
             <ul>
                 <li v-for="(atributo, index) in atributosLocal" :key="index">
@@ -266,18 +266,12 @@ export default {
     }
 }
 </script>
-<style scoped>
+<style >
 
 #imgAtributo{
     border: 1px solid rgba(255, 255, 255, 0);
     border-radius: 50%;
     opacity: 0.7;
-
-}
-#imgAtributo:hover{
-    opacity: 1;
-    border: 1px solid rgb(201, 201, 201);
-    background-color: rgba(7  7  7 / 0.3);
 
 }
 .modal-atributo{

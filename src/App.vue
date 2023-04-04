@@ -7,9 +7,9 @@
       <div class="nav-p"  @click="go_sessoes">
         <p>Sessões</p>
       </div>
-      <div class="nav-p"  @click="go_meu_sistema">
+      <!-- <div class="nav-p"  @click="go_meu_sistema">
         <p>Meu Sistema</p>
-      </div>
+      </div> -->
       <div class="nav-p">
         <h3 >{{ isAuthenticated }}</h3>
       </div>

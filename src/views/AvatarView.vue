@@ -58,8 +58,8 @@ export default {
             this.$router.push({name:"createatributos", params:{dataJ: dataj}})
         }
     },created(){
-        this.dataJ = JSON.parse(this.$route.params.dataJ)
-        this.movimento = this.dataJ.movimento
+        // this.dataJ = JSON.parse(this.$route.params.dataJ)
+        // this.movimento = this.dataJ.movimento
 
     },
     mounted(){
@@ -77,18 +77,7 @@ export default {
 h1, h2, h3, label{
     color: #ffff
 }
-form{
-    background-color: rgb(0  0  0 / 0.0);
-    width: 60%;
-    margin: 0 auto;
-    text-align: center;
-}
-form h2{
-    text-align: center;
-}
-form div{
-    margin: 0 auto;
-}
+
 #line03{
     display: flex;}
 #input-padrao2 input{
@@ -99,24 +88,8 @@ form div{
     float: left;
     margin: 0;
     height: 30px;}
-input {
-    text-align: center;
-    border: none;
-    border-bottom: 2px solid #a2a2a2;
-    border-top-left-radius: 10px;
-    border-bottom-right-radius: 10px;
-    padding: 3px 4px;
-    background: rgba(7 7 7 / 0.5);
-    color: #fff;
-    font-family: 'Itim', sans-serif;}
-input[type="number"]:hover{
-background-color: rgba(255, 255, 255, 1);
-color: black;
-}
-input[type="submit"]{
-    height: 30px;
-    font-size: 20px;
-}
+
+
 input:focus {
     outline: none;}
 
@@ -154,41 +127,12 @@ input:focus {
     top: 10%;
     left:0%;
     right:0;
-    padding: 0 20px;
-    position: absolute;
+
     background: rgba(0, 0, 0, 0.5);
     background-size:contain;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
 }
-.conteinerModal{
-    background-color: rgba(0  0  0 / 0.7);
-    text-align:center;
-    margin: 0 auto;
-    height: 300px;
-    position: fixed;
-    top: 20px;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    border: 2px solid #898;
-    width: 50%;}
-.conteinerModal h2{
-    font-size: 30px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.6
-);
-    margin: 0 auto;}
-.conteinerModal label{
-    font-size: 25px;}
-.conteinerModal input{
-    font-size: 25px;
-    text-align: center;
-    width:93%;}
-.conteinerModal p{
-    height: 50px;
-    color: #fff;
-    font-size: 35px;
-    margin: 0 auto;
-    display: block;}
+
 
 </style>
