@@ -50,7 +50,6 @@
 
                                         <td>{{data[index].nome}}</td>
                                         <td>{{data[index].valor}}</td>
-                                        <td> <button id="btnLixeira" @click="apagarPericia(pericia.id, pericia.nome, index)"><img id="imgLixeira" src="../img/lixeira1.png" alt=""></button></td>
                                </tr>
 
                             </table>

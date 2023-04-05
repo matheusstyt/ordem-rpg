@@ -3,14 +3,14 @@
         <div id="div-caixa-avatar">
             <Avatar :vida="vida" :sanidade="sanidade" :ocultismo="ocultismo" :esforco="esforco" :movimento="movimento" :reacao="reacao" :acao="acao" :classe="classe" @classe="classe"/>
         </div>
-        <input class="btnPrevious" @click="btnPrevious"  type="submit" value="PREVIOUS ">
-        <input class="btnNext" @click="btnNext"  type="submit" value="NEXT">
+        <input class="btn previous" @click="btnPrevious"  type="submit" value="PREVIOUS ">
+        <input class="btn next" @click="btnNext"  type="submit" value="NEXT">
     </div>
 
 
 </template>
 <script>
-import Avatar from '../components/Personagem.vue'
+import Avatar from '../components/Avatar.vue'
 export default {
     components:{
         Avatar
@@ -78,42 +78,19 @@ h1, h2, h3, label{
     color: #ffff
 }
 
-#line03{
-    display: flex;}
-#input-padrao2 input{
-    width: 100px;}
-
-.input-padrao0{
-    width: 50%;
-    float: left;
-    margin: 0;
-    height: 30px;}
-
-
 input:focus {
     outline: none;}
 
-.caixa-input{
-    display: flex;
-}
-.caixa-input label{
-    margin: 0 20px;
-}
-.caixa-input div{
-    width: 70%;
-    margin: 0;
-    margin-bottom: 10px;
-}
-.btnNext:hover, .btnPrevious:hover{
+.btn:hover{
     color: black;
     background-color: aliceblue;
 }
-.btnPrevious{
+.previous{
     position: absolute;
     bottom:5%;
     left: 40%;
 }
-.btnNext{
+.next{
     position: absolute;
     bottom:5%;
     right:40%;

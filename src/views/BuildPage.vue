@@ -54,21 +54,56 @@
                 </li>
             </ul>
         </div> -->
+        <Avatar 
+            :vida.sync="vida" 
+            :sanidade.sync="sanidade" 
+            :ocultismo.sync="ocultismo" 
+            :esforco.sync="esforco" 
+            :acao.sync="acao" 
+            :movimento.sync="movimento" 
+            :reacao.sync="reacao" 
+            :lesao_grave.sync="lesao_grave" 
+            :inconsciente.sync="inconsciente" 
+            :morrendo.sync="morrendo" 
+            :traumatizado.sync="traumatizado" 
+            :enlouquecendo.sync="enlouquecendo" 
+        />
     </div>
 
 
 </template>
 <script>
+
+import ToastPlugin from 'vue-toast-notification';
+import 'vue-toast-notification/dist/theme-bootstrap.css';
+
 import Detalhes from '../components/Detalhes.vue'
 import Atributos from '../components/Atributos.vue'
+import Avatar from '../components/Avatar.vue'
 export default {
     components:{
-        Detalhes, Atributos
+        ToastPlugin, Detalhes, Atributos, Avatar
     }
     ,
     data(){
         return{
             dataJ: {},
+
+            // dados do avatar 
+            vida : {atual: 56, maximo: 50},
+            sanidade : {atual: 68, maximo: 50},
+            ocultismo : {atual: 50, maximo: 50},
+            esforco : {atual: 12, maximo: 12},
+            acao : 1,
+            movimento : 1,
+            reacao : 1,
+            lesao_grave : false,
+            inconsciente : false,
+            morrendo : false,
+            traumatizado : false,
+            enlouquecendo : false,
+            // fim dados do avatar
+
             nome : "",
             jogador : "",
             origem : 'Executivo',
