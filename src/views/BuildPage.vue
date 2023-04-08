@@ -1,155 +1,107 @@
 <template>
     <div class="caixa-central">
-       <!-- <Detalhes 
-       :nome="nome" 
-       :origem="origem" 
-       :classe="classe" 
-       :idade="idade" 
-       :sexo="sexo" 
-       :nascimento="nascimento" 
-       :residencia="residencia" 
-       :trilha="trilha" 
-       :NEX="NEX" 
-       :patente="patente"
+        <template v-if="carrosel === 1">
+            <Detalhes 
+                :nome="nome" 
+                :origem="origem" 
+                :classe="classe" 
+                :idade="idade" 
+                :sexo="sexo" 
+                :nascimento="nascimento" 
+                :residencia="residencia" 
+                :trilha="trilha" 
+                :NEX="NEX" 
+                :patente="patente"
 
-        @u_nome="u_nome" 
-        @u_origem="u_origem" 
-        @u_classe="u_classe" 
-        @u_idade="u_idade"
-        @u_sexo="u_sexo" 
-        @u_nascimento="u_nascimento" 
-        @u_residencia="u_residencia" 
-        @u_trilha="u_trilha" 
-        @u_NEX="u_NEX" 
-        @u_patente="u_patente" 
-        /> -->
-        
-        <input class="btnPrevious" @click="teste"  type="submit" value="PREV ">
-        <input class="btnNext" @click="btnNext()"  type="submit" value="NEXT">
-
-        <!-- <div class="loop atributos">
-            <ul>
-                <li v-for="(atributo, index) in atributos" :key="index">
-                    <img id="imgAtributo" src="/img/d20_3.png" @click="modalDado(atributo.nome, atributo.valor)" alt="">
-                    <p>{{atributo.nome}}</p>
-                    <input v-model="atributo.valor" type="number">
-                </li>
-            </ul>
-        </div> -->
-        <!-- <div class="loop atributos">
-            <ul>
-                <li v-for="(pericia, index) in pericias" :key="index">
-                    <img src="/img/d20_4.png" alt="">
-                    <p>{{pericia.nome}}</p>
-                    <input v-model="pericia.valor" type="number">
-                </li>
-            </ul>
-        </div> -->
-        <!-- <Avatar 
-            :l_vida.sync="vida" 
-            :l_sanidade.sync="sanidade" 
-            :l_ocultismo.sync="ocultismo" 
-            :l_esforco.sync="esforco" 
-            :l_acao.sync="acao" 
-            :l_movimento.sync="movimento" 
-            :l_reacao.sync="reacao" 
-
-            :lesao_grave="lesao_grave" 
-            :inconsciente="inconsciente" 
-            :morrendo="morrendo" 
-            :traumatizado="traumatizado" 
-            :enlouquecendo="enlouquecendo"
-
-            @u_lesao_grave="u_lesao_grave" 
-            @u_inconsciente="u_inconsciente" 
-            @u_morrendo="u_morrendo" 
-            @u_traumatizado="u_traumatizado" 
-            @u_enlouquecendo="u_enlouquecendo"
-        /> -->
-        <div class="content-sessaormamentos">
-            <div class="content-sessao">
-                <table>
-                    <thead>
-                        <th colspan="7">ARMAMENTOS DISPONÍVEIS</th>
-                        <tr>
-                            <th>arma</th>
-                            <th>categoria</th>
-                            <th>dano</th>
-                            <th>crítico</th>
-                            <th>alcance</th>
-                            <th>tipo</th>
-                            <th>espaço</th>
-                        </tr>
-                    </thead>
-                    
-                    <template v-if="armamento_simples_sessao.length > 0">
-                        <h3>Armas Simples</h3>
-                        <tr v-for="(arma, index) in armamento_simples_sessao" :key="index" @click="add_arma_simples(arma, index)">
-                            <td>{{arma.arma}}</td>
-                            <td>{{arma.categoria_0}}</td>
-                            <td>{{arma.dano}}</td>
-                            <td>{{arma.critico}}</td>
-                            <td>{{arma.alcance}}</td>
-                            <td>{{arma.tipo}}</td>
-                            <td>{{arma.espaco}}</td>
-                        </tr>
-                    </template>
-                    <template v-if="armamento_tatico_sessao.length > 0">
-                        <h3>Armas Táticas</h3>
-                        <tr v-for="(arma, index) in armamento_tatico_sessao" :key="index" @click="add_arma_tatica(arma, index)">
-                            <td>{{arma.arma}}</td>
-                            <td>{{arma.categoria_0}}</td>
-                            <td>{{arma.dano}}</td>
-                            <td>{{arma.critico}}</td>
-                            <td>{{arma.alcance}}</td>
-                            <td>{{arma.tipo}}</td>
-                            <td>{{arma.espaco}}</td>
-                        </tr>
-                    </template>
-                    <template v-if="armamento_pesado_sessao.length > 0">
-                        <h3>Armas Pesadas</h3>
-                        <tr v-for="(arma, index) in armamento_pesado_sessao" :key="index" @click="add_arma_pesada(arma, index)">
-                            <td>{{arma.arma}}</td>
-                            <td>{{arma.categoria_0}}</td>
-                            <td>{{arma.dano}}</td>
-                            <td>{{arma.critico}}</td>
-                            <td>{{arma.alcance}}</td>
-                            <td>{{arma.tipo}}</td>
-                            <td>{{arma.espaco}}</td>
-                        </tr>
-                    </template>
-                </table>
+                @u_nome="u_nome" 
+                @u_origem="u_origem" 
+                @u_classe="u_classe" 
+                @u_idade="u_idade"
+                @u_sexo="u_sexo" 
+                @u_nascimento="u_nascimento" 
+                @u_residencia="u_residencia" 
+                @u_trilha="u_trilha" 
+                @u_NEX="u_NEX" 
+                @u_patente="u_patente" 
+            />
+        </template>
+        <template v-if="carrosel === 2">
+            <div class="loop atributos">
+                <ul>
+                    <li v-for="(atributo, index) in atributos" :key="index">
+                        <img id="imgAtributo" src="/img/d20_3.png" @click="modalDado(atributo.nome, atributo.valor)" alt="">
+                        <p>{{atributo.nome}}</p>
+                        <input v-model="atributo.valor" type="number">
+                    </li>
+                </ul>
+            </div> 
+        </template>
+        <template v-if="carrosel === 3">
+            <div class="loop pericias">
+                <ul>
+                    <li v-for="(pericia, index) in pericias" :key="index">
+                        <img src="/img/d20_4.png" alt="">
+                        <p>{{pericia.nome}}</p>
+                        <input v-model="pericia.valor" type="number">
+                    </li>
+                </ul>
             </div>
-            <div class="content-personagem">
-                <div>
+        </template>
+        <template v-if="carrosel === 4">
+            <Avatar 
+                :l_vida.sync="vida" 
+                :l_sanidade.sync="sanidade" 
+                :l_ocultismo.sync="ocultismo" 
+                :l_esforco.sync="esforco" 
+                :l_acao.sync="acao" 
+                :l_movimento.sync="movimento" 
+                :l_reacao.sync="reacao" 
+
+                :lesao_grave="lesao_grave" 
+                :inconsciente="inconsciente" 
+                :morrendo="morrendo" 
+                :traumatizado="traumatizado" 
+                :enlouquecendo="enlouquecendo"
+
+                @u_lesao_grave="u_lesao_grave" 
+                @u_inconsciente="u_inconsciente" 
+                @u_morrendo="u_morrendo" 
+                @u_traumatizado="u_traumatizado" 
+                @u_enlouquecendo="u_enlouquecendo"
+            />
+        </template>
+        <template v-if="carrosel >= 5">
+            <div class="content-sessaormamentos">
+                <div class="content-sessao">
                     <table>
                         <thead>
-                            <th colspan="7">SEUS ARMAMENTOS</th>
+                            <th colspan="7">ARMAMENTOS DISPONÍVEIS</th>
                             <tr>
                                 <th>arma</th>
-                                <th>categoria</th>
+                                <th class="hide-td">categoria</th>
                                 <th>dano</th>
-                                <th>crítico</th>
+                                <th class="hide-td">crítico</th>
                                 <th>alcance</th>
-                                <th>tipo</th>
+                                <th class="hide-td">tipo</th>
                                 <th>espaço</th>
                             </tr>
                         </thead>
-                        <template v-if="armamento_simples_personagem.length > 0">
+                        
+                        <template v-if="armamento_simples_sessao.length > 0">
                             <h3>Armas Simples</h3>
-                            <tr v-for="(arma, index) in armamento_simples_personagem" :key="index" @click="remove_arma_simples(arma, index)">
+                            <tr v-for="(arma, index) in armamento_simples_sessao" :key="index" @click="add_arma_simples(arma, index)">
                                 <td>{{arma.arma}}</td>
-                                <td>{{arma.categoria_0}}</td>
+                                <td class="hide-td" >{{arma.categoria_0}}</td>
                                 <td>{{arma.dano}}</td>
-                                <td>{{arma.critico}}</td>
+                                <td class="hide-td">{{arma.critico}}</td>
                                 <td>{{arma.alcance}}</td>
-                                <td>{{arma.tipo}}</td>
+                                <td class="hide-td">{{arma.tipo}}</td>
                                 <td>{{arma.espaco}}</td>
                             </tr>
                         </template>
-                        <template v-if="armamento_tatico_personagem.length > 0">
+                        <template v-if="armamento_tatico_sessao.length > 0">
                             <h3>Armas Táticas</h3>
-                            <tr v-for="(arma, index) in armamento_tatico_personagem" :key="index" @click="remove_arma_tatica(arma, index)">
+                            <tr v-for="(arma, index) in armamento_tatico_sessao" :key="index" @click="add_arma_tatica(arma, index)">
                                 <td>{{arma.arma}}</td>
                                 <td>{{arma.categoria_0}}</td>
                                 <td>{{arma.dano}}</td>
@@ -159,9 +111,9 @@
                                 <td>{{arma.espaco}}</td>
                             </tr>
                         </template>
-                        <template v-if="armamento_pesado_personagem.length > 0">
+                        <template v-if="armamento_pesado_sessao.length > 0">
                             <h3>Armas Pesadas</h3>
-                            <tr v-for="(arma, index) in armamento_pesado_personagem" :key="index" @click="remove_arma_pesada(arma, index)">
+                            <tr v-for="(arma, index) in armamento_pesado_sessao" :key="index" @click="add_arma_pesada(arma, index)">
                                 <td>{{arma.arma}}</td>
                                 <td>{{arma.categoria_0}}</td>
                                 <td>{{arma.dano}}</td>
@@ -173,9 +125,71 @@
                         </template>
                     </table>
                 </div>
-        
+                <div class="content-personagem">
+                    <div>
+                        <table>
+                            <thead>
+                                <th colspan="7">SEUS ARMAMENTOS</th>
+                                <tr>
+                                    <th>arma</th>
+                                    <th>categoria</th>
+                                    <th>dano</th>
+                                    <th>crítico</th>
+                                    <th>alcance</th>
+                                    <th>tipo</th>
+                                    <th>espaço</th>
+                                </tr>
+                            </thead>
+                            <template v-if="armamento_simples_personagem.length > 0">
+                                <h3>Armas Simples</h3>
+                                <tr v-for="(arma, index) in armamento_simples_personagem" :key="index" @click="remove_arma_simples(arma, index)">
+                                    <td>{{arma.arma}}</td>
+                                    <td>{{arma.categoria_0}}</td>
+                                    <td>{{arma.dano}}</td>
+                                    <td>{{arma.critico}}</td>
+                                    <td>{{arma.alcance}}</td>
+                                    <td>{{arma.tipo}}</td>
+                                    <td>{{arma.espaco}}</td>
+                                </tr>
+                            </template>
+                            <template v-if="armamento_tatico_personagem.length > 0">
+                                <h3>Armas Táticas</h3>
+                                <tr v-for="(arma, index) in armamento_tatico_personagem" :key="index" @click="remove_arma_tatica(arma, index)">
+                                    <td>{{arma.arma}}</td>
+                                    <td>{{arma.categoria_0}}</td>
+                                    <td>{{arma.dano}}</td>
+                                    <td>{{arma.critico}}</td>
+                                    <td>{{arma.alcance}}</td>
+                                    <td>{{arma.tipo}}</td>
+                                    <td>{{arma.espaco}}</td>
+                                </tr>
+                            </template>
+                            <template v-if="armamento_pesado_personagem.length > 0">
+                                <h3>Armas Pesadas</h3>
+                                <tr v-for="(arma, index) in armamento_pesado_personagem" :key="index" @click="remove_arma_pesada(arma, index)">
+                                    <td>{{arma.arma}}</td>
+                                    <td>{{arma.categoria_0}}</td>
+                                    <td>{{arma.dano}}</td>
+                                    <td>{{arma.critico}}</td>
+                                    <td>{{arma.alcance}}</td>
+                                    <td>{{arma.tipo}}</td>
+                                    <td>{{arma.espaco}}</td>
+                                </tr>
+                            </template>
+                        </table>
+                    </div>
+            
+                </div>
             </div>
-        </div>
+        </template>
+
+        <input class="btnPrevious" @click="btnPrev()"  type="submit" value="PREV ">
+        <input class="btnNext" @click="btnNext()"  type="submit" value="NEXT">
+
+        
+        
+        
+        
     </div>
 
 
@@ -198,11 +212,11 @@ export default {
     ,
     data(){
         return{
-            dataJ: {},
+            carrosel: 1,
 
             // dados do avatar 
-            vida : {atual: 56, maximo: 50},
-            sanidade : {atual: 68, maximo: 50},
+            vida : {atual: 23, maximo: 40},
+            sanidade : {atual: 68, maximo: 100},
             ocultismo : {atual: 50, maximo: 50},
             esforco : {atual: 12, maximo: 12},
             acao : 1,
@@ -211,7 +225,7 @@ export default {
             inconsciente : false,
             morrendo : false,
             traumatizado : false,
-            enlouquecendo : true,
+            enlouquecendo : false,
             // fim dados do avatar
 
             // dados de detalhes do personagem
@@ -285,8 +299,17 @@ export default {
         u_morrendo(value){this.morrendo = value},
         u_traumatizado(value){this.traumatizado = value},
         u_enlouquecendo(value){this.enlouquecendo = value},
-
+        btnPrev(){
+            if(this.carrosel > 1){
+                this.carrosel = this.carrosel - 1;
+            }
+            
+        },
         btnNext(){
+            if(this.carrosel < 5){
+                this.carrosel = this.carrosel + 1;
+            }
+            
             // console.log(this.vida)
             // console.log(this.sanidade)
             // console.log(this.ocultismo)
@@ -394,12 +417,18 @@ background: rgba(0, 0, 0, 0.0);
 width: 100vw;
 height: 100vh;
 
+margin-top: 3vmax;
 display: flex;
-align-items: center;
+align-items: flex-start;
 justify-content: center;
+@media screen and (max-width: 400px)    {
+    max-height: 70vh;
+}
 }
 .caixa-form-detalhes{
+
     .detalhes-inputs{
+
         border: 1px solid rgba(255 255 255 / 0.5);
         padding: 20px;
         background: rgba(0, 0, 0, 0.6);
@@ -412,6 +441,10 @@ justify-content: center;
     display: flex;
     justify-content: space-between;
     gap: 3em;
+    padding: 0.3    em 0;
+}
+label{
+    text-align: left;
 }
 input, select, option {
     text-align: center;
@@ -440,23 +473,24 @@ select:hover, option:hover{
 .btnPrevious{
     cursor: pointer;
     position: absolute;
-    bottom:50%;
+    bottom:5%;
     left: 5%;
 }
 .btnNext{
     cursor: pointer;
     position: absolute;
-    bottom:50%;
+    bottom:5%;
     right:5%;
 }
 
 
 .loop{
     width: 60%;
-    max-height: 75vh;
+    max-height: 73vh;
     overflow-y: auto;
     ul{
         padding: 0;
+        margin: 0;
         margin: 1em 0;
         list-style: none;
         display: flex;
@@ -502,15 +536,21 @@ select:hover, option:hover{
 // scss de armaentos e tabelas
 .content-sessaormamentos{
     display: flex;
-    
     width: 80%;
     gap: 1px;
     margin: 0 auto;
     background-color:rgba(0  0  0 / 0);
+    @media screen and (max-width: 400px)    {
+        width: 100%;
+        flex-direction: column;
+    }
     table{
         margin: 0 auto;
         width: 100%;
         max-height: 100%;
+        @media screen and (max-width: 400px)    {
+            max-height: 5   0%;
+        }
         thead{
             background-color: rgba(0, 0, 0, 0.827);
             top: 0;
@@ -547,12 +587,16 @@ select:hover, option:hover{
         width: 50%;
         max-height: 80vh;
         overflow-y: auto;
-       background-color: rgba(0, 0, 0, 0.7);
+        background-color: rgba(0, 0, 0, 0.7);
         border-right: 1px solid rgb(137, 137, 137);
         h2{
             text-align: center;
             color: #ffff;
             text-shadow: 2px 2px black;
+        }
+        @media screen and (max-width: 400px)    {
+            width: 100%;
+            max-height: 38vh;
         }
     }
     .content-personagem{
@@ -560,9 +604,14 @@ select:hover, option:hover{
         width: 50%;
         overflow-y: auto;
         background-color: rgba(0, 0, 0, 0.7);
-        
+        @media screen and (max-width: 400px)    {
+            width: 100%;
+            max-height: 35vh;
+        }
     }
     
 }
+
+
 // fim scss armamentos
 </style>

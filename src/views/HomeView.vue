@@ -14,7 +14,6 @@
         <p>É um universo ficcional e marca criada pelo streamer brasileiro Cellbit.[1]</p>
         <p>Atualmente, sua ramificação principal são os episódios de RPG de mesa exibidos aos sábados, às 18 horas, no canal do Cellbit na Twitch. Todas as terças ocorrem as reprises, ao mesmo horário e também na Twitch, e, às quintas-feiras, o episódio é publicado no canal Lives do Cellbit no YouTube.</p>
         <p>O objetivo do desenvolvimento desse projeto FullStack, é aperfeiçoar meus conhecimentos em HTML, CSS e JavaScript, e implementar Vue.js para front-end, Node.js para back-end, Mysql como banco de dados. Vale ressaltar que foi feito apenas por mim!  </p>
-        <p>Atenciosamente: Matheus Galdino</p>
     </div>
     <p id="author">author: matheus da silva galdino :D</p>
     <div>
@@ -51,6 +50,13 @@ p, h2{
 }
 h2{
     font-size:27px;
+    
+}
+@media screen and (max-width: 400px)    {
+    h2{
+        font-size: 1.2em;
+        text-align: center;
+    }
 }
 .geral-home{
     position: absolute;
@@ -58,6 +64,9 @@ h2{
     height: 100%;
     background-color: rgba( 0 0 0 / 0.3);
     text-align: center;
+    @media screen and (max-width: 400px)    {
+        top: 8vmax;
+    }
     .caixa-bemvindo{
         max-width: 90vw;
         text-align: justify;
@@ -66,6 +75,9 @@ h2{
             width: 100%;
             display: flex;
             justify-content: space-between;
+        }
+        @media screen and (max-width: 400px)    {
+            max-width: 100vw;
         }
     }
     #author{
@@ -101,5 +113,8 @@ h2{
         width: 95%;
         height: 95%;
     }
+    @media screen and (max-width: 400px)    {
+        width: 60%;
+      }
 }
 </style>

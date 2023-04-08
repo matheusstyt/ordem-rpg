@@ -28,13 +28,13 @@
             <div class="content-session-open" v-if="no_session === true" style="display: block">
                 <ul>
                   <li v-for="(session, index) in list_sessions" :key="session.id" @click="open_session(session.id, session.descricao)" >
-                  <div @click="abrirsession(session.idsession)">
+
                     <p>N°: {{index+1}}</p>  
                     <p>mestre: {{session.mestre}}</p>
                     <p>descrição : {{session.descricao}}</p>
                     <p>data de inicio: {{session.data_criacao}}</p>
-                    <label  for="status">status: {{session.status}}</label>
-                  </div>
+                    <p >status: {{session.status}}</p>
+              
                   </li>
                 </ul>
             </div>
@@ -50,7 +50,7 @@
             <div class="content-session-open" style="display: block">
               <ul>
                 <li v-for="(match, index) in list_matches" :key="match.id" @click="open_match(match.id, match.fk_mestre, match.descricao)" >
-                <div>
+             
                   <p>N°: {{index+1}}</p>
                   
                   <p>mestre: {{match.mestre}}</p>
@@ -59,7 +59,7 @@
                   
                  <!-- <p>Tempo decorrido: {{match.tempoDecorrido}}</p> -->
                   <label  for="status">status: {{match.status}}</label>
-                </div>
+            
                 </li>
               </ul>
           </div>
@@ -175,19 +175,19 @@
           this.modal_contact_opened = false
         },
         async list_match(){
-          const url_session = "http://170.10.0.50:8000/session/";
-          const url_players = "http://170.10.0.50:8000/players/";
+          const url_session = "http://192.168.100.26:8000/session/";
+          const url_players = "http://192.168.100.26:8000/players/";
           const now = Date()
           const headers = {'Authorization': 'Token ' + sessionStorage.getItem('token') };
         
-          axios.get(`http://170.10.0.50:8000/players/`, { params : { fk_user : this.user_id }, headers : headers })
+          axios.get(`http://192.168.100.26:8000/players/`, { params : { fk_user : this.user_id }, headers : headers })
           .then( res => {
             console.log('players')
             console
             .log(res.data)
             
             res.data.players.forEach(element => {
-              axios.get(`http://170.10.0.50:8000/session/${element.fk_session}/`, { headers : headers })
+              axios.get(`http://192.168.100.26:8000/session/${element.fk_session}/`, { headers : headers })
               .then(res => { 
                 console.log('match list')
                 console.log(res.data)
@@ -206,7 +206,7 @@
           })
         },
         async get_session(){
-            const url_session = "http://170.10.0.50:8000/session/";
+            const url_session = "http://192.168.100.26:8000/session/";
             const now = Date()
             const headers = {'Authorization': 'Token ' + sessionStorage.getItem('token') };
             
@@ -229,7 +229,7 @@
 
         },  
         async get_partida(){
-            const url = "http://170.10.0.50:8000/askplayer/";
+            const url = "http://192.168.100.26:8000/askplayer/";
             const now = Date()
             const headers = {'Authorization': 'Token ' + sessionStorage.getItem('token') };
           
@@ -249,7 +249,7 @@
             })
         },
         async get_pendente(){
-            const url = "http://170.10.0.50:8000/ask/";
+            const url = "http://192.168.100.26:8000/ask/";
             const now = Date()
             const headers = {'Authorization': 'Token ' + sessionStorage.getItem('token') };
           
@@ -268,7 +268,7 @@
             })
         },
         async get_contact(){
-          const url = "http://170.10.0.50:8000/contact/";
+          const url = "http://192.168.100.26:8000/contact/";
             const headers = {'Authorization': 'Token ' + sessionStorage.getItem('token') };
           
             axios.get(url, { params : { fk_user : sessionStorage.getItem('token') }, headers : headers })
@@ -284,7 +284,7 @@
         },
         logout: function() {
           this.$router.push('/login');
-          axios.post('http://170.10.0.50:8000/logout/', null, {
+          axios.post('http://192.168.100.26:8000/logout/', null, {
             headers: {
               Authorization: 'Token ' + sessionStorage.getItem('token')
             }
@@ -305,7 +305,7 @@
           let formattedDate = formatter.format(now);
 
           if(sessionStorage.getItem("token")){
-            const url = `http://170.10.0.50:8000/contact/`;
+            const url = `http://192.168.100.26:8000/contact/`;
 
             const body_uni = {
               fk_user : fk_destino, 
@@ -335,7 +335,7 @@
           }
         },
         excluir_pedido(id){
-          const url = `http://170.10.0.50:8000/ask/${id}/`;
+          const url = `http://192.168.100.26:8000/ask/${id}/`;
               const headers = {'Authorization': 'Token ' + sessionStorage.getItem('token') };
               axios.delete(url, { headers : headers })
               .then(res => {
@@ -351,7 +351,7 @@
             let formattedDate = formatter.format(now);
 
             if(sessionStorage.getItem("token")){
-              const url = `http://170.10.0.50:8000/players/`;
+              const url = `http://192.168.100.26:8000/players/`;
 
               const body_uni = {
                 fk_user : fk_destino, 
@@ -371,7 +371,7 @@
             }
         },
         excluir_pedido_partida(id){
-          const url = `http://170.10.0.50:8000/askplayer/${id}/`;
+          const url = `http://192.168.100.26:8000/askplayer/${id}/`;
               const headers = {'Authorization': 'Token ' + sessionStorage.getItem('token') };
               axios.delete(url, { headers : headers })
               .then(res => {
@@ -507,6 +507,7 @@
 .content-ico{
   height: 1.5em;
   aspect-ratio: 1/1;
+  
 }
 
 .content-social{
@@ -532,8 +533,8 @@
       padding-left: 1em;
       background-color: rgba(3, 3, 3, 0.26);
       #status{
-        height: 20px;
-        width: 20px;
+        height: 1em;
+        aspect-ratio: 1/1;
         border-radius: 50%;
         background-color: #04e04e;   
         margin: 0;
@@ -599,6 +600,9 @@
   gap: 1em;
   height: 88vh;
   width: 80vw;
+  @media screen and (max-width: 400px)    {
+    width: 100vw;
+  }
   .conteiner-system{
     width: 100%;
     height: 100%;
@@ -640,6 +644,11 @@
     width: 100%;
     h2{
       margin: 0;
+      
+    }
+    @media screen and (max-width: 400px)    {
+      justify-content: space-between;
+      h2{ display: none; }
     }
   }
  
@@ -659,43 +668,51 @@
     text-align: center;
     font-family: 'Consolas';
     width: 100%;
+    ul{
+      width: 100%;
+      padding: 0;
+      margin: 0;
+      list-style: none;
+      display:flex;
+      flex-flow: column;
+      li{
+        width: 100%;
+        
+        display:flex;
+        justify-content: space-between;
+        background-color: rgba(0 0 0 / 0.3);
+        border-bottom: 1px solid rgba( 255 255 255 / 0.7);
+        label{
+          margin: 5px 0; 
+          padding: 0 20px;
+          border-right: 1px solid rgba( 255 255 255 / 0.7);
+          cursor: pointer;
+          border: none;
+        }
+    
+      }
+      li:hover{
+        background-color: rgba( 255 255 255 / 0.1);
+      }
+      
+    }
+    @media screen and (max-width: 400px)    {
+        ul{
+          flex-flow: row wrap;
+          gap: 0.3em;
+          li{
+            
+            border: 1px solid rgba(83, 83, 83, 0.61);
+            flex-flow: row wrap;
+            p{
+              margin: 0.2em;
+              width: 100%;
+              text-align: start;
+            }
+          }
+
+        }
+      }
   }
-  .content-session-open ul{
-    padding: 0;
-    margin: 0;
-    list-style: none;
-    display:block;
-  }
-  .content-session-open ul li{
-    margin: 0;
-    padding: 0;
-    display:flex;
-    background-color: rgba(0 0 0 / 0.3);
-    border-bottom: 1px solid rgba( 255 255 255 / 0.7);
-  }
-  .content-session-open ul li div{
-    margin: 0;
-    padding: 0;
-    display:flex;
-  
-  }
-  .content-session-open ul li:hover{
-    background-color: rgba( 255 255 255 / 0.1);
-  }
-  
-  .content-session-open ul li p, .content-session-open ul li label{
-    margin: 5px 0; 
-    padding: 0 20px;
-    border-right: 1px solid rgba( 255 255 255 / 0.7);
-    cursor: pointer;
-  }
-  .content-session-open ul li label{
-    border: none;
-  }
-  .content-session-open ul li select{
-    background-color: rgba(0  0  0 / 0.4);
-    color: #fff;
-    font-family: "Consolas";
-    font-size: 14px;
-  }
+
   </style>

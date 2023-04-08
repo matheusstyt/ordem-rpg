@@ -79,7 +79,7 @@ export default {
         },
         salvar_armamento(){
             
-            const url = "http://170.10.0.50:8000/armamento/";
+            const url = "http://192.168.100.26:8000/armamento/";
             
             const headers = {'Authorization': 'Token ' + sessionStorage.getItem('token') };
             
@@ -108,7 +108,7 @@ export default {
             })
         },
         salvar_armamento_user(id){
-            const url = "http://170.10.0.50:8000/armamentoUser/";
+            const url = "http://192.168.100.26:8000/armamentoUser/";
             
             const headers = {'Authorization': 'Token ' + sessionStorage.getItem('token') };
             

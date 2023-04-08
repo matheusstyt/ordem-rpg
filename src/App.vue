@@ -39,7 +39,7 @@ export default {
   },
    methods:{
     go_inicio(){
-      window.location.href = "/home"
+      window.location.href = "/"
     },
     go_sessoes(){
       window.location.href = "/painel"
@@ -69,12 +69,13 @@ h2, p, label, button{
 }
 
 .header{
-  width: 100%;
-  position: absolute;
+width: 100%;
+display: flex;
 }
 .header-content{
   background-color: rgba(0  0  0 / 0.7);
-  width: 40%;
+  gap: 1em;
+  padding: 0 1em;
   height: 100%;
 
   display: flex;
@@ -104,7 +105,7 @@ h2, p, label, button{
       color: rgba(177, 177, 177, 0.8);
     }
     svg{
-      stroke: rgba(236, 139, 21, 0.829);
+      stroke: #ec8b15d3;
       cursor: pointer;
     }
   }
@@ -118,12 +119,15 @@ h2, p, label, button{
   background-attachment: fixed;
   background-size: contain;
   height: 100vh;
+  @media screen and (max-width: 400px)    {
+    background-size: cover;
+  }
 }
 .app-div{
   height:100vh;
   width: 100vw;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
 
 }
@@ -133,6 +137,9 @@ body{
   font-family: 'Itim', sans-serif;
   margin: 0;
   padding: 0;
+  @media screen and (max-width: 400px)    {
+    overflow: hidden;
+  }
 }
 
 </style>

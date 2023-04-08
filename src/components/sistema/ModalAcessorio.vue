@@ -50,7 +50,7 @@ export default {
         },
         salvar_acessorio(){
             
-            const url = "http://170.10.0.50:8000/acessorios/";
+            const url = "http://192.168.100.26:8000/acessorios/";
             
             const headers = {'Authorization': 'Token ' + sessionStorage.getItem('token') };
             

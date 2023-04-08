@@ -5,7 +5,7 @@
             <h2>DETALHES PESSOAIS</h2>
 
             <div class="input-field">
-                <label for="jogador">Nome do Personagem</label>
+                <label for="jogador">Nome</label>
                 <input  type="text" name="jogador" id="id-jogador " v-model="l_nome" spellcheck="false">
             </div>
             <div class="input-field">
@@ -25,7 +25,7 @@
 
             </div>
             <div class="input-field">
-                <label for="classe">Nível de Exposição Paranormal(NEX)</label>
+                <label for="classe">(NEX)</label>
                 <input   type="number" v-model="l_NEX">
             </div>
             <div class="input-field">

@@ -40,12 +40,6 @@ const routes: Array<RouteRecordRaw> = [
   }
   ,
   {
-    path: '/sistema',
-    name: 'sistema',
-    component: () => import(/* webpackChunkName: "sistema" */ '../views/MeuSistemaPage.vue')
-  }
-  ,
-  {
     path: '/sessao',
     name: 'sessao',
     component: () => import(/* webpackChunkName: "sessao" */ '../views/SessaoPage.vue')
@@ -56,53 +50,7 @@ const routes: Array<RouteRecordRaw> = [
     name: 'ritual',
     component: () => import(/* webpackChunkName: "ritual" */ '../views/RitualView.vue')
   }
-  ,
-  {
-    path: '/jogador',
-    name: 'jogador',
-    component: () => import(/* webpackChunkName: "jogador" */ '../views/JogadorView.vue')
-  }
-  ,
-  {
-    path: '/createdetalhes',
-    name: 'createdetalhes',
-    component: () => import(/* webpackChunkName: "createdetalhes" */ '../views/DetalhesView.vue')
-  }
-  ,
-  {
-    path: '/createavatar',
-    name: 'createavatar',
-    component: () => import(/* webpackChunkName: "createavatar" */ '../views/AvatarView.vue')
-  }
-  ,
-  {
-    path: '/createatributos',
-    name: 'createatributos',
-    component: () => import(/* webpackChunkName: "createatributos" */ '../views/AtributosView.vue')
-  }
-  ,
-  {
-    path: '/createpericia',
-    name: 'createpericia',
-    component: () => import(/* webpackChunkName: "createpericia" */ '../views/PericiaisView.vue')
-  }
-  ,
-  {
-    path: '/createresistencias',
-    name: 'createresistencias',
-    component: () => import(/* webpackChunkName: "createresistencias" */ '../views/ResistenciasView.vue')
-  }
-  ,
-  {
-    path: '/createarmamento',
-    name: 'createarmamento',
-    component: () => import(/* webpackChunkName: "createarmamento" */ '../views/ArmamentosView.vue')
-  },
-  {
-    path: '/createantescendente',
-    name: 'createantescendente',
-    component: () => import(/* webpackChunkName: "createantescendente" */ '../views/AntescendenteView.vue')
-  }
+
 ]
 
 const router = createRouter({

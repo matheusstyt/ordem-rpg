@@ -181,7 +181,7 @@
         },
         
         async get_session(){
-          const url_session = `http://170.10.0.50:8000/session/${sessionStorage.getItem('session_id')}/`;
+          const url_session = `http://192.168.100.26:8000/session/${sessionStorage.getItem('session_id')}/`;
             const now = Date()
             const headers = {'Authorization': 'Token ' + sessionStorage.getItem('token') };
             
@@ -203,7 +203,7 @@
           let formattedDate = formatter.format(now);
 
           if(sessionStorage.getItem("token")){
-            const url = `http://170.10.0.50:8000/contact/`;
+            const url = `http://192.168.100.26:8000/contact/`;
 
             const body_uni = {
               fk_user : fk_destino, 
@@ -233,7 +233,7 @@
           }
         },
         excluir_pedido(id){
-          const url = `http://170.10.0.50:8000/ask/${id}/`;
+          const url = `http://192.168.100.26:8000/ask/${id}/`;
               const headers = {'Authorization': 'Token ' + sessionStorage.getItem('token') };
               axios.delete(url, { headers : headers })
               .then(res => {

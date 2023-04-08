@@ -77,7 +77,7 @@ export default {
         },
         salvar_ritual(){
             
-            const url = "http://170.10.0.50:8000/rituais/";
+            const url = "http://192.168.100.26:8000/rituais/";
             
             const headers = {'Authorization': 'Token ' + sessionStorage.getItem('token') };
             
