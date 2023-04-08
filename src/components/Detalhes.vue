@@ -6,18 +6,18 @@
 
             <div class="input-field">
                 <label for="jogador">Nome do Personagem</label>
-                <input  type="text" name="jogador" id="id-jogador alerta" v-model="localJogador" spellcheck="false" :style="alertaJogador">
+                <input  type="text" name="jogador" id="id-jogador " v-model="l_nome" spellcheck="false">
             </div>
             <div class="input-field">
                 <label for="ocupacao">Origem</label>
-                <select v-model="localOrigem" size="1"  >
+                <select v-model="l_origem" size="1"  >
                     <option v-for="origem in origens" :key="origem.id" :value="origem.origem">{{origem.origem}}</option>
 
                 </select>
             </div>
             <div class="input-field">
                 <label for="classe">Classe</label>
-                <select v-model="localClasse" size="1"  >
+                <select v-model="l_classe" size="1"  >
                     <option value="COMBATENTE">COMBATENTE</option>
                     <option value="OCULTISTA">OCULTISTA</option>
                     <option value="INTELECTUAL">INTELECTUAL</option>
@@ -26,29 +26,29 @@
             </div>
             <div class="input-field">
                 <label for="classe">Nível de Exposição Paranormal(NEX)</label>
-                <input   type="number" v-model="localNEX">
+                <input   type="number" v-model="l_NEX">
             </div>
             <div class="input-field">
                 <label for="classe">Trilha (são necessários 10% de NEX)</label>
-                <select v-model="localTrilha" v-if="localNEX < 10" size="1"  >
+                <select v-model="l_trilha" v-if="l_NEX < 10" size="1"  >
                     <option value="Sem Patente">Sem Patente</option>
                 </select>
-                <select v-else-if="localNEX >= 10 && localClasse === 'COMBATENTE'" v-model="localTrilha" size="1"  >
+                <select v-else-if="l_NEX >= 10 && l_classe === 'COMBATENTE'" v-model="l_trilha" size="1"  >
                     <option value="Sem Patente">Sem Patente</option>
                     <option v-for="(trilhac, index) in trilhasC" :key="index" value="trilhac.trilha">{{trilhac.trilha}}</option>
                 </select>
-                <select v-else-if="localNEX >= 10 && localClasse === 'INTELECTUAL'" v-model="localTrilha" size="1"  >
+                <select v-else-if="l_NEX >= 10 && l_classe === 'INTELECTUAL'" v-model="l_trilha" size="1"  >
                     <option value="Sem Patente">Sem Patente</option>
                     <option v-for="(trilhae, index) in trilhasI" :key="index" :value="trilhae.trilha">{{trilhae.trilha}}</option>
                 </select>
-                <select v-model="localTrilha" v-else-if="localNEX >= 10 && localClasse === 'OCULTISTA'"  size="1"  >
+                <select v-model="l_trilha" v-else-if="l_NEX >= 10 && l_classe === 'OCULTISTA'"  size="1"  >
                     <option value="Sem Patente">Sem Patente</option>
                     <option v-for="(trilhao, index) in trilhasO" :key="index" :value="trilhao.trilha">{{trilhao.trilha}}</option>
                 </select>
             </div>
             <div class="input-field">
                 <label for="classe">Patente</label>
-                <select v-model="localPatente" size="1"  >
+                <select v-model="l_patente" size="1"  >
                     <option value="Sem Patente">Sem Patente</option>
                     <option value="Recruta">Recruta</option>
                     <option value="Operador">Operador</option>
@@ -60,19 +60,19 @@
             </div>
             <div class="input-field">
                 <label for="idade">Idade</label>
-                <input  type="number" name="idade" id="id-idade" v-model="localIdade" :style="alertaIdade">
+                <input  type="number" name="idade" id="id-idade" v-model="l_idade">
             </div>
             <div class="input-field">
                 <label for="sexo">Sexo</label>
-                <input  type="text" name="sexo" id="id-sexo" v-model="localSexo" :style="alertaSexo">
+                <input  type="text" name="sexo" id="id-sexo" v-model="l_sexo">
             </div>
             <div class="input-field">
-                <label for="lnascimento">Local de nascimento</label>
-                <input  type="text" name="lnascimento" id="id-lnascimento" v-model="localLnascimento" :style="alertaLN">
+                <label for="nascimento">Local de nascimento</label>
+                <input  type="text" name="nascimento" id="id-nascimento" v-model="l_nascimento">
             </div>
             <div class="input-field">
-                <label for="lresidencia">Local de residência</label>
-                <input  type="text" name="lresidencia" id="id-lresidencia" v-model="localLresidencia" :style="alertaLR">
+                <label for="residencia">Local de residência</label>
+                <input  type="text" name="residencia" id="id-residencia" v-model="l_residencia">
             </div>
         </div>
     </div>
@@ -82,87 +82,23 @@
 export default {
     props:{
         nome : String,
-        jogador : String,
         origem : String,
         classe : String,
+        NEX : Number,
+        trilha : String,
+        patente : String,
         idade : Number,
         sexo : String,
-        lnascimento : String,
-        lresidencia : String,
-        trilha : String,
-        NEX : Number,
-        patente : String
+        nascimento : String,
+        residencia : String,
     },
     methods:{
-        teste(){
-            console.log('testando :', this.localNome)
-        },
-        verificar(e){
-            e.preventDefault();
-
-            // if(this.localNome == ''){
-            //     this.alertaNome = 'text-transform:uppercase; border-bottom: 2px solid #e65656;'
-            //     console.log('AAAAAAAAAAAAAAA')
-            // }
-            // if(this.document.getElementById('id-nome').value != ''){
-            //     this.alertaNome = 'text-transform:uppercase; border-bottom: 2px solid #a2a2a2;'
-            //      console.log('BBBBBBBBBBB')
-            // }
-           // this.localJogador = document.getElementById('id-jogador').value
-           // this.localOrigem = document.getElementById('id-origem').value
-           // this.localIdade = document.getElementById('id-idade').value
-          //  this.localSexo =document.getElementById('id-sexo').value
-           // this.localLnascimento = document.getElementById('id-lnascimento').value
-           // this.localLresidencia = document.getElementById('id-lresidencia').value
-
-           // SalvarDetalhes()
-
-        },
-        SalvarDetalhes(){
-
-            if(this.localNome == ''){
-                this.alertaNome = 'text-transform:uppercase; border-bottom: 2px solid #e65656;'
-            }else{
-                this.alertaNome = 'text-transform:uppercase; border-bottom: 2px solid #a2a2a2;'
-
-            }
-            if(this.localJogador == ''){
-                this.alertaJogador = 'text-transform:uppercase; border-bottom: 2px solid #e65656;'
-            }else{
-                this.alertaJogador = 'text-transform:uppercase; border-bottom: 2px solid #a2a2a2;'
-            }
-            if(this.localOrigem == ''){
-                this.alertaOrigem = 'text-transform:uppercase; border-bottom: 2px solid #e65656;'
-            }else{
-                this.alertaOrigem = 'text-transform:uppercase; border-bottom: 2px solid #a2a2a2;'
-            }
-            if(this.localSexo == ''){
-                this.alertaSexo = 'text-transform:uppercase; border-bottom: 2px solid #e65656;'
-            }else{
-                this.alertaSexo = 'text-transform:uppercase; border-bottom: 2px solid #a2a2a2;'
-            }if(this.localIdade < 1 || this.localIdade >= 90){
-                this.alertaIdade = 'text-transform:uppercase; border-bottom: 2px solid #e65656;'
-            }else{
-                this.alertaIdade = 'text-transform:uppercase; border-bottom: 2px solid #a2a2a2;'
-
-            } if(this.localLnascimento == ''){
-                this.alertaLN = 'text-transform:uppercase; border-bottom: 2px solid #e65656;'
-            }else{
-                this.alertaLN = 'text-transform:uppercase; border-bottom: 2px solid #a2a2a2;'
-
-            }if(this.localLresidencia == ''){
-                this.alertaLR = 'text-transform:uppercase; border-bottom: 2px solid #e65656;'
-            }else{
-                this.alertaLR = 'text-transform:uppercase; border-bottom: 2px solid #a2a2a2;'
-            }
-
-        },
     },
     data(){
         return{
-            localNEX:0,
-            localPatente: '',
-            localTrilha: '',
+            l_NEX:0,
+            l_patente: '',
+            l_trilha: '',
             trilhasC:[
                 {classe: 'COMBATENTE', trilha: 'Aniquilador'},
                 {classe: 'COMBATENTE', trilha: 'Comandante de Campo'},
@@ -209,59 +145,41 @@ export default {
             {id: 22, origem: 'TRAMBIQUEIRO', periciasT: 'Crime e Enganação', poder: 'Impostor'},
             {id: 23, origem: 'UNIVERSITÁRIO', periciasT: 'Atualidades e Investigação', poder: 'Empenho'}
             ],
-            id: 0,
-            testando: 'a',
-            localNome : '',
-            localJogador : '',
-            localOrigem : '',
-            localClasse: '',
-            localIdade : 0,
-            localSexo : '',
-            localLnascimento : '',
-            localLresidencia : '',
-            alertaNome: 'text-transform:uppercase; border-bottom: 2px solid #a2a2a2;',
-            alertaJogador: 'text-transform:uppercase; border-bottom: 2px solid #a2a2a2;',
-            alertaOrigem: 'text-transform:uppercase; border-bottom: 2px solid #a2a2a2;',
-            alertaIdade: 'text-transform:uppercase; border-bottom: 2px solid #a2a2a2;',
-            alertaSexo: 'text-transform:uppercase; border-bottom: 2px solid #a2a2a2;',
-            alertaLN: 'text-transform:uppercase; border-bottom: 2px solid #a2a2a2;',
-            alertaLR: 'text-transform:uppercase; border-bottom: 2px solid #a2a2a2;',
 
+            l_nome : '',
+            l_origem : '',
+            l_classe: '',
+            l_idade : 0,
+            l_sexo : '',
+            l_nascimento : '',
+            l_residencia : '',
         }
     },created(){
-        this.id = Number(this.$route.params.id)
-        this.localOrigem = this.origem
-        this.localClasse = this.classe
-        console.log('A id',this.id)
+        this.l_nome = this.nome;
+        this.l_origem = this.origem;
+        this.l_idade = this.idade;
+        this.l_sexo = this.sexo;
+        this.l_classe = this.classe
+        this.l_nascimento = this.nascimento;
+        this.l_residencia= this.residencia;
+        this.l_NEX = this.NEX;
+        this.l_patente = this.patente;
+        this.l_trilha = this.trilha;
     },
     mounted(){
-        this.localNome = this.nome;
-        this.localJogador = this.jogador;
-        this.localOrigem = this.origem;
-        this.localIdade = this.idade;
-        this.localSexo = this.sexo;
-        this.localClasse = this.classe
-        this.localLnascimento = this.lnascimento;
-        this.localLresidencia= this.lresidencia;
-        this.localNEX = this.NEX;
-        this.localPatente = this.patente
-        this.localTrilha = this.trilha
+ 
     },
     watch:{
-        localNome(newValue){this.$emit('nomeUpdate', newValue)},
-        localJogador(newValue){this.$emit('jogadorUpdate', newValue)},
-        localOrigem(newValue){this.$emit('origemUpdate', newValue)},
-        localClasse(newValue){this.$emit('classeUpdate', newValue)
-        console.log(newValue)},
-        localIdade(newValue){this.$emit('idadeUpdate', newValue)},
-        localSexo(newValue){this.$emit('sexoUpdate', newValue)},
-        localLnascimento(newValue){this.$emit('lnascimentoUpdate', newValue)},
-        localLresidencia(newValue){this.$emit('lresidenciaUpdate', newValue)},
-        localNEX(newValue){this.$emit('NEXUpdate', newValue)},
-        localPatente(newValue){this.$emit('patenteUpdate', newValue)},
-        localTrilha(newValue){this.$emit('trilhaUpdate', newValue)
-        console.log(newValue)
-        }
+        l_nome(value){this.$emit('u_nome', value)},
+        l_origem(value){this.$emit('u_origem', value)},
+        l_classe(value){this.$emit('u_classe', value)},
+        l_NEX(value){this.$emit('u_NEX', value)},
+        l_trilha(value){this.$emit('u_trilha', value)},
+        l_patente(value){this.$emit('u_patente', value)},
+        l_idade(value){this.$emit('u_idade', value)},
+        l_sexo(value){this.$emit('u_sexo', value)},
+        l_nascimento(value){this.$emit('u_nascimento', value)},
+        l_residencia(value){this.$emit('u_residencia', value)},
     }
 }
 

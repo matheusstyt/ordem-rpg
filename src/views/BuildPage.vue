@@ -2,39 +2,30 @@
     <div class="caixa-central">
        <!-- <Detalhes 
        :nome="nome" 
-       :jogador="jogador" 
        :origem="origem" 
        :classe="classe" 
        :idade="idade" 
        :sexo="sexo" 
-       :lnascimento="lnascimento" 
-       :lresidencia="lresidencia" 
+       :nascimento="nascimento" 
+       :residencia="residencia" 
        :trilha="trilha" 
        :NEX="NEX" 
        :patente="patente"
-        @nomeUpdate="nomeUpdate" 
-        @jogadorUpdate="jogadorUpdate" 
-        @origemUpdate="origemUpdate" 
-        @classeUpdate="classeUpdate" 
-        @idadeUpdate="idadeUpdate"
-        @sexoUpdate="sexoUpdate" 
-        @lnascimentoUpdate="lnascimentoUpdate" 
-        @lresidenciaUpdate="lresidenciaUpdate" 
-        @trilhaUpdate="trilhaUpdate" 
-        @NEXUpdate="NEXUpdate" 
-        @patenteUpdate="patenteUpdate" />
-         -->
-        <input class="btnPrevious" @click="teste"  type="submit" value="PREVIOUS ">
-        <input class="btnNext" @click="btnNext()"  type="submit" value="NEXT">
+
+        @u_nome="u_nome" 
+        @u_origem="u_origem" 
+        @u_classe="u_classe" 
+        @u_idade="u_idade"
+        @u_sexo="u_sexo" 
+        @u_nascimento="u_nascimento" 
+        @u_residencia="u_residencia" 
+        @u_trilha="u_trilha" 
+        @u_NEX="u_NEX" 
+        @u_patente="u_patente" 
+        /> -->
         
-        <!-- <Atributos :data="atributos" 
-        @atributosUpdate="atributosUpdate" 
-        :CON="CON" 
-        :DES="DES" 
-        :MOV="movimento"
-        @updateCON="updateCON"
-        @updateDES="updateDES" 
-        @updateMov="updateMov"/> -->
+        <input class="btnPrevious" @click="teste"  type="submit" value="PREV ">
+        <input class="btnNext" @click="btnNext()"  type="submit" value="NEXT">
 
         <!-- <div class="loop atributos">
             <ul>
@@ -54,25 +45,145 @@
                 </li>
             </ul>
         </div> -->
-        <Avatar 
-            :vida.sync="vida" 
-            :sanidade.sync="sanidade" 
-            :ocultismo.sync="ocultismo" 
-            :esforco.sync="esforco" 
-            :acao.sync="acao" 
-            :movimento.sync="movimento" 
-            :reacao.sync="reacao" 
-            :lesao_grave.sync="lesao_grave" 
-            :inconsciente.sync="inconsciente" 
-            :morrendo.sync="morrendo" 
-            :traumatizado.sync="traumatizado" 
-            :enlouquecendo.sync="enlouquecendo" 
-        />
+        <!-- <Avatar 
+            :l_vida.sync="vida" 
+            :l_sanidade.sync="sanidade" 
+            :l_ocultismo.sync="ocultismo" 
+            :l_esforco.sync="esforco" 
+            :l_acao.sync="acao" 
+            :l_movimento.sync="movimento" 
+            :l_reacao.sync="reacao" 
+
+            :lesao_grave="lesao_grave" 
+            :inconsciente="inconsciente" 
+            :morrendo="morrendo" 
+            :traumatizado="traumatizado" 
+            :enlouquecendo="enlouquecendo"
+
+            @u_lesao_grave="u_lesao_grave" 
+            @u_inconsciente="u_inconsciente" 
+            @u_morrendo="u_morrendo" 
+            @u_traumatizado="u_traumatizado" 
+            @u_enlouquecendo="u_enlouquecendo"
+        /> -->
+        <div class="content-sessaormamentos">
+            <div class="content-sessao">
+                <table>
+                    <thead>
+                        <th colspan="7">ARMAMENTOS DISPONÍVEIS</th>
+                        <tr>
+                            <th>arma</th>
+                            <th>categoria</th>
+                            <th>dano</th>
+                            <th>crítico</th>
+                            <th>alcance</th>
+                            <th>tipo</th>
+                            <th>espaço</th>
+                        </tr>
+                    </thead>
+                    
+                    <template v-if="armamento_simples_sessao.length > 0">
+                        <h3>Armas Simples</h3>
+                        <tr v-for="(arma, index) in armamento_simples_sessao" :key="index" @click="add_arma_simples(arma, index)">
+                            <td>{{arma.arma}}</td>
+                            <td>{{arma.categoria_0}}</td>
+                            <td>{{arma.dano}}</td>
+                            <td>{{arma.critico}}</td>
+                            <td>{{arma.alcance}}</td>
+                            <td>{{arma.tipo}}</td>
+                            <td>{{arma.espaco}}</td>
+                        </tr>
+                    </template>
+                    <template v-if="armamento_tatico_sessao.length > 0">
+                        <h3>Armas Táticas</h3>
+                        <tr v-for="(arma, index) in armamento_tatico_sessao" :key="index" @click="add_arma_tatica(arma, index)">
+                            <td>{{arma.arma}}</td>
+                            <td>{{arma.categoria_0}}</td>
+                            <td>{{arma.dano}}</td>
+                            <td>{{arma.critico}}</td>
+                            <td>{{arma.alcance}}</td>
+                            <td>{{arma.tipo}}</td>
+                            <td>{{arma.espaco}}</td>
+                        </tr>
+                    </template>
+                    <template v-if="armamento_pesado_sessao.length > 0">
+                        <h3>Armas Pesadas</h3>
+                        <tr v-for="(arma, index) in armamento_pesado_sessao" :key="index" @click="add_arma_pesada(arma, index)">
+                            <td>{{arma.arma}}</td>
+                            <td>{{arma.categoria_0}}</td>
+                            <td>{{arma.dano}}</td>
+                            <td>{{arma.critico}}</td>
+                            <td>{{arma.alcance}}</td>
+                            <td>{{arma.tipo}}</td>
+                            <td>{{arma.espaco}}</td>
+                        </tr>
+                    </template>
+                </table>
+            </div>
+            <div class="content-personagem">
+                <div>
+                    <table>
+                        <thead>
+                            <th colspan="7">SEUS ARMAMENTOS</th>
+                            <tr>
+                                <th>arma</th>
+                                <th>categoria</th>
+                                <th>dano</th>
+                                <th>crítico</th>
+                                <th>alcance</th>
+                                <th>tipo</th>
+                                <th>espaço</th>
+                            </tr>
+                        </thead>
+                        <template v-if="armamento_simples_personagem.length > 0">
+                            <h3>Armas Simples</h3>
+                            <tr v-for="(arma, index) in armamento_simples_personagem" :key="index" @click="remove_arma_simples(arma, index)">
+                                <td>{{arma.arma}}</td>
+                                <td>{{arma.categoria_0}}</td>
+                                <td>{{arma.dano}}</td>
+                                <td>{{arma.critico}}</td>
+                                <td>{{arma.alcance}}</td>
+                                <td>{{arma.tipo}}</td>
+                                <td>{{arma.espaco}}</td>
+                            </tr>
+                        </template>
+                        <template v-if="armamento_tatico_personagem.length > 0">
+                            <h3>Armas Táticas</h3>
+                            <tr v-for="(arma, index) in armamento_tatico_personagem" :key="index" @click="remove_arma_tatica(arma, index)">
+                                <td>{{arma.arma}}</td>
+                                <td>{{arma.categoria_0}}</td>
+                                <td>{{arma.dano}}</td>
+                                <td>{{arma.critico}}</td>
+                                <td>{{arma.alcance}}</td>
+                                <td>{{arma.tipo}}</td>
+                                <td>{{arma.espaco}}</td>
+                            </tr>
+                        </template>
+                        <template v-if="armamento_pesado_personagem.length > 0">
+                            <h3>Armas Pesadas</h3>
+                            <tr v-for="(arma, index) in armamento_pesado_personagem" :key="index" @click="remove_arma_pesada(arma, index)">
+                                <td>{{arma.arma}}</td>
+                                <td>{{arma.categoria_0}}</td>
+                                <td>{{arma.dano}}</td>
+                                <td>{{arma.critico}}</td>
+                                <td>{{arma.alcance}}</td>
+                                <td>{{arma.tipo}}</td>
+                                <td>{{arma.espaco}}</td>
+                            </tr>
+                        </template>
+                    </table>
+                </div>
+        
+            </div>
+        </div>
     </div>
 
 
 </template>
 <script>
+
+import armamentos from '@/json/armamentos'
+
 
 import ToastPlugin from 'vue-toast-notification';
 import 'vue-toast-notification/dist/theme-bootstrap.css';
@@ -95,30 +206,29 @@ export default {
             ocultismo : {atual: 50, maximo: 50},
             esforco : {atual: 12, maximo: 12},
             acao : 1,
-            movimento : 1,
             reacao : 1,
             lesao_grave : false,
             inconsciente : false,
             morrendo : false,
             traumatizado : false,
-            enlouquecendo : false,
+            enlouquecendo : true,
             // fim dados do avatar
 
+            // dados de detalhes do personagem
             nome : "",
-            jogador : "",
             origem : 'Executivo',
             classe: "",
             NEX: 0,
-            patente: "",
             trilha: "",
-            idade : "",
+            patente: "",
+            idade : 0,
             sexo : "",
-            lnascimento : "",
-            lresidencia : "",
-            dataL: '',
-            CON :0,
-            DES : 0,
+            nascimento : "",
+            residencia : "",
+            // fim dados detalhes
+
             movimento : 0,
+
             atributos :[{id:1, nome: 'APARÊNCIA', valor: 0},
                         {id:2, nome: 'CONSTITUIÇÃO', valor: 0},
                         {id:3, nome: 'DESTREZA', valor: 0},
@@ -154,61 +264,99 @@ export default {
                 {id:23, treino: 'DESTREINADA', tipo: 'treinada', nome: 'VONTADE', valor: 0} 
             ],
 
+            // dados de armamentos sessao / personagem
+            movimento : 1,
+            peso : 0,
+            armamentos_sessao_all: [],
+            
+            armamento_simples_sessao : [],
+            armamento_tatico_sessao : [],
+            armamento_pesado_sessao : [],
+
+            armamento_simples_personagem : [],
+            armamento_tatico_personagem : [],
+            armamento_pesado_personagem : []
+            
         }
     },
     methods:{
-        btnNext(){
- 
-            //  this.dataJ['nome'] = this.nome.toUpperCase();
-            //  this.dataJ['jogador'] = this.jogador.toUpperCase();
-            //  this.dataJ['origem'] = this.origem.toUpperCase();
-            //  this.dataJ['classe'] = this.classe.toUpperCase();
-            //  this.dataJ['trilha'] = this.trilha
-            //  this.dataJ['NEX'] = this.NEX
-            //  this.dataJ['patente'] = this.patente.toUpperCase();
-            //  this.dataJ['idade'] = this.idade
-            //  this.dataJ['sexo'] = this.sexo.toUpperCase();
-            //  this.dataJ['lnascimento'] = this.lnascimento.toUpperCase();
-            //  this.dataJ['lresidencia'] = this.lresidencia.toUpperCase();
+        u_lesao_grave(value){this.lesao_grave = value},
+        u_inconsciente(value){this.inconsciente = value},
+        u_morrendo(value){this.morrendo = value},
+        u_traumatizado(value){this.traumatizado = value},
+        u_enlouquecendo(value){this.enlouquecendo = value},
 
-            // const dataj =  JSON.stringify(this.dataJ);
-           // console.log(dataj)
-         //   this.$router.push({name:"createatributos", params:{dataJ: dataj}})
+        btnNext(){
+            // console.log(this.vida)
+            // console.log(this.sanidade)
+            // console.log(this.ocultismo)
+            // console.log(this.esforco)
+            // console.log(this.acao)
+            // console.log(this.movimento)
+            // console.log(this.reacao)
+            // console.log(this.lesao_grave)
+            // console.log(this.inconsciente)
+            // console.log(this.morrendo)
+            // console.log(this.traumatizado)
+            // console.log(this.enlouquecendo)
+            console.log(this.nome)
+            console.log(this.origem)
+            console.log(this.classe)
+            console.log(this.NEX)
+            console.log(this.trilha)
+            console.log(this.patente)
+            console.log(this.idade)
+            console.log(this.sexo)
+            console.log(this.nascimento)
+            console.log(this.residencia)
 
         },
-        nomeUpdate(nome){this.nome = nome;},
-        jogadorUpdate(jogador){this.jogador = jogador;},
-        origemUpdate(origem){this.origem = origem;},
-        classeUpdate(classe){this.classe = classe;},
-        idadeUpdate(idade){this.idade = idade;},
-        sexoUpdate(sexo){this.sexo = sexo;},
-        lnascimentoUpdate(lnascimento){this.lnascimento = lnascimento;},
-        lresidenciaUpdate(lresidencia){this.lresidencia = lresidencia;},
-        trilhaUpdate(trilha){this.trilha = trilha;},
-        patenteUpdate(patente){this.patente = patente;},
-        NEXUpdate(NEX){this.NEX = NEX;}
+        u_nome(nome){this.nome = nome},
+        u_origem(origem){this.origem = origem},
+        u_classe(classe){this.classe = classe},
+        u_NEX(NEX){this.NEX = NEX},
+        u_trilha(trilha){this.trilha = trilha},
+        u_patente(patente){this.patente = patente},
+        u_idade(idade){this.idade = idade},
+        u_sexo(sexo){this.sexo = sexo},
+        u_nascimento(nascimento){this.nascimento = nascimento},
+        u_residencia(residencia){this.residencia = residencia},
+
+        // funcões de armamentos
+        async carregar_armamentos_ordem(){
+            this.armamento_simples_sessao = this.armamentos_sessao_all.filter(arma => arma.categoria_1 === "Arma Simples")
+            this.armamento_tatico_sessao = this.armamentos_sessao_all.filter(arma  => arma.categoria_1 === "Arma Tática")
+            this.armamento_pesado_sessao = this.armamentos_sessao_all.filter(arma => arma.categoria_1 === "Arma Pesada")
+        },
+        add_arma_simples(arma, index){
+            this.armamento_simples_personagem.unshift(arma)
+            this.armamento_simples_sessao.splice(index, 1)
+        },
+        add_arma_tatica(arma, index){
+            this.armamento_tatico_personagem.unshift(arma)
+            this.armamento_tatico_sessao.splice(index, 1) 
+        },
+        add_arma_pesada(arma, index){
+            this.armamento_pesado_personagem.unshift(arma)
+            this.armamento_pesado_sessao.splice(index, 1)
+        },
+        remove_arma_simples(arma, index){
+            this.armamento_simples_sessao.unshift(arma)
+            this.armamento_simples_personagem.splice(index, 1)     
+        },
+        remove_arma_tatica(arma, index){
+            this.armamento_tatico_sessao.unshift(arma)
+            this.armamento_tatico_personagem.splice(index, 1)     
+        },
+        remove_arma_pesada(arma, index){
+            this.armamento_pesado_sessao.unshift(arma)
+            this.armamento_pesado_personagem.splice(index, 1)        
+        },
+        // fim de armamentos 
     },created(){
-        console.log('id sessao',this.$route.params.id)
-        try {
-            this.dataJ = JSON.parse(this.$route.params.dataJ)
-            this.nome = this.dataJ.nome
-            this.jogador = this.dataJ.jogador,
-            this.origem = this.dataJ.origem,
-            this.classe = this.dataJ.classe,
-            this.trilha = this.dataJ.trilha,
-            this.patente = this.dataJ.patente,
-            this.NEX = this.dataJ.NEX,
-            this.idade = this.dataJ.idade,
-            this.sexo = this.dataJ.sexo,
-            this.lnascimento = this.dataJ.lnascimento,
-            this.lresidencia = this.dataJ.lresidencia
-        }catch (error) {       
-            
-        }
+        this.armamentos_sessao_all = armamentos.armamentos;
     }, mounted(){
-     //   this.dataJ['idSessao'] = Number(this.$route.params.idSe)
-        
-        console.log(this.dataJ)
+        this.carregar_armamentos_ordem()
     },
     watch :{
         pericias(newValue){
@@ -219,6 +367,24 @@ export default {
 }
 </script>
 <style lang="scss">
+/* Estilização do Scroll */
+
+/* Cor da barra de rolagem */
+::-webkit-scrollbar {
+    width: 8px;
+    background-color: #1a1a1a;
+}
+
+/* Cor do indicador do scroll */
+::-webkit-scrollbar-thumb {
+    background-color: #666666;
+}
+
+/* Cor do indicador do scroll quando está em hover */
+::-webkit-scrollbar-thumb:hover {
+    background-color: #999999;
+}
+
 h1, h2, h3, label{
     color: #ffff
 }
@@ -332,4 +498,71 @@ select:hover, option:hover{
         }
     }
 }
+
+// scss de armaentos e tabelas
+.content-sessaormamentos{
+    display: flex;
+    
+    width: 80%;
+    gap: 1px;
+    margin: 0 auto;
+    background-color:rgba(0  0  0 / 0);
+    table{
+        margin: 0 auto;
+        width: 100%;
+        max-height: 100%;
+        thead{
+            background-color: rgba(0, 0, 0, 0.827);
+            top: 0;
+            position: sticky;
+            text-align: center;
+            th{
+                cursor:default;
+                border-bottom: 1px solid rgba(239, 239, 239, 0.7);
+                padding: 0.5em 0.3em;
+                font-size: 1em;
+            }
+        }
+        
+        h3{
+            font-family: 'Consolas';
+            width: 100%;
+            font-size: 12px;
+            margin: 5px 0;
+            background-color: rgba(81, 81, 81, 0.5);
+        }
+        td{
+            cursor: pointer;
+            text-align: center;
+            border-bottom:1px solid rgba(91, 91, 91, 0.7);
+            font-size: 13px;
+        }
+        tr:hover{
+            color: rgba(0, 0, 0, 1);
+            background-color: rgba(255, 255, 255, 0.9);
+        
+        }
+    }
+    .content-sessao{
+        width: 50%;
+        max-height: 80vh;
+        overflow-y: auto;
+       background-color: rgba(0, 0, 0, 0.7);
+        border-right: 1px solid rgb(137, 137, 137);
+        h2{
+            text-align: center;
+            color: #ffff;
+            text-shadow: 2px 2px black;
+        }
+    }
+    .content-personagem{
+        max-height: 80vh;
+        width: 50%;
+        overflow-y: auto;
+        background-color: rgba(0, 0, 0, 0.7);
+        
+    }
+    
+}
+// fim scss armamentos
 </style>

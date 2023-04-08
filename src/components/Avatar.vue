@@ -18,11 +18,11 @@
                 <form @submit="salvar_vida($event)" class="formModal" id="changeLife" >
                     <div class="field-input">
                         <label for="">Atual</label>
-                        <input type="number" id="vidaAtual" name="atual" min="0" v-model="vida.atual">
+                        <input type="number" id="vidaAtual" name="atual" min="0" v-model="l_vida.atual">
                     </div>
                     <div class="field-input">
                         <label for="">Máximo</label>
-                        <input type="number" id="vidaMaxima" name="maxima" min="0" v-model="vida.maximo">
+                        <input type="number" id="vidaMaxima" name="maxima" min="0" v-model="l_vida.maximo">
                     </div>
                     <input type="submit" value="Salvar">
 
@@ -36,11 +36,11 @@
             <form @submit="salvar_sanidade($event)" class="formModal" action="">
                 <div class="field-input">
                     <label for="">Atual</label>
-                    <input type="number" id="vidaAutal" name="atual" v-model="sanidade_l.atual">
+                    <input type="number" id="vidaAutal" name="atual" v-model="l_sanidade.atual">
                 </div>
                 <div class="field-input">
                     <label for="">Máximo</label>
-                    <input type="number" id="vidaMaxima" name="maxima" v-model="sanidade_l.maximo">
+                    <input type="number" id="vidaMaxima" name="maxima" v-model="l_sanidade.maximo">
                 </div>
                 <input type="submit" value="Salvar">
 
@@ -54,11 +54,11 @@
             <form @submit="salvar_ocultismo($event)" class="formModal" >
                 <div class="field-input">
                     <label for="">Atual</label>
-                    <input type="number" id="ocultismoAtual" name="atual" min="0" v-model="ocultismo_l.atual">
+                    <input type="number" id="ocultismoAtual" name="atual" min="0" v-model="l_ocultismo.atual">
                 </div>
                 <div class="field-input">
                     <label for="">Máximo</label>
-                    <input type="number" id="ocultismoMaxima" name="maxima" min="0" v-model="ocultismo_l.maximo">
+                    <input type="number" id="ocultismoMaxima" name="maxima" min="0" v-model="l_ocultismo.maximo">
                 </div>
                 <input type="submit" value="Salvar">
 
@@ -72,11 +72,11 @@
             <form @submit="salvar_esforco($event)" class="formModal" >
                 <div class="field-input">
                     <label for="">Atual</label>
-                    <input type="number" id="esforcoAtual" name="atual" min="0" v-model="esforco_l.atual">
+                    <input type="number" id="esforcoAtual" name="atual" min="0" v-model="l_esforco.atual">
                 </div>
                 <div class="field-input">
                     <label for="">Máximo</label>
-                    <input type="number" id="esforcoMaxima" name="maxima" min="0" v-model="esforco_l.maximo">
+                    <input type="number" id="esforcoMaxima" name="maxima" min="0" v-model="l_esforco.maximo">
                 </div>
                 <input type="submit" value="Salvar">
             </form>
@@ -120,20 +120,20 @@
             <h4>Vida</h4>
             <div class="back-vida front-barra-padrao" @click="open_modal_vida">
                 <div class="front-vida back-barra-padrao" :style="{ width : `${porcentagem_vida}%`}">
-                    <p class="percentual_barra" >{{vida_l.atual}}/{{vida_l.maximo}}</p>
+                    <p class="percentual_barra" >{{l_vida.atual}}/{{l_vida.maximo}}</p>
                 </div>
             </div>
             <div class="container-field">
                 <div class="form-field">
-                    <input   type="checkbox" v-model="lesao_grave" name="vidaStatus" id="vidaStatus01">
+                    <input   type="checkbox" v-model="l_lesao_grave" name="vidaStatus" id="vidaStatus01">
                     <label for="vidaStatus01">Lesão Grave</label>
                 </div>
                 <div class="form-field">
-                    <input type="checkbox" v-model="inconsciente" name="vidaStatus" id="vidaStatus02">
+                    <input type="checkbox" v-model="l_inconsciente" name="vidaStatus" id="vidaStatus02">
                     <label for="vidaStatus02">Inconsciente</label>
                 </div>
                 <div class="form-field">
-                    <input type="checkbox" v-model="morrendo" name="vidaStatus" id="vidaStatus03">
+                    <input type="checkbox" v-model="l_morrendo" name="vidaStatus" id="vidaStatus03">
                     <label for="vidaStatus03">Morrendo</label>
                 </div>
                     
@@ -144,18 +144,18 @@
         <div id="teste-sanidade">
             <div class="back-sanidade front-barra-padrao" @click="open_modal_sanidade">
                 <div class="front-sanidade back-barra-padrao" :style="{ width : `${porcentagem_sanidade}%`}">
-                    <p class="percentual_barra">{{sanidade_l.atual}}/{{sanidade_l.maximo}}</p>
+                    <p class="percentual_barra">{{l_sanidade.atual}}/{{l_sanidade.maximo}}</p>
                 </div>
             </div>
             <img src="/img/d20_2.png" @click="open_modal_teste_esforco()">
         </div>
         <div class="container-field">
             <div class="form-field">
-                <input type="checkbox" v-model="traumatizado" name="vidaStatus" id="vidaStatus">
+                <input type="checkbox" v-model="l_traumatizado" name="vidaStatus" id="vidaStatus">
                 <label for="vidaStatus">Traumatizado</label>
             </div>
             <div class="form-field">
-                <input type="checkbox" v-model="enlouquecendo" name="vidaStatus" id="vidaStatus">
+                <input type="checkbox" v-model="l_enlouquecendo" name="vidaStatus" id="vidaStatus">
                 <label for="vidaStatus">Enlouquecendo</label>
             </div>
             
@@ -166,7 +166,7 @@
         <h4>Ocultismo</h4>
         <div class="back-ocultismo front-barra-padrao" @click="open_modal_ocultismo">
             <div  class="front-ocultismo back-barra-padrao" :style="{ width : `${porcentagem_ocultismo}%`}">
-                <p class="percentual_barra">{{ocultismo_l.atual}}/{{ocultismo_l.maximo}}</p>
+                <p class="percentual_barra">{{l_ocultismo.atual}}/{{l_ocultismo.maximo}}</p>
             </div>
         </div>
 
@@ -175,7 +175,7 @@
         <h4>Esforço</h4>
         <div class="back-esforco front-barra-padrao" @click="open_modal_esforco">
             <div class="front-esforco back-barra-padrao" :style="{ width : `${porcentagem_esforco}%`}">
-                <p class="percentual_barra">{{esforco_l.atual}}/{{esforco_l.maximo}}</p>
+                <p class="percentual_barra">{{l_esforco.atual}}/{{l_esforco.maximo}}</p>
             </div>
         </div>
   
@@ -191,23 +191,17 @@ import { createToast } from 'mosha-vue-toastify';
 import 'mosha-vue-toastify/dist/style.css'
 export default {
 
-    setup () {
-        const toast = () => {
-            createToast('Wow, easy')
-        }
-        return { toast }
-    },
     components:{
         ToastPlugin
     },
     props:{
-        vida : Object,
-        sanidade : Object,
-        ocultismo : Object,
-        esforco : Object,
-        acao : Number,
-        movimento: Number,
-        reacao: Number,
+        l_vida : Object,
+        l_sanidade : Object,
+        l_ocultismo : Object,
+        l_esforco : Object,
+        l_acao : Number,
+        l_movimento: Number,
+        l_reacao: Number,
 
         lesao_grave : Boolean,
         inconsciente : Boolean,
@@ -219,10 +213,6 @@ export default {
     data(){
         return{
             isBuild : true,
-            vida_l : {atual: 5, maximo: 50},
-            sanidade_l : {atual: 5, maximo: 50},
-            ocultismo_l : {atual: 5, maximo: 50},
-            esforco_l : {atual: 5, maximo: 50},
             acao_l : 1,
             movimento_l : 1,
             reacao_l : 1,
@@ -246,6 +236,7 @@ export default {
             color_teste_sanidade : "#fff",
             isExecuting : false,
             // PERFIL AVATAR
+            l_traumatizado : false,
             show: true,
 			params: {
 				token: '123456798',
@@ -254,11 +245,11 @@ export default {
 
 			imgDataUrl: '', // the datebase64 url of created image,
             // CHECK BOX
-            lesao_grave : false,
-            inconsciente : false,
-            morrendo : false,
+            l_lesao_grave : false,
+            l_inconsciente : false,
+            l_morrendo : false,
             traumatizado : false,
-            enlouquecendo : false
+            l_enlouquecendo : false,
         }
     },
     methods:{
@@ -266,16 +257,16 @@ export default {
             setTimeout(()=>{
                 let percent;
                 // percentual de vida
-                percent = (100 / this.vida_l.maximo)*this.vida_l.atual
+                percent = (100 / this.l_vida.maximo)*this.l_vida.atual
                 this.porcentagem_vida = percent;
                 // percentual de sanidade
-                percent = (100 / this.sanidade_l.maximo)*this.sanidade_l.atual
+                percent = (100 / this.l_sanidade.maximo)*this.l_sanidade.atual
                 this.porcentagem_sanidade = percent;
                 // percentual de ocultismo
-                percent = (100 / this.ocultismo_l.maximo)*this.ocultismo_l.atual
+                percent = (100 / this.l_ocultismo.maximo)*this.l_ocultismo.atual
                 this.porcentagem_ocultismo = percent;
                 // percentual de esforço
-                percent = (100 / this.esforco_l.maximo)*this.esforco_l.atual
+                percent = (100 / this.l_esforco.maximo)*this.l_esforco.atual
                 this.porcentagem_esforco = percent;
 
             },100)
@@ -284,14 +275,14 @@ export default {
           this.show_modal_vida = true
       },salvar_vida(e){
             let percent;
-            if(this.vida_l.atual > this.vida_l.maximo){
+            if(this.l_vida.atual > this.l_vida.maximo){
                 alert('A VIDA ATUAL NÃO PODE SER MAIOR QUE A MÁXIMA!!')
-                this.vida_l.atual = this.vida_l.maximo
+                this.l_vida.atual = this.l_vida.maximo
                 percent = 100
-            }else if(this.vida_l.atual < 0){
+            }else if(this.l_vida.atual < 0){
                 percent = 0
             }else{
-                percent = (100 / this.vida_l.maximo)*this.vida_l.atual
+                percent = (100 / this.l_vida.maximo)*this.l_vida.atual
             }
  
             this.porcentagem_vida = percent
@@ -305,15 +296,15 @@ export default {
         },
         salvar_sanidade(e){
             let percent;
-            if(this.sanidade_l.atual > this.sanidade_l.maximo){
+            if(this.l_sanidade.atual > this.l_sanidade.maximo){
                 alert('A SANIDADE ATUAL NÃO PODE SER MAIOR QUE A MÁXIMA!!')
-                this.sanidade_l.atual = this.sanidade_l.maximo
+                this.l_sanidade.atual = this.l_sanidade.maximo
                 percent = 100
-            }else if(this.sanidade_l.atual < 0){
+            }else if(this.l_sanidade.atual < 0){
                 percent = 0
 
             }else{
-                percent = (100 / this.sanidade_l.maximo)*this.sanidade_l.atual
+                percent = (100 / this.l_sanidade.maximo)*this.l_sanidade.atual
             }
 
             this.porcentagem_sanidade = percent
@@ -326,15 +317,15 @@ export default {
         },
         salvar_ocultismo(e){
             let percent;
-            if(this.ocultismo_l.atual > this.ocultismo_l.maximo){
+            if(this.l_ocultismo.atual > this.l_ocultismo.maximo){
                 alert('O OCULTISMO ATUAL NÃO PODE SER MAIOR QUE A MÁXIMA!!')
-                this.ocultismo_l.atual = this.ocultismo_l.maximo
+                this.l_ocultismo.atual = this.l_ocultismo.maximo
                 percent = 100
-            }else if(this.ocultismo_l.atual < 0){
+            }else if(this.l_ocultismo.atual < 0){
                 percent = 0
 
             }else{
-                percent = (100 / this.ocultismo_l.maximo)*this.ocultismo_l.atual
+                percent = (100 / this.l_ocultismo.maximo)*this.l_ocultismo.atual
             }
 
             this.porcentagem_ocultismo = percent
@@ -348,15 +339,15 @@ export default {
       },
       salvar_esforco(e){
         let percent;
-          if(this.esforco_l.atual > this.esforco_l.maximo){
+          if(this.l_esforco.atual > this.l_esforco.maximo){
                 alert('PONTOS DE ESFORÇO ATUAL NÃO PODE SER MAIOR QUE A MÁXIMA!!')
-                this.esforco_l.atual = this.esforco_l.maximo
+                this.l_esforco.atual = this.l_esforco.maximo
                 percent = 100
-            }else if(this.esforco_l.atual < 0){
+            }else if(this.l_esforco.atual < 0){
                 percent = 0
 
             }else{
-                percent = (100 / this.esforco_l.maximo)*this.esforco_l.atual
+                percent = (100 / this.l_esforco.maximo)*this.l_esforco.atual
             }
             this.porcentagem_esforco = percent
 
@@ -377,12 +368,12 @@ export default {
                 this.result_number_sanidade = total
                 }, 2000)
             setTimeout(()=>{
-                if(this.sanidade_l.atual < total){
+                if(this.l_sanidade.atual < total){
                     this.result_string_sanidade = 'Sucesso';
                     this.color_teste_sanidade = '#298437';
                     createToast(`Sucesso`, { type : 'success', timeout : 3000 } )
                 }
-                if(this.sanidade_l.atual >= total){
+                if(this.l_sanidade.atual >= total){
                     this.result_string_sanidade = 'Fracasso'
                     this.displayTesteTipo = '#781c1c';
                     createToast(`Fracasso`, { type : 'danger', timeout : 3000 } )
@@ -439,41 +430,49 @@ export default {
         this.started();
     },
     watch:{
-        lesao_grave(value){  
+        l_lesao_grave(value){  
             if(value){ createToast('Lesão Grave - ativado', { type : 'warning', timeout : 3000 } ) }
             else { createToast('Lesão Grave - desativado', { type : 'default', timeout : 3000 } ) }
-            this.$emit("update:lesao_grave", value)
+            this.$emit("u_lesao_grave", value)
         },
-        inconsciente(value){  
+        l_inconsciente(value){  
             if(value){ createToast('Inconsciente - ativado', { type : 'danger', timeout : 3000 } ) }
             else { createToast('Inconsciente - desativado', { type : 'default', timeout : 3000 } ) }
-            this.$emit("update:inconsciente", value)
+            this.$emit("u_inconsciente", value)
         },
-        morrendo(value){  
+        l_morrendo(value){  
             if(value){ createToast('Morrendo - ativado', { type : 'danger', timeout : 3000 } ) }
             else { createToast('Morrendo - desativado', { type : 'default', timeout : 3000 } ) }
-            this.$emit("update:morrendo", value)
+            this.$emit("u_morrendo", value)
         },
-        traumatizado(value){  
+        l_traumatizado(value){  
             if(value){ createToast('Traumatizado - ativado', { type : 'warning', timeout : 3000 } ) }
             else { createToast('Traumatizado - desativado', { type : 'default', timeout : 3000 } ) }
-            this.$emit("update:traumatizado", value)
+            this.$emit("u_traumatizado", value)
         },
-        enlouquecendo(value){  
+        l_enlouquecendo(value){  
+            console.log(value)
+
             if(value){ createToast('Enlouquecendo - ativado', { type : 'danger', timeout : 3000 } ) }
             else { createToast('Enlouquecendo - desativado', { type : 'default', timeout : 3000 } ) }
-            this.$emit("update:enlouquecendo", value)
+            this.$emit("u_enlouquecendo", value)
         },
 
-        vida(value){ this.vida_l = this.$emit("update:vida_u", value) },
-        sanidade(value){ this.sanidade_l = this.$emit("update:sanidade_u", value) },
-        ocultismo(value){ this.ocultismo_l = this.$emit("update:ocultismo_u", value) },
-        esforco(value){ this.esforco_l = this.$emit("update:esforco_u", value) },
-        acao(value){ this.acao_l = this.$emit("update:acao_u", value) },
-        movimento(value){ this.movimento_l = this.$emit("update:movimento_u", value) },
-        reacao(value){ this.reacao_l = this.$emit("update:reacao_u", value) },
+        // l_vida(value){  this.$emit("update:vida_u", value) },
+        // l_sanidade(value){ this.$emit("update:sanidade_u", value) },
+        // l_ocultismo(value){ this.$emit("update:ocultismo_u", value) },
+        // l_esforco(value){ this.$emit("update:esforco_u", value) },
+        // l_acao(value){ this.$emit("update:acao_u", value) },
+        // l_movimento(value){ this.$emit("update:movimento_u", value) },
+        // l_reacao(value){ this.$emit("update:reacao_u", value) },
+    },
+    created(){
+        this.l_lesao_grave = this.lesao_grave;
+        this.l_inconsciente = this.inconsciente;
+        this.l_morrendo = this.morrendo;
+        this.l_traumatizado = this.traumatizado;
+        this.l_enlouquecendo = this.enlouquecendo;
     }
-
 }
 </script>
 <style scoped lang="scss">

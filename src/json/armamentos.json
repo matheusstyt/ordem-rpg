@@ -3,7 +3,7 @@
     {
       "arma": "Pistola",
       "categoria_0": "0",
-      "categoria_1": "Armas Simples",
+      "categoria_1": "Arma Simples",
       "categoria_2": "arma de fogo - leve",
       "dano": "1d12",
       "critico": "18",
@@ -14,7 +14,7 @@
     {
       "arma": "Submetralhadora",
       "categoria_0": "I",
-      "categoria_1": "armas tatica",
+      "categoria_1": "Arma Tática",
       "categoria_2": "arma de fogo - uma mao",
       "dano": "2d6 ",
       "critico": "19/x3",
@@ -25,7 +25,7 @@
     {
       "arma": "Espingarda",
       "categoria_0": "I",
-      "categoria_1": "armas tatica",
+      "categoria_1": "Arma Tática",
       "categoria_2": "arma de fogo - leve",
       "dano": "4d6",
       "critico": "x3",
@@ -36,7 +36,7 @@
     {
       "arma": "Coronhada",
       "categoria_0": "0",
-      "categoria_1": "Armas Simples",
+      "categoria_1": "Arma Simples",
       "categoria_2": "corpo a corpo - leve",
       "dano": "1d4",
       "critico": "x2",
@@ -47,7 +47,7 @@
     {
       "arma": "Martelo",
       "categoria_0": "0",
-      "categoria_1": "Armas Simples",
+      "categoria_1": "Arma Simples",
       "categoria_2": "corpo a corpo - leve",
       "dano": "1d6",
       "critico": "x2",
@@ -58,7 +58,7 @@
     {
       "arma": "Faca",
       "categoria_0": "0",
-      "categoria_1": "Armas Simples",
+      "categoria_1": "Arma Simples",
       "categoria_2": "corpo a corpo - leve",
       "dano": "1d4",
       "critico": "19",
@@ -69,7 +69,7 @@
     {
       "arma": "Punhal",
       "categoria_0": "0",
-      "categoria_1": "Armas Simples",
+      "categoria_1": "Arma Simples",
       "categoria_2": "Corpo a Corpo – Leve",
       "dano": "1d4",
       "critico": "x3",
@@ -80,7 +80,7 @@
     {
       "arma": "Bastão",
       "categoria_0": "0",
-      "categoria_1": "Armas Simples",
+      "categoria_1": "Arma Simples",
       "categoria_2": "Corpo a Corpo – Uma Mão",
       "dano": "1d6/1d8",
       "critico": "x2",
@@ -91,7 +91,7 @@
     {
       "arma": "Machete",
       "categoria_0": "0",
-      "categoria_1": "Armas Simples",
+      "categoria_1": "Arma Simples",
       "categoria_2": "Corpo a Corpo – Uma Mão",
       "dano": "1d6",
       "critico": "19",
@@ -102,7 +102,7 @@
     {
       "arma": "Lança",
       "categoria_0": "0",
-      "categoria_1": "Armas Simples",
+      "categoria_1": "Arma Simples",
       "categoria_2": "Corpo a Corpo – Uma Mão",
       "dano": "1d6",
       "critico": "x2",
@@ -113,7 +113,7 @@
     {
       "arma": "Cajado",
       "categoria_0": "0",
-      "categoria_1": "Armas Simples",
+      "categoria_1": "Arma Simples",
       "categoria_2": "Corpo a Corpo – Duas Mãos",
       "dano": "1d6/1d6",
       "critico": "x2",
@@ -124,7 +124,7 @@
     {
       "arma": "Arco",
       "categoria_0": "0",
-      "categoria_1": "Armas Simples",
+      "categoria_1": "Arma Simples",
       "categoria_2": "Armas de Disparo – Duas Mãos",
       "dano": "1d6",
       "critico": "x3",
@@ -135,7 +135,7 @@
     {
       "arma": "Besta",
       "categoria_0": "0",
-      "categoria_1": "Armas Simples",
+      "categoria_1": "Arma Simples",
       "categoria_2": "Armas de Disparo – Duas Mãos",
       "dano": "1d8",
       "critico": "19",
@@ -146,7 +146,7 @@
     {
       "arma": "Pistola",
       "categoria_0": "1",
-      "categoria_1": "Armas Simples",
+      "categoria_1": "Arma Simples",
       "categoria_2": "Armas de Fogo – Leves",
       "dano": "1d12",
       "critico": "18",
@@ -157,7 +157,7 @@
     {
       "arma": "Revólver",
       "categoria_0": "1",
-      "categoria_1": "Armas Simples",
+      "categoria_1": "Arma Simples",
       "categoria_2": "Armas de Fogo – Leves",
       "dano": "2d6",
       "critico": "19/x3",
@@ -168,7 +168,7 @@
     {
       "arma": "Fuzil de caça",
       "categoria_0": "1",
-      "categoria_1": "Armas Simples",
+      "categoria_1": "Arma Simples",
       "categoria_2": "Armas de Fogo – Duas Mãos",
       "dano": "2d8",
       "critico": "19/x3",
@@ -179,7 +179,7 @@
     {
       "arma": "Machadinha",
       "categoria_0": "0",
-      "categoria_1": "Armas Táticas",
+      "categoria_1": "Arma Tática",
       "categoria_2": "Corpo a Corpo – Leves",
       "dano": "1d6",
       "critico": "x3",
@@ -190,7 +190,7 @@
     {
       "arma": "Nunchaku",
       "categoria_0": "0",
-      "categoria_1": "Armas Táticas",
+      "categoria_1": "Arma Tática",
       "categoria_2": "Corpo a Corpo – Leves",
       "dano": "1d8",
       "critico": "x2",
@@ -201,7 +201,7 @@
     {
       "arma": "Corrente",
       "categoria_0": "0",
-      "categoria_1": "Armas Táticas",
+      "categoria_1": "Arma Tática",
       "categoria_2": "Corpo a Corpo – Uma Mão",
       "dano": "1d8",
       "critico": "x2",
@@ -212,7 +212,7 @@
     {
       "arma": "Espada",
       "categoria_0": "I",
-      "categoria_1": "Armas Táticas",
+      "categoria_1": "Arma Tática",
       "categoria_2": "Corpo a Corpo – Uma Mão",
       "dano": "1d8/1d10",
       "critico": "19",
@@ -223,7 +223,7 @@
     {
       "arma": "Florete",
       "categoria_0": "I",
-      "categoria_1": "Armas Táticas",
+      "categoria_1": "Arma Tática",
       "categoria_2": "Corpo a Corpo – Uma Mão",
       "dano": "1d6",
       "critico": "19",
@@ -234,7 +234,7 @@
     {
       "arma": "Machado",
       "categoria_0": "I",
-      "categoria_1": "Armas Táticas",
+      "categoria_1": "Arma Tática",
       "categoria_2": "Corpo a Corpo – Uma Mão",
       "dano": "1d8",
       "critico": "x3",
@@ -245,7 +245,7 @@
     {
       "arma": "Marreta",
       "categoria_0": "I",
-      "categoria_1": "Armas Táticas",
+      "categoria_1": "Arma Tática",
       "categoria_2": "Corpo a Corpo – Uma Mão",
       "dano": "2d4",
       "critico": "x2",
@@ -256,7 +256,7 @@
     {
       "arma": "Acha",
       "categoria_0": "I",
-      "categoria_1": "Armas Táticas",
+      "categoria_1": "Arma Tática",
       "categoria_2": "Corpo a Corpo – Duas Mãos",
       "dano": "1d12",
       "critico": "x3",
@@ -267,7 +267,7 @@
     {
       "arma": "Gadanho",
       "categoria_0": "I",
-      "categoria_1": "Armas Táticas",
+      "categoria_1": "Arma Tática",
       "categoria_2": "Corpo a Corpo – Duas Mãos",
       "dano": "2d4",
       "critico": "x4",
@@ -278,7 +278,7 @@
     {
       "arma": "Katana",
       "categoria_0": "I",
-      "categoria_1": "Armas Táticas",
+      "categoria_1": "Arma Tática",
       "categoria_2": "Corpo a Corpo – Duas Mãos",
       "dano": "1d10",
       "critico": "19",
@@ -289,7 +289,7 @@
     {
       "arma": "Montante",
       "categoria_0": "I",
-      "categoria_1": "Armas Táticas",
+      "categoria_1": "Arma Tática",
       "categoria_2": "Corpo a Corpo – Duas Mãos",
       "dano": "2d6",
       "critico": "19",
@@ -300,7 +300,7 @@
     {
       "arma": "Moto-serra",
       "categoria_0": "I",
-      "categoria_1": "Armas Táticas",
+      "categoria_1": "Arma Tática",
       "categoria_2": "Corpo a Corpo – Duas Mãos",
       "dano": "3d6",
       "critico": "x2",
@@ -311,7 +311,7 @@
     {
       "arma": "Arco composto",
       "categoria_0": "I",
-      "categoria_1": "Armas Táticas",
+      "categoria_1": "Arma Tática",
       "categoria_2": "Armas de Disparo – Duas Mãos",
       "dano": "1d10",
       "critico": "x3",
@@ -322,7 +322,7 @@
     {
       "arma": "Balestra",
       "categoria_0": "I",
-      "categoria_1": "Armas Táticas",
+      "categoria_1": "Arma Tática",
       "categoria_2": "Armas de Disparo – Duas Mãos",
       "dano": "1d12",
       "critico": "19",
@@ -333,7 +333,7 @@
     {
       "arma": "Submetralhadora",
       "categoria_0": "I",
-      "categoria_1": "Armas Táticas",
+      "categoria_1": "Arma Tática",
       "categoria_2": "Armas de Fogo – Uma Mão",
       "dano": "2d6",
       "critico": "19/x3",
@@ -343,7 +343,7 @@
     {
       "arma": "Espingarda",
       "categoria_0": "I",
-      "categoria_1": "Armas Táticas",
+      "categoria_1": "Arma Tática",
       "categoria_2": "Armas de Fogo – Duas Mãos",
       "dano": "4d6",
       "critico": "x3",
@@ -354,7 +354,7 @@
     {
       "arma": "Fuzil de assalto",
       "categoria_0": "II",
-      "categoria_1": "Armas Táticas",
+      "categoria_1": "Arma Tática",
       "categoria_2": "Armas de Fogo – Duas Mãos",
       "dano": "2d10",
       "critico": "19/x3",
@@ -365,7 +365,7 @@
     {
       "arma": "Fuzil de precisão",
       "categoria_0": "III",
-      "categoria_1": "Armas Táticas",
+      "categoria_1": "Arma Tática",
       "categoria_2": "Armas de Fogo – Duas Mãos",
       "dano": "2d10",
       "critico": "19/x3",
@@ -376,7 +376,7 @@
     {
       "arma": "Bazuca",
       "categoria_0": "III",
-      "categoria_1": "Armas Pesada",
+      "categoria_1": "Arma Pesada",
       "categoria_2": "À Distância – Duas Mãos",
       "dano": "10d8",
       "critico": "x2",
@@ -387,7 +387,7 @@
     {
       "arma": "Lança-chamas",
       "categoria_0": "III",
-      "categoria_1": "Armas Pesada",
+      "categoria_1": "Arma Pesada",
       "categoria_2": "À Distância – Duas Mãos",
       "dano": "6d6",
       "critico": "x2",
@@ -398,7 +398,7 @@
     {
       "arma": "Metralhadora",
       "categoria_0": "II",
-      "categoria_1": "Armas Pesada",
+      "categoria_1": "Arma Pesada",
       "categoria_2": "À Distância – Duas Mãos",
       "dano": "2d12",
       "critico": "19/x3",
