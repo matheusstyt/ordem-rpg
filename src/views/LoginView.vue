@@ -39,7 +39,7 @@ export default {
             e.preventDefault()
         },
         async get_token(){
-            const url = "http://192.168.100.26:8000/token";
+            const url = "http://192.168.100.52:8000/token";
             const body = {
                 username: this.user,
                 password: this.pass,

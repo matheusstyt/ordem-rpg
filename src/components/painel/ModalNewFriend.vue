@@ -42,7 +42,7 @@ export default {
             this.data_atual = formattedDate;
         },
         search_user(){
-            const url = "http://192.168.100.26:8000/users/";
+            const url = "http://192.168.100.52:8000/users/";
             const headers = {'Authorization': 'Token ' + sessionStorage.getItem('token') };
 
             axios.get(url, { params: { username : this.search_username}, headers : headers })
@@ -66,7 +66,7 @@ export default {
         enviar(){
             if(sessionStorage.getItem("token")){
                 
-                const url = `http://192.168.100.26:8000/ask/`;
+                const url = `http://192.168.100.52:8000/ask/`;
 
                 const body_ask = {
                     origem : parseInt(sessionStorage.getItem("user_id")), 

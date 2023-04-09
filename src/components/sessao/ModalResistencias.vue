@@ -72,7 +72,7 @@ export default {
         },
         get_resistencias(){
             const headers = {'Authorization': 'Token ' + sessionStorage.getItem('token') };
-            const url = "http://192.168.100.26:8000/resistencias/";
+            const url = "http://192.168.100.52:8000/resistencias/";
 
             axios.get(url, { params : { fk_session : sessionStorage.getItem("session_id")}, headers : headers })
             .then( res => {
@@ -87,7 +87,7 @@ export default {
         },
         get_resistencia(id) {
             const headers = {'Authorization': 'Token ' + sessionStorage.getItem('token') };
-            const url = "http://192.168.100.26:8000/resistencia/";
+            const url = "http://192.168.100.52:8000/resistencia/";
 
             axios.get(url, { params : { id : id}, headers : headers })
             .then( res => {
@@ -106,7 +106,7 @@ export default {
             });
 
             function post_resistencia(body) {
-                const url = "http://192.168.100.26:8000/resistencia/";
+                const url = "http://192.168.100.52:8000/resistencia/";
                 console.log(body)
                 axios.post(url, body, { headers : headers })
                 .then( res => {
@@ -118,7 +118,7 @@ export default {
                 })
             }
             function post_resistencias(id) {
-                const url = "http://192.168.100.26:8000/resistencias/";
+                const url = "http://192.168.100.52:8000/resistencias/";
                 const body_resistencias = {
                     fk_resistencia : id,
                     fk_session : sessionStorage.getItem("session_id")
@@ -139,7 +139,7 @@ export default {
                 console.log(resistencias)
                 if( id === resistencias.fk_resistencia ){
                     const headers = {'Authorization': 'Token ' + sessionStorage.getItem('token') };
-                    const url = `http://192.168.100.26:8000/resistencias/${resistencias.id}/`;
+                    const url = `http://192.168.100.52:8000/resistencias/${resistencias.id}/`;
                     axios.delete(url, { headers : headers })
                     .then( res => {
                         this.list_resistencias = []
