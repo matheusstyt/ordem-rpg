@@ -133,7 +133,7 @@ export default {
             this.display_modal_ritual = true
         },
         get_list_acessorios(){
-            const url = "http://192.168.100.52:8000/acessorios/";
+            const url = "http://170.10.0.50:8000/acessorios/";
             
             const headers = {'Authorization': 'Token ' + sessionStorage.getItem('token') };
 
@@ -152,7 +152,7 @@ export default {
 
         },
         get_list_armamentos(){
-            const url = "http://192.168.100.52:8000/armamento/";
+            const url = "http://170.10.0.50:8000/armamento/";
             
             const headers = {'Authorization': 'Token ' + sessionStorage.getItem('token') };
 
@@ -168,7 +168,7 @@ export default {
 
         },
         get_list_rituais(){
-            const url = "http://192.168.100.52:8000/rituais/";
+            const url = "http://170.10.0.50:8000/rituais/";
             
             const headers = {'Authorization': 'Token ' + sessionStorage.getItem('token') };
 

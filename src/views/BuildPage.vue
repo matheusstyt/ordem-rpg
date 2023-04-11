@@ -74,7 +74,7 @@
         @u_enlouquecendo="u_enlouquecendo"
       />
     </template>
-    <template v-if="carrosel >= 5">
+    <template v-if="carrosel == 5">
       <div class="content-sessaormamentos">
         <div class="content-sessao">
           <table>
@@ -207,7 +207,21 @@
         </div>
       </div>
     </template>
-
+    <template v-if="carrosel == 6">
+      <div class="container-armamento">
+        <ul>
+          <li v-for="(item, index) in antescendentes" :key="index">
+            <h3>{{ item.nome }}</h3>
+            <textarea
+              v-model="item.descricao"
+              spellcheck="false"
+              rows="4"
+              cols="50"
+            ></textarea>
+          </li>
+        </ul>
+      </div>
+    </template>
     <input class="btnPrevious" @click="btnPrev()" type="submit" value="PREV " />
     <input class="btnNext" @click="btnNext()" type="submit" value="NEXT" />
   </div>
@@ -316,7 +330,6 @@ export default {
         { id: 22, treino: "DESTREINADA", tipo: "treinada", nome: "TECNOLOGIA", valor: 0 },
         { id: 23, treino: "DESTREINADA", tipo: "treinada", nome: "VONTADE", valor: 0 },
       ],
-
       // dados de armamentos sessao / personagem
       movimento: 1,
       peso: 0,
@@ -329,6 +342,17 @@ export default {
       armamento_simples_personagem: [],
       armamento_tatico_personagem: [],
       armamento_pesado_personagem: [],
+
+      antescendentes: [
+        { nome: "DESCRIÇÃO PESSOAL", descricao: "" },
+        { nome: "IDEOLOGIA / CRENÇAS", descricao: "" },
+        { nome: "PESSOAS SIGNIFICATIVAS", descricao: "" },
+        { nome: "LOCAIS IMPORTANTES", descricao: "" },
+        { nome: "PERTENCES QUERIDOS", descricao: "" },
+        { nome: "CARACTERÍSTICAS", descricao: "" },
+        { nome: "FERIMENTOS E CICATRIZES", descricao: "" },
+        { nome: "FOBIAS E MANIAS", descricao: "" },
+      ],
     };
   },
   methods: {
@@ -353,32 +377,42 @@ export default {
       }
     },
     btnNext() {
-      if (this.carrosel < 5) {
+      if (this.carrosel < 6) {
         this.carrosel = this.carrosel + 1;
-      }
+      } else {
+        console.log(this.vida);
+        console.log(this.sanidade);
+        console.log(this.ocultismo);
+        console.log(this.esforco);
+        console.log(this.acao);
+        console.log(this.movimento);
+        console.log(this.reacao);
+        console.log(this.lesao_grave);
+        console.log(this.inconsciente);
+        console.log(this.morrendo);
+        console.log(this.traumatizado);
+        console.log(this.enlouquecendo);
 
-      // console.log(this.vida)
-      // console.log(this.sanidade)
-      // console.log(this.ocultismo)
-      // console.log(this.esforco)
-      // console.log(this.acao)
-      // console.log(this.movimento)
-      // console.log(this.reacao)
-      // console.log(this.lesao_grave)
-      // console.log(this.inconsciente)
-      // console.log(this.morrendo)
-      // console.log(this.traumatizado)
-      // console.log(this.enlouquecendo)
-      console.log(this.nome);
-      console.log(this.origem);
-      console.log(this.classe);
-      console.log(this.NEX);
-      console.log(this.trilha);
-      console.log(this.patente);
-      console.log(this.idade);
-      console.log(this.sexo);
-      console.log(this.nascimento);
-      console.log(this.residencia);
+        console.log(this.nome);
+        console.log(this.origem);
+        console.log(this.classe);
+        console.log(this.NEX);
+        console.log(this.trilha);
+        console.log(this.patente);
+        console.log(this.idade);
+        console.log(this.sexo);
+        console.log(this.nascimento);
+        console.log(this.residencia);
+        console.log(this.antescendentes);
+
+        console.log(this.atributos);
+        console.log(this.pericias);
+        console.log(this.antescendentes);
+
+        console.log(this.armamento_simples_personagem);
+        console.log(this.armamento_tatico_personagem);
+        console.log(this.armamento_pesado_personagem);
+      }
     },
     u_nome(nome) {
       this.nome = nome;
@@ -735,4 +769,55 @@ option:hover {
 }
 
 // fim scss armamentos
+
+// SCSS de antescendentes
+
+.container-armamento {
+  width: 100%;
+
+  ul {
+    list-style: none;
+    width: 75vw;
+    height: 100%;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    margin: 0 auto;
+    gap: 0.5em;
+    max-height: 80vh;
+    overflow: auto;
+
+    li {
+      display: flex;
+      border-radius: 24px;
+      padding: 0;
+      flex-direction: column;
+      text-align: center;
+      width: 48%;
+
+      min-height: 200px;
+
+      background-color: rgba(20 20 20 / 0.5);
+
+      h3 {
+        border-bottom: 1px solid #fff;
+        background-color: rgba(0 0 0 / 0.7);
+        margin-top: 0;
+      }
+      textarea {
+        width: 95%;
+        min-height: 50%;
+        background-color: rgba(0, 0, 0, 0.5);
+        border: 1px solid rgba(96, 96, 96, 0.5);
+        padding: 10px;
+        color: #fff;
+      }
+    }
+  }
+}
+.container-armamento .container-armamento ul .caixa-A {
+  min-height: 200px;
+  width: 100%;
+  background-color: rgba(20 20 20 / 0.5);
+}
 </style>

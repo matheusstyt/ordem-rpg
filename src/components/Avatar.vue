@@ -219,19 +219,19 @@
           <input
             type="checkbox"
             v-model="l_traumatizado"
-            name="vidaStatus"
-            id="vidaStatus"
+            name="tramautizado_status"
+            id="tramautizado_status"
           />
-          <label for="vidaStatus">Traumatizado</label>
+          <label for="tramautizado_status">Traumatizado</label>
         </div>
         <div class="form-field">
           <input
             type="checkbox"
             v-model="l_enlouquecendo"
-            name="vidaStatus"
-            id="vidaStatus"
+            name="enlouquecendo_status"
+            id="enlouquecendo_status"
           />
-          <label for="vidaStatus">Enlouquecendo</label>
+          <label for="enlouquecendo_status">Enlouquecendo</label>
         </div>
       </div>
     </div>
@@ -322,7 +322,7 @@ export default {
       l_lesao_grave: false,
       l_inconsciente: false,
       l_morrendo: false,
-      traumatizado: false,
+      l_traumatizado: false,
       l_enlouquecendo: false,
     };
   },
@@ -540,8 +540,6 @@ export default {
       this.$emit("u_traumatizado", value);
     },
     l_enlouquecendo(value) {
-      console.log(value);
-
       if (value) {
         createToast("Enlouquecendo - ativado", { type: "danger", timeout: 3000 });
       } else {
@@ -549,14 +547,6 @@ export default {
       }
       this.$emit("u_enlouquecendo", value);
     },
-
-    // l_vida(value){  this.$emit("update:vida_u", value) },
-    // l_sanidade(value){ this.$emit("update:sanidade_u", value) },
-    // l_ocultismo(value){ this.$emit("update:ocultismo_u", value) },
-    // l_esforco(value){ this.$emit("update:esforco_u", value) },
-    // l_acao(value){ this.$emit("update:acao_u", value) },
-    // l_movimento(value){ this.$emit("update:movimento_u", value) },
-    // l_reacao(value){ this.$emit("update:reacao_u", value) },
   },
   created() {
     this.l_lesao_grave = this.lesao_grave;

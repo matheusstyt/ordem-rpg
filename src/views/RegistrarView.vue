@@ -59,7 +59,7 @@ export default {
             e.preventDefault()
         },
         async registrar(){
-            const url = "http://192.168.100.52:8000/registrar/";
+            const url = "http://170.10.0.50:8000/registrar/";
             const body_user = {
                 username: this.user,
                 email: this.email,

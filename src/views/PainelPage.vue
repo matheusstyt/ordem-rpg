@@ -189,13 +189,13 @@ export default {
       this.modal_contact_opened = false;
     },
     async list_match() {
-      const url_session = "http://192.168.100.52:8000/session/";
-      const url_players = "http://192.168.100.52:8000/players/";
+      const url_session = "http://170.10.0.50:8000/session/";
+      const url_players = "http://170.10.0.50:8000/players/";
       const now = Date();
       const headers = { Authorization: "Token " + sessionStorage.getItem("token") };
 
       axios
-        .get(`http://192.168.100.52:8000/players/`, {
+        .get(`http://170.10.0.50:8000/players/`, {
           params: { fk_user: this.user_id },
           headers: headers,
         })
@@ -205,7 +205,7 @@ export default {
 
           res.data.players.forEach((element) => {
             axios
-              .get(`http://192.168.100.52:8000/session/${element.fk_session}/`, {
+              .get(`http://170.10.0.50:8000/session/${element.fk_session}/`, {
                 headers: headers,
               })
               .then((res) => {
@@ -222,7 +222,7 @@ export default {
         });
     },
     async get_session() {
-      const url_session = "http://192.168.100.52:8000/session/";
+      const url_session = "http://170.10.0.50:8000/session/";
       const now = Date();
       const headers = { Authorization: "Token " + sessionStorage.getItem("token") };
 
@@ -244,7 +244,7 @@ export default {
         });
     },
     async get_partida() {
-      const url = "http://192.168.100.52:8000/askplayer/";
+      const url = "http://170.10.0.50:8000/askplayer/";
       const now = Date();
       const headers = { Authorization: "Token " + sessionStorage.getItem("token") };
 
@@ -265,7 +265,7 @@ export default {
         });
     },
     async get_pendente() {
-      const url = "http://192.168.100.52:8000/ask/";
+      const url = "http://170.10.0.50:8000/ask/";
       const now = Date();
       const headers = { Authorization: "Token " + sessionStorage.getItem("token") };
 
@@ -285,7 +285,7 @@ export default {
         });
     },
     async get_contact() {
-      const url = "http://192.168.100.52:8000/contact/";
+      const url = "http://170.10.0.50:8000/contact/";
       const headers = { Authorization: "Token " + sessionStorage.getItem("token") };
 
       axios
@@ -306,7 +306,7 @@ export default {
     logout: function () {
       this.$router.push("/login");
       axios
-        .post("http://192.168.100.52:8000/logout/", null, {
+        .post("http://170.10.0.50:8000/logout/", null, {
           headers: {
             Authorization: "Token " + sessionStorage.getItem("token"),
           },
@@ -332,7 +332,7 @@ export default {
       let formattedDate = formatter.format(now);
 
       if (sessionStorage.getItem("token")) {
-        const url = `http://192.168.100.52:8000/contact/`;
+        const url = `http://170.10.0.50:8000/contact/`;
 
         const body_uni = {
           fk_user: fk_destino,
@@ -364,7 +364,7 @@ export default {
       }
     },
     excluir_pedido(id) {
-      const url = `http://192.168.100.52:8000/ask/${id}/`;
+      const url = `http://170.10.0.50:8000/ask/${id}/`;
       const headers = { Authorization: "Token " + sessionStorage.getItem("token") };
       axios
         .delete(url, { headers: headers })
@@ -387,7 +387,7 @@ export default {
       let formattedDate = formatter.format(now);
 
       if (sessionStorage.getItem("token")) {
-        const url = `http://192.168.100.52:8000/players/`;
+        const url = `http://170.10.0.50:8000/players/`;
 
         const body_uni = {
           fk_user: fk_destino,
@@ -407,7 +407,7 @@ export default {
       }
     },
     excluir_pedido_partida(id) {
-      const url = `http://192.168.100.52:8000/askplayer/${id}/`;
+      const url = `http://170.10.0.50:8000/askplayer/${id}/`;
       const headers = { Authorization: "Token " + sessionStorage.getItem("token") };
       axios
         .delete(url, { headers: headers })
@@ -457,6 +457,23 @@ export default {
 };
 </script>
 <style lang="scss">
+/* Estilização do Scroll */
+
+/* Cor da barra de rolagem */
+::-webkit-scrollbar {
+  width: 8px;
+  background-color: #1a1a1a;
+}
+
+/* Cor do indicador do scroll */
+::-webkit-scrollbar-thumb {
+  background-color: #666666;
+}
+
+/* Cor do indicador do scroll quando está em hover */
+::-webkit-scrollbar-thumb:hover {
+  background-color: #999999;
+}
 .flex {
   display: flex;
   justify-content: center;

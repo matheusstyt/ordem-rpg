@@ -61,7 +61,7 @@ export default {
     },
     save_session() {
       if (sessionStorage.getItem("token")) {
-        const url = `http://192.168.100.52:8000/session/?fk_mestre=${sessionStorage.getItem(
+        const url = `http://170.10.0.50:8000/session/?fk_mestre=${sessionStorage.getItem(
           "user_id"
         )}`;
 

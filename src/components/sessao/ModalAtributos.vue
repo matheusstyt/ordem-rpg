@@ -72,7 +72,7 @@ export default {
         },
         get_atributos(){
             const headers = {'Authorization': 'Token ' + sessionStorage.getItem('token') };
-            const url = "http://192.168.100.52:8000/atributos/";
+            const url = "http://170.10.0.50:8000/atributos/";
 
             axios.get(url, { params : { fk_session : sessionStorage.getItem("session_id")}, headers : headers })
             .then( res => {
@@ -87,7 +87,7 @@ export default {
         },
         get_atributo(id) {
             const headers = {'Authorization': 'Token ' + sessionStorage.getItem('token') };
-            const url = "http://192.168.100.52:8000/atributo/";
+            const url = "http://170.10.0.50:8000/atributo/";
 
             axios.get(url, { params : { id : id}, headers : headers })
             .then( res => {
@@ -106,7 +106,7 @@ export default {
             });
 
             function post_atributo(body) {
-                const url = "http://192.168.100.52:8000/atributo/";
+                const url = "http://170.10.0.50:8000/atributo/";
 
                 axios.post(url, body, { headers : headers })
                 .then( res => {
@@ -118,7 +118,7 @@ export default {
                 })
             }
             function post_atributos(id) {
-                const url = "http://192.168.100.52:8000/atributos/";
+                const url = "http://170.10.0.50:8000/atributos/";
                 const body_atributos = {
                     fk_atributo : id,
                     fk_session : sessionStorage.getItem("session_id")
@@ -140,7 +140,7 @@ export default {
                 console.log(atributos)
                 if( id === atributos.fk_atributo ){
                     const headers = {'Authorization': 'Token ' + sessionStorage.getItem('token') };
-                    const url = `http://192.168.100.52:8000/atributos/${atributos.id}/`;
+                    const url = `http://170.10.0.50:8000/atributos/${atributos.id}/`;
                     axios.delete(url, { headers : headers })
                     .then( res => {
                         this.list_atributos = []
