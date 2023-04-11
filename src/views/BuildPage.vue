@@ -235,6 +235,8 @@ import "vue-toast-notification/dist/theme-bootstrap.css";
 import Detalhes from "../components/Detalhes.vue";
 import Atributos from "../components/Atributos.vue";
 import Avatar from "../components/Avatar.vue";
+
+import { salvar_personagem } from "@/api/post_personagem.js";
 export default {
   components: {
     ToastPlugin,
@@ -330,6 +332,11 @@ export default {
         { id: 22, treino: "DESTREINADA", tipo: "treinada", nome: "TECNOLOGIA", valor: 0 },
         { id: 23, treino: "DESTREINADA", tipo: "treinada", nome: "VONTADE", valor: 0 },
       ],
+      resistencias: [
+        { id: 1, nome: "FÍSICO", valor: 0 },
+        { id: 2, nome: "MAGICO", valor: 0 },
+      ],
+
       // dados de armamentos sessao / personagem
       movimento: 1,
       peso: 0,
@@ -353,6 +360,8 @@ export default {
         { nome: "FERIMENTOS E CICATRIZES", descricao: "" },
         { nome: "FOBIAS E MANIAS", descricao: "" },
       ],
+
+      acessorios: [{ nome: "colete 1", descricao: "colete nivel 1", espaco: 1 }],
     };
   },
   methods: {
@@ -384,14 +393,10 @@ export default {
         console.log(this.sanidade);
         console.log(this.ocultismo);
         console.log(this.esforco);
+
         console.log(this.acao);
         console.log(this.movimento);
         console.log(this.reacao);
-        console.log(this.lesao_grave);
-        console.log(this.inconsciente);
-        console.log(this.morrendo);
-        console.log(this.traumatizado);
-        console.log(this.enlouquecendo);
 
         console.log(this.nome);
         console.log(this.origem);
@@ -403,8 +408,14 @@ export default {
         console.log(this.sexo);
         console.log(this.nascimento);
         console.log(this.residencia);
-        console.log(this.antescendentes);
 
+        console.log(this.lesao_grave);
+        console.log(this.inconsciente);
+        console.log(this.morrendo);
+        console.log(this.traumatizado);
+        console.log(this.enlouquecendo);
+
+        console.log(this.antescendentes);
         console.log(this.atributos);
         console.log(this.pericias);
         console.log(this.antescendentes);
@@ -412,6 +423,41 @@ export default {
         console.log(this.armamento_simples_personagem);
         console.log(this.armamento_tatico_personagem);
         console.log(this.armamento_pesado_personagem);
+
+        salvar_personagem(sessionStorage.getItem("session_id"), {
+          vida: this.vida,
+          sanidade: this.sanidade,
+          ocultismo: this.ocultismo,
+          esforco: this.esforco,
+
+          antescendentes: this.antescendentes,
+          atributos: this.atributos,
+          pericias: this.pericias,
+          resistencias: this.resistencias,
+
+          nome: this.nome,
+          origem: this.origem,
+          classe: this.classe,
+          NEX: this.NEX,
+          trilha: this.trilha,
+          patente: this.patente,
+          idade: this.idade,
+          sexo: this.sexo,
+          nascimento: this.nascimento,
+          residencia: this.residencia,
+
+          lesao_grave: this.lesao_grave,
+          inconsciente: this.inconsciente,
+          morrendo: this.morrendo,
+          traumatizado: this.traumatizado,
+          enlouquecendo: this.enlouquecendo,
+
+          armamentos: this.armamento_simples_personagem.concat(
+            this.armamento_tatico_personagem,
+            this.armamento_pesado_personagem
+          ),
+          acessorios: this.acessorios,
+        });
       }
     },
     u_nome(nome) {
