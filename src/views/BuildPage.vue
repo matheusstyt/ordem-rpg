@@ -424,40 +424,44 @@ export default {
         console.log(this.armamento_tatico_personagem);
         console.log(this.armamento_pesado_personagem);
 
-        salvar_personagem(sessionStorage.getItem("session_id"), {
-          vida: this.vida,
-          sanidade: this.sanidade,
-          ocultismo: this.ocultismo,
-          esforco: this.esforco,
+        salvar_personagem(
+          sessionStorage.getItem("session_id"),
+          sessionStorage.getItem("user_id"),
+          {
+            vida: this.vida,
+            sanidade: this.sanidade,
+            ocultismo: this.ocultismo,
+            esforco: this.esforco,
 
-          antescendentes: this.antescendentes,
-          atributos: this.atributos,
-          pericias: this.pericias,
-          resistencias: this.resistencias,
+            antescendentes: this.antescendentes,
+            atributos: this.atributos,
+            pericias: this.pericias,
+            resistencias: this.resistencias,
 
-          nome: this.nome,
-          origem: this.origem,
-          classe: this.classe,
-          NEX: this.NEX,
-          trilha: this.trilha,
-          patente: this.patente,
-          idade: this.idade,
-          sexo: this.sexo,
-          nascimento: this.nascimento,
-          residencia: this.residencia,
+            nome: this.nome,
+            origem: this.origem,
+            classe: this.classe,
+            NEX: this.NEX,
+            trilha: this.trilha,
+            patente: this.patente,
+            idade: this.idade,
+            sexo: this.sexo,
+            nascimento: this.nascimento,
+            residencia: this.residencia,
 
-          lesao_grave: this.lesao_grave,
-          inconsciente: this.inconsciente,
-          morrendo: this.morrendo,
-          traumatizado: this.traumatizado,
-          enlouquecendo: this.enlouquecendo,
+            lesao_grave: this.lesao_grave,
+            inconsciente: this.inconsciente,
+            morrendo: this.morrendo,
+            traumatizado: this.traumatizado,
+            enlouquecendo: this.enlouquecendo,
 
-          armamentos: this.armamento_simples_personagem.concat(
-            this.armamento_tatico_personagem,
-            this.armamento_pesado_personagem
-          ),
-          acessorios: this.acessorios,
-        });
+            armamentos: this.armamento_simples_personagem.concat(
+              this.armamento_tatico_personagem,
+              this.armamento_pesado_personagem
+            ),
+            acessorios: this.acessorios,
+          }
+        );
       }
     },
     u_nome(nome) {

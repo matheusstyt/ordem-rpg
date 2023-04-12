@@ -27,43 +27,79 @@
   </div>
 
   <preloader v-if="loading" />
-  <div class="container-home" v-else>
+  <div class="container-home-sessao" v-else>
     <div class="content-right" v-if="system == false">
-      <div class="content-session-add flex">
+      <div class="content-session-add">
         <h3>{{ sessao_atual.mestre }}</h3>
         <h3>{{ sessao_atual.descricao }}</h3>
+        <button @click="novo_personagem()">criar novo</button>
       </div>
       <div class="container-personagens">
         <ul>
           <template v-for="(item, index) in list_personagens" :key="item.id">
             <li>
-              <p>{{ item.nome }}</p>
-              <p>{{ item.classe }}</p>
-              <p>{{ item.idade }}</p>
+              <p>Nome: {{ item.nome }}</p>
+              <p>Classe: {{ item.classe }}</p>
+              <p>Patente: {{ item.patente }}</p>
+              <p>NEX: {{ item.NEX }}</p>
+
               <div class="container-bar">
                 <h3>Vida</h3>
-                <div class="back-bar" id="back-vida">
-                  <div class="front-bar" id="front-vida"><p>0/0</p></div>
+                <div
+                  class="back-bar"
+                  :style="{
+                    width: `${(item.vida.atual / item.vida.maximo) * 100}%`,
+                  }"
+                  id="back-vida"
+                >
+                  <div class="front-bar" id="front-vida">
+                    <p>{{ item.vida.atual }}/{{ item.vida.maximo }}</p>
+                  </div>
                 </div>
               </div>
               <div class="container-bar">
                 <h3>Sanidade</h3>
-                <div class="back-bar" id="back-sanidade">
-                  <div class="front-bar" id="front-sanidade"><p>0/0</p></div>
+                <div
+                  class="back-bar"
+                  :style="{
+                    width: `${(item.sanidade.atual / item.sanidade.maximo) * 100}%`,
+                  }"
+                  id="back-sanidade"
+                >
+                  <div class="front-bar" id="front-sanidade">
+                    <p>{{ item.sanidade.atual }}/{{ item.sanidade.maximo }}</p>
+                  </div>
                 </div>
               </div>
               <div class="container-bar">
                 <h3>Ocultismo</h3>
-                <div class="back-bar" id="back-ocultismo">
-                  <div class="front-bar" id="front-ocultismo"><p>0/0</p></div>
+                <div
+                  class="back-bar"
+                  :style="{
+                    width: `${(item.ocultismo.atual / item.ocultismo.maximo) * 100}%`,
+                  }"
+                  id="back-ocultismo"
+                >
+                  <div class="front-bar" id="front-ocultismo">
+                    <p>{{ item.ocultismo.atual }}/{{ item.ocultismo.maximo }}</p>
+                  </div>
                 </div>
               </div>
               <div class="container-bar">
                 <h3>Esforço</h3>
-                <div class="back-bar" id="back-esforco">
-                  <div class="front-bar" id="front-esforco"><p>0/0</p></div>
+                <div
+                  class="back-bar"
+                  :style="{
+                    width: `${(item.esforco.atual / item.esforco.maximo) * 100}%`,
+                  }"
+                  id="back-esforco"
+                >
+                  <div class="front-bar" id="front-esforco">
+                    <p>{{ item.esforco.atual }}/{{ item.esforco.maximo }}</p>
+                  </div>
                 </div>
               </div>
+              <p>Jogador: {{ item.jogador }}</p>
             </li>
           </template>
         </ul>
@@ -218,7 +254,9 @@ export default {
     close_modal_contact() {
       this.modal_contact_opened = false;
     },
-
+    novo_personagem() {
+      window.location.href = "/build";
+    },
     async get_session() {
       const url_session = `http://170.10.0.50:8000/session/${sessionStorage.getItem(
         "session_id"
@@ -347,10 +385,31 @@ export default {
   margin: 0;
   border-bottom: 1px solid rgba(255 255 255 / 0.7);
   position: relative;
+
+  display: flex;
+  justify-content: space-around;
+
   width: 100%;
   h3 {
     margin: 0;
-    padding: 0.5em 0;
+    padding: 0.2em 0;
+  }
+  button {
+    background-color: #0f0f0fb4;
+    color: rgb(231, 231, 231);
+    border-radius: 0.5em;
+    border: 1px dashed rgba(0 0 0 / 0.4);
+    padding: 0.2em;
+    margin: 0.2em 0;
+    cursor: pointer;
+  }
+  button:hover {
+    background-color: #0f0f0fe3;
+    color: white;
+  }
+  button:active {
+    background-color: #0f39098c;
+    color: white;
   }
 }
 .btn-add-session {
@@ -443,13 +502,13 @@ export default {
   display: flex;
   gap: 1em;
   padding-right: 2em;
-}
-.pendente-container-btn button {
-  background-color: rgb(0 0 0 / 0.7);
-  padding: 0.4em 1em;
-}
-.pendente-container-btn button:hover {
-  background-color: rgba(59, 59, 59, 0.7);
+  button {
+    background-color: rgb(0 0 0 / 0.7);
+    padding: 0.4em 1em;
+  }
+  button:hover {
+    background-color: rgba(59, 59, 59, 0.7);
+  }
 }
 #contact-okay:active {
   background-color: rgba(35, 231, 78, 0.486);
@@ -469,23 +528,13 @@ export default {
   background-color: rgba(223, 17, 17, 0.7);
 }
 
-.container-home {
-  /* background-image: url('../img/background.webp'); */
-  background-color: rgba(0 0 0 / 0);
-  background-position: center;
-  background-repeat: repeat-x;
-  background-attachment: fixed;
-  background-size: contain;
+.container-home-sessao {
   display: flex;
   padding-top: 2vmax;
   gap: 1em;
   height: 80vh;
   width: 75vw;
-  .conteiner-system {
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.3);
-  }
+
   .content-left,
   .content-right {
     box-shadow: 0px 0px 5px rgba(15, 15, 15, 0.61);
@@ -558,14 +607,16 @@ export default {
     display: flex;
     flex-flow: row wrap;
     width: auto;
-    background-color: beige;
+    background-color: transparent;
     list-style: none;
     gap: 1em;
     li {
-      width: 20%;
-      aspect-ratio: 9/16;
+      padding: 0.4em;
       background-color: rgba(0 0 0 / 0.7);
-
+      p {
+        font-size: 0.8em;
+        margin: 0.3em 0;
+      }
       .container-bar {
         width: 100%;
         h3 {
@@ -581,7 +632,7 @@ export default {
           .front-bar {
             position: static;
             height: 100%;
-            width: 90%;
+
             p {
               font-size: 0.8em;
               margin: 0;

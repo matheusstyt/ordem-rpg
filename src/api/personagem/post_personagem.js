@@ -4,7 +4,7 @@ const host = require("@/config/env").host
 const port = require("@/config/env").port
 const headers = { Authorization: "Token " + sessionStorage.getItem("token") };
 
-export async function salvar_personagem(session_id, data) {
+export async function salvar_personagem(session_id, user_id, data) {
     var id_vida, id_sandiade, id_ocultismo, id_esforco, id_antescendentes, 
         id_atributos, id_pericias, id_resistencias, id_armamentos = null, id_acessorios = null, id_inventario;
     try {
@@ -46,7 +46,8 @@ export async function salvar_personagem(session_id, data) {
             fk_resistencias : id_pericias,
             fk_antescendentes : id_resistencias,
 
-            fk_session : parseInt(session_id)
+            fk_session : parseInt(session_id),
+            fk_user : parseInt(user_id),
         }
         console.table(body_personagem)
         axios.post(`${host}:${port}/personagem/`, body_personagem, { headers : headers })
