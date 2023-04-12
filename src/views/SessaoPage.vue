@@ -34,7 +34,41 @@
         <h3>{{ sessao_atual.descricao }}</h3>
       </div>
       <div class="container-personagens">
-        <h5 class="content-add-person">+</h5>
+        <ul>
+          <template v-for="(item, index) in list_personagens" :key="item.id">
+            <li>
+              <p>{{ item.nome }}</p>
+              <p>{{ item.classe }}</p>
+              <p>{{ item.idade }}</p>
+              <div class="container-bar">
+                <h3>Vida</h3>
+                <div class="back-bar" id="back-vida">
+                  <div class="front-bar" id="front-vida"><p>0/0</p></div>
+                </div>
+              </div>
+              <div class="container-bar">
+                <h3>Sanidade</h3>
+                <div class="back-bar" id="back-sanidade">
+                  <div class="front-bar" id="front-sanidade"><p>0/0</p></div>
+                </div>
+              </div>
+              <div class="container-bar">
+                <h3>Ocultismo</h3>
+                <div class="back-bar" id="back-ocultismo">
+                  <div class="front-bar" id="front-ocultismo"><p>0/0</p></div>
+                </div>
+              </div>
+              <div class="container-bar">
+                <h3>Esforço</h3>
+                <div class="back-bar" id="back-esforco">
+                  <div class="front-bar" id="front-esforco"><p>0/0</p></div>
+                </div>
+              </div>
+            </li>
+          </template>
+        </ul>
+
+        <!-- <h5 class="content-add-person">+</h5> -->
       </div>
     </div>
     <div class="content-left">
@@ -45,6 +79,7 @@
           </div>
           <h2>Jogadores</h2>
         </div>
+
         <div class="btn-add-session" @click="open_modal_player()">
           <h4>+</h4>
         </div>
@@ -94,6 +129,8 @@ import ModalJogador from "@/components/sessao/add/ModalNewJogador.vue";
 
 import SessaoPersonagens from "@/components/SessaoPersonagens.vue";
 
+import { carregar_personagem } from "@/api/personagem/get_personagem.js";
+
 export default {
   components: {
     ModalAtributos,
@@ -141,6 +178,7 @@ export default {
       list_contact: null,
       no_session: false,
       show_config: false,
+      list_personagens: [],
     };
   },
   methods: {
@@ -201,61 +239,6 @@ export default {
           console.log(error);
         });
     },
-    aceitar_pedido(fk_origem, fk_destino, id) {
-      let now = new Date();
-      let formatter = new Intl.DateTimeFormat("pt-BR", {
-        weekday: "long",
-        day: "numeric",
-        month: "long",
-        hour: "numeric",
-        minute: "numeric",
-      });
-      let formattedDate = formatter.format(now);
-
-      if (sessionStorage.getItem("token")) {
-        const url = `http://170.10.0.50:8000/contact/`;
-
-        const body_uni = {
-          fk_user: fk_destino,
-          fk_friend: fk_origem,
-          data_inicio: String(formattedDate),
-        };
-        const body_bi = {
-          fk_user: fk_origem,
-          fk_friend: fk_destino,
-          data_inicio: String(formattedDate),
-        };
-        console.table(body_uni);
-        const headers = { Authorization: "Token " + sessionStorage.getItem("token") };
-        axios
-          .post(url, body_uni, { headers: headers })
-          .then((res) => {
-            axios
-              .post(url, body_bi, { headers: headers })
-              .then((res) => {
-                this.excluir_pedido(id);
-              })
-              .catch((error) => {
-                console.log(error);
-              });
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      }
-    },
-    excluir_pedido(id) {
-      const url = `http://170.10.0.50:8000/ask/${id}/`;
-      const headers = { Authorization: "Token " + sessionStorage.getItem("token") };
-      axios
-        .delete(url, { headers: headers })
-        .then((res) => {
-          window.location.reload();
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    },
     showConfig() {
       console.log(sessionStorage.getItem("user_id"));
       console.log(this.sessao_atual.fk_mestre);
@@ -265,6 +248,11 @@ export default {
     },
   },
   mounted() {
+    carregar_personagem(this.session_id).then((dados) => {
+      this.list_personagens = dados.personagem;
+      console.log(this.list_personagens);
+    });
+
     if (!sessionStorage.getItem("token")) {
       this.$router.push({ name: "login" });
     }
@@ -542,6 +530,9 @@ export default {
   background-color: rgba(19, 82, 29, 0.7);
 }
 .container-personagens {
+  margin: 0;
+  padding: 0;
+
   padding: 1em;
   h5 {
     width: 20%;
@@ -558,6 +549,74 @@ export default {
   }
   h5:hover {
     background-color: #0000008e;
+  }
+  ul {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-flow: row wrap;
+    width: auto;
+    background-color: beige;
+    list-style: none;
+    gap: 1em;
+    li {
+      width: 20%;
+      aspect-ratio: 9/16;
+      background-color: rgba(0 0 0 / 0.7);
+
+      .container-bar {
+        width: 100%;
+        h3 {
+          margin: 0;
+          padding: 0;
+          font-size: 0.9em;
+        }
+        .back-bar {
+          position: relative;
+          width: 100%;
+          height: 1em;
+          overflow: hidden;
+          .front-bar {
+            position: static;
+            height: 100%;
+            width: 90%;
+            p {
+              font-size: 0.8em;
+              margin: 0;
+
+              position: absolute;
+              left: 40%;
+            }
+          }
+        }
+        #back-vida {
+          background-color: rgb(97, 12, 12);
+          #front-vida {
+            background-color: red;
+          }
+        }
+        #back-sanidade {
+          background-color: rgb(12, 52, 97);
+          #front-sanidade {
+            background-color: rgb(48, 121, 181);
+          }
+        }
+        #back-ocultismo {
+          background-color: rgb(28, 12, 97);
+          #front-ocultismo {
+            background-color: rgb(111, 71, 203);
+          }
+        }
+        #back-esforco {
+          background-color: rgb(11, 73, 16);
+          #front-esforco {
+            background-color: rgb(61, 170, 86);
+          }
+        }
+      }
+    }
   }
 }
 

@@ -49,13 +49,12 @@ export async function salvar_personagem(session_id, data) {
             fk_session : parseInt(session_id)
         }
         console.table(body_personagem)
-        axios.post(`http://170.10.0.50:8000/personagem/`, body_personagem, { headers : headers })
+        axios.post(`${host}:${port}/personagem/`, body_personagem, { headers : headers })
         .then(res => {
             console.log(res.data)
 
             loop_armamentos(res.data.id, data.armamentos)
             loop_acessorios(res.data.id, data.acessorios)
-           // id_inventario = salvar_inventario(res.data.id, id_armamentos, id_inventario)
 
             alert('deu certo')
         })
@@ -72,7 +71,7 @@ export async function salvar_personagem(session_id, data) {
     async function salvar_vida(body_vida) {
         // vida post
         try {
-            const res = await axios.post(`http://170.10.0.50:8000/vidaPersonagem/`, body_vida, { headers : headers } )
+            const res = await axios.post(`${host}:${port}/vidaPersonagem/`, body_vida, { headers : headers } )
             console.log(`vida - ${res.data.id}`)
             return res.data.id
         } catch (error) {
@@ -83,7 +82,7 @@ export async function salvar_personagem(session_id, data) {
     async function salvar_sanidade(body_sanidade) {
         // sanidade post
         try {
-            const res = await axios.post(`http://170.10.0.50:8000/sanidadePersonagem/`, body_sanidade, { headers : headers } )
+            const res = await axios.post(`${host}:${port}/sanidadePersonagem/`, body_sanidade, { headers : headers } )
             console.log(`sanidade - ${res.data.id}`)
             return res.data.id
         } catch (error) {
@@ -92,7 +91,7 @@ export async function salvar_personagem(session_id, data) {
     }
     async function salvar_ocultismo(body_ocultismo) {
         try {
-            const res = await axios.post(`http://170.10.0.50:8000/ocultismoPersonagem/`, body_ocultismo, { headers : headers } )
+            const res = await axios.post(`${host}:${port}/ocultismoPersonagem/`, body_ocultismo, { headers : headers } )
             console.log(`ocultismo - ${res.data.id}`)
             return res.data.id
         } catch (error) {
@@ -102,7 +101,7 @@ export async function salvar_personagem(session_id, data) {
     }
     async function salvar_esforco(body_esforco) {
         try {
-            const res = await axios.post(`http://170.10.0.50:8000/esforcoPersonagem/`, body_esforco, { headers : headers } )
+            const res = await axios.post(`${host}:${port}/esforcoPersonagem/`, body_esforco, { headers : headers } )
             console.log(`esforco - ${res.data.id}`)
             return res.data.id
         } catch (error) {
@@ -113,7 +112,7 @@ export async function salvar_personagem(session_id, data) {
     async function salvar_antescendentes(body_antescendentes) {
         try {
             var jbody = { cadeia : JSON.stringify(body_antescendentes) };
-            const res = await axios.post(`http://170.10.0.50:8000/antescendentesPersonagem/`, jbody, { headers : headers } )
+            const res = await axios.post(`${host}:${port}/antescendentesPersonagem/`, jbody, { headers : headers } )
             console.log(`antescendentes - ${res.data.id}`)
             return res.data.id
         } catch (error) {
@@ -124,7 +123,7 @@ export async function salvar_personagem(session_id, data) {
     async function salvar_atributos(body_atributos) {
         try {
             var jbody = { cadeia : JSON.stringify(body_atributos) }
-            const res = await axios.post(`http://170.10.0.50:8000/atributosPersonagem/`, jbody, { headers : headers } )
+            const res = await axios.post(`${host}:${port}/atributosPersonagem/`, jbody, { headers : headers } )
             console.log(`atributos - ${res.data.id}`)
             return res.data.id
         } catch (error) {
@@ -136,7 +135,7 @@ export async function salvar_personagem(session_id, data) {
         var jbody = { cadeia : JSON.stringify(body_pericias) }
 
         try {
-            const res = await axios.post(`http://170.10.0.50:8000/periciasPersonagem/`, jbody, { headers : headers } )
+            const res = await axios.post(`${host}:${port}/periciasPersonagem/`, jbody, { headers : headers } )
             console.log(`pericias - ${res.data.id}`)
             return res.data.id
         } catch (error) {
@@ -148,7 +147,7 @@ export async function salvar_personagem(session_id, data) {
         var jbody = { cadeia : JSON.stringify(body_resistencias) }
 
         try {
-            const res = await axios.post(`http://170.10.0.50:8000/resistenciasPersonagem/`, jbody, { headers : headers } )
+            const res = await axios.post(`${host}:${port}/resistenciasPersonagem/`, jbody, { headers : headers } )
             console.log(`resistencias - ${res.data.id}`)
             return res.data.id
         } catch (error) {
@@ -167,7 +166,7 @@ export async function salvar_personagem(session_id, data) {
         var new_body = armamento;
         new_body.fk_personagem = fk;
         try {
-            const res = await axios.post(`http://170.10.0.50:8000/armamentosPersonagem/`, new_body, { headers : headers } )
+            const res = await axios.post(`${host}:${port}/armamentosPersonagem/`, new_body, { headers : headers } )
             console.log(`armamento - ${res.data.id}`)
             return res.data.id
 
@@ -185,7 +184,7 @@ export async function salvar_personagem(session_id, data) {
         var new_body = acessorio;
         new_body.fk_personagem = fk;
         try {
-            const res = await axios.post(`http://170.10.0.50:8000/acessoriosPersonagem/`, new_body, { headers : headers } )
+            const res = await axios.post(`${host}:${port}/acessoriosPersonagem/`, new_body, { headers : headers } )
             console.log(`acessorio - ${res.data.id}`)
             return res.data.id
         } catch (error) {
@@ -202,7 +201,7 @@ export async function salvar_personagem(session_id, data) {
                 fk_acessorios : fk_acessorios,
                 fk_personagem : fk_personagem
             }
-            const res = await axios.post(`http://170.10.0.50:8000/vidaPersonagem/`, body_inventario, { headers : headers } )
+            const res = await axios.post(`${host}:${port}/vidaPersonagem/`, body_inventario, { headers : headers } )
             console.log(`inventario - ${res.data.id}`)
             return res.data.id
         } catch (error) {

@@ -236,7 +236,7 @@ import Detalhes from "../components/Detalhes.vue";
 import Atributos from "../components/Atributos.vue";
 import Avatar from "../components/Avatar.vue";
 
-import { salvar_personagem } from "@/api/post_personagem.js";
+import { salvar_personagem } from "@/api/personagem/post_personagem.js";
 export default {
   components: {
     ToastPlugin,
