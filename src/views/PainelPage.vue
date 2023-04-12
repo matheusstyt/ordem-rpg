@@ -743,7 +743,7 @@ export default {
   gap: 1em;
   height: 80vh;
   width: 80vw;
-  @media screen and (max-width: 400px) {
+  @media screen and (max-width: 732px) {
     width: 100vw;
     gap: 0.4em;
   }

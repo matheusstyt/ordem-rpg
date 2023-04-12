@@ -30,8 +30,8 @@
   <div class="container-home-sessao" v-else>
     <div class="content-right" v-if="system == false">
       <div class="content-session-add">
-        <h3>{{ sessao_atual.mestre }}</h3>
-        <h3>{{ sessao_atual.descricao }}</h3>
+        <h3>Mestre: {{ sessao_atual.mestre }}</h3>
+        <h3 class="hide-small">Descrição: {{ sessao_atual.descricao }}</h3>
         <button @click="novo_personagem()">criar novo</button>
       </div>
       <div class="container-personagens">
@@ -45,56 +45,56 @@
 
               <div class="container-bar">
                 <h3>Vida</h3>
-                <div
-                  class="back-bar"
-                  :style="{
-                    width: `${(item.vida.atual / item.vida.maximo) * 100}%`,
-                  }"
-                  id="back-vida"
-                >
-                  <div class="front-bar" id="front-vida">
+                <div class="back-bar" id="back-vida">
+                  <div
+                    class="front-bar"
+                    id="front-vida"
+                    :style="{
+                      width: `${(item.vida.atual / item.vida.maximo) * 100}%`,
+                    }"
+                  >
                     <p>{{ item.vida.atual }}/{{ item.vida.maximo }}</p>
                   </div>
                 </div>
               </div>
               <div class="container-bar">
                 <h3>Sanidade</h3>
-                <div
-                  class="back-bar"
-                  :style="{
-                    width: `${(item.sanidade.atual / item.sanidade.maximo) * 100}%`,
-                  }"
-                  id="back-sanidade"
-                >
-                  <div class="front-bar" id="front-sanidade">
+                <div class="back-bar" id="back-sanidade">
+                  <div
+                    class="front-bar"
+                    id="front-sanidade"
+                    :style="{
+                      width: `${(item.sanidade.atual / item.sanidade.maximo) * 100}%`,
+                    }"
+                  >
                     <p>{{ item.sanidade.atual }}/{{ item.sanidade.maximo }}</p>
                   </div>
                 </div>
               </div>
               <div class="container-bar">
                 <h3>Ocultismo</h3>
-                <div
-                  class="back-bar"
-                  :style="{
-                    width: `${(item.ocultismo.atual / item.ocultismo.maximo) * 100}%`,
-                  }"
-                  id="back-ocultismo"
-                >
-                  <div class="front-bar" id="front-ocultismo">
+                <div class="back-bar" id="back-ocultismo">
+                  <div
+                    class="front-bar"
+                    id="front-ocultismo"
+                    :style="{
+                      width: `${(item.ocultismo.atual / item.ocultismo.maximo) * 100}%`,
+                    }"
+                  >
                     <p>{{ item.ocultismo.atual }}/{{ item.ocultismo.maximo }}</p>
                   </div>
                 </div>
               </div>
               <div class="container-bar">
                 <h3>Esforço</h3>
-                <div
-                  class="back-bar"
-                  :style="{
-                    width: `${(item.esforco.atual / item.esforco.maximo) * 100}%`,
-                  }"
-                  id="back-esforco"
-                >
-                  <div class="front-bar" id="front-esforco">
+                <div class="back-bar" id="back-esforco">
+                  <div
+                    class="front-bar"
+                    id="front-esforco"
+                    :style="{
+                      width: `${(item.esforco.atual / item.esforco.maximo) * 100}%`,
+                    }"
+                  >
                     <p>{{ item.esforco.atual }}/{{ item.esforco.maximo }}</p>
                   </div>
                 </div>
@@ -108,42 +108,41 @@
       </div>
     </div>
     <div class="content-left">
-      <div class="content-social-btn">
-        <div class="flex">
-          <div class="content-ico">
-            <img v-bind:src="require('@/assets/ico/meet.svg')" alt="Social_Img" />
-          </div>
-          <h2>Jogadores</h2>
+      <div class="title-lateral">
+        <div class="ico-h3">
+          <img
+            class="ico-group"
+            v-bind:src="require('@/assets/ico/meet.svg')"
+            alt="Social_Img"
+          />
+          <h3 class="hide-small">Jogadores</h3>
         </div>
 
-        <div class="btn-add-session" @click="open_modal_player()">
-          <h4>+</h4>
+        <button>+</button>
+      </div>
+      <div class="coluna-lateral">
+        <div class="content-social ativos">
+          <h3>Online</h3>
+          <ul>
+            <li v-for="(item, index) in sessao_atual.players">
+              <p>{{ item.player }}</p>
+              <div class="pendente-container-btn"></div>
+              <div id="status"></div>
+            </li>
+          </ul>
+        </div>
+        <div class="content-social config" v-if="show_config === true">
+          <h3>Configurar</h3>
+          <ul>
+            <li @click="open_modal_atributos()">Atributos</li>
+            <li @click="open_modal_pericias()">Pericias</li>
+            <li @click="open_modal_resistencias()">Resistencias a dano</li>
+            <li @click="open_modal_armamentos()">Armamentos</li>
+            <li @click="open_modal_acessorios()">Acessórios</li>
+            <li>Rituais</li>
+          </ul>
         </div>
       </div>
-      <div class="content-social ativos">
-        <h3>Online</h3>
-        <ul>
-          <li v-for="(item, index) in sessao_atual.players">
-            <p>{{ item.player }}</p>
-            <div class="pendente-container-btn"></div>
-            <div id="status"></div>
-          </li>
-        </ul>
-      </div>
-      <div class="content-social config" v-if="show_config === true">
-        <h3>Configurar</h3>
-        <ul>
-          <li @click="open_modal_atributos()">Atributos</li>
-          <li @click="open_modal_pericias()">Pericias</li>
-          <li @click="open_modal_resistencias()">Resistencias a dano</li>
-          <li @click="open_modal_armamentos()">Armamentos</li>
-          <li @click="open_modal_acessorios()">Acessórios</li>
-          <li>Rituais</li>
-        </ul>
-      </div>
-    </div>
-    <div class="conteiner-system" v-if="system == true">
-      <System />
     </div>
   </div>
 </template>
@@ -317,6 +316,23 @@ export default {
 };
 </script>
 <style lang="scss">
+/* Estilização do Scroll */
+
+/* Cor da barra de rolagem */
+::-webkit-scrollbar {
+  width: 8px;
+  background-color: #1a1a1a;
+}
+
+/* Cor do indicador do scroll */
+::-webkit-scrollbar-thumb {
+  background-color: #666666;
+}
+
+/* Cor do indicador do scroll quando está em hover */
+::-webkit-scrollbar-thumb:hover {
+  background-color: #999999;
+}
 .modal-session {
   background-color: rgba(0 0 0 / 0.4);
   width: 100%;
@@ -383,9 +399,11 @@ export default {
 }
 .content-session-add {
   margin: 0;
+  background-color: #000000c8;
   border-bottom: 1px solid rgba(255 255 255 / 0.7);
-  position: relative;
-
+  position: sticky;
+  top: 0;
+  z-index: 1;
   display: flex;
   justify-content: space-around;
 
@@ -393,10 +411,15 @@ export default {
   h3 {
     margin: 0;
     padding: 0.2em 0;
+    font-size: 1em;
+    font-weight: 500;
+  }
+  h3:before {
+    content: "";
   }
   button {
-    background-color: #0f0f0fb4;
-    color: rgb(231, 231, 231);
+    background-color: #ffffffb4;
+    color: rgb(42, 42, 42);
     border-radius: 0.5em;
     border: 1px dashed rgba(0 0 0 / 0.4);
     padding: 0.2em;
@@ -404,11 +427,11 @@ export default {
     cursor: pointer;
   }
   button:hover {
-    background-color: #0f0f0fe3;
-    color: white;
+    background-color: #ffffffe3;
+    color: rgb(0, 0, 0);
   }
   button:active {
-    background-color: #0f39098c;
+    background-color: #c9fcc28c;
     color: white;
   }
 }
@@ -431,73 +454,123 @@ export default {
   background-color: #88888883;
   border: 1px dashed rgba(82, 82, 82, 0.4);
 }
-.content-ico {
-  height: 2em;
-  aspect-ratio: 1/1;
-}
-.content-social-btn {
-  height: 5%;
-}
-.content-social {
-  background-color: rgb(43 43 43 / 0.1);
-  width: 100%;
-  height: 45%;
-  overflow: hidden;
-  h3 {
-    padding-bottom: 5px;
-    margin: 0;
-    text-align: center;
-    border-bottom: 1px dashed rgba(0 0 0 / 0.4);
-  }
-  ul {
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    box-shadow: 3px 0px 4px rgba(0, 0, 0, 0.726);
-    li {
-      list-style: none;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding-left: 1em;
-      background-color: rgba(22, 22, 22, 0.568);
-      #status {
-        height: 20px;
-        width: 20px;
-        border-radius: 50%;
-        background-color: #04e04e;
-        margin: 0;
-        margin-right: 1em;
-      }
-    }
-    li:hover {
-      background-color: rgba(5, 5, 5, 0.568);
-      #status {
-        background-color: #09aa31;
-      }
-    }
-  }
-}
 
+.title-lateral {
+  width: 100%;
+  position: relative;
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+  gap: 0.6em;
+  background-color: rgb(0 0 0 / 0.8);
+  border-top: 1px solid rgba(190, 190, 190, 0.6);
+  border-bottom: 1px solid rgba(190, 190, 190, 0.6);
+  .ico-h3 {
+    display: flex;
+    gap: 0.5em;
+    img {
+      height: 1.5em;
+      aspect-ratio: 1/1;
+    }
+    h3 {
+      font-size: 1em;
+      font-weight: 400;
+      padding: 0.3em 0;
+      color: bisque;
+      margin: 0;
+    }
+  }
+  button {
+    background-color: #ffffffb4;
+    color: rgb(42, 42, 42);
+    border-radius: 0.5em;
+    border: 1px dashed rgba(0 0 0 / 0.4);
+    margin: 0.2em 0;
+    cursor: pointer;
+    position: absolute;
+    right: 0.5em;
+  }
+  button:hover {
+    background-color: #ffffffe3;
+    color: rgb(0, 0, 0);
+  }
+  button:active {
+    background-color: #c9fcc28c;
+    color: white;
+  }
+}
+.coluna-lateral {
+  height: auto;
+  .content-social {
+    background-color: rgb(43 43 43 / 0.1);
+    width: 100%;
+    height: 50%;
+    max-height: 50%;
+    overflow-y: auto;
+    h3 {
+      top: 0;
+      position: sticky;
+      margin: 0;
+      text-align: center;
+      font-size: 1em;
+      font-weight: 400;
+      padding: 0.3em 0;
+      color: bisque;
+      border-bottom: 1px dashed rgba(0 0 0 / 0.4);
+    }
+    ul {
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 3px 0px 4px rgba(0, 0, 0, 0.726);
+      li {
+        list-style: none;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-left: 1em;
+        background-color: rgba(22, 22, 22, 0.568);
+        p {
+          margin: 0;
+        }
+        #status {
+          height: 20px;
+          width: 20px;
+          border-radius: 50%;
+          background-color: #04e04e;
+          margin: 0;
+          margin-right: 1em;
+        }
+      }
+      li:hover {
+        background-color: rgba(5, 5, 5, 0.568);
+        #status {
+          background-color: #09aa31;
+        }
+      }
+    }
+  }
+}
 .ativos h3 {
   background-color: #00f75259;
 }
-.config {
-  h3 {
-    background-color: #5b50bb50;
-    z-index: 2;
-  }
-  ul {
-    z-index: 1;
-    li {
-      cursor: pointer;
-      padding: 0.5em 1em;
-      border-bottom: 1px solid rgba(68, 68, 68, 0.4);
-      box-shadow: 0px 1px 5px #000;
-    }
+.config h3 {
+  background-color: #000000ea;
+}
+ul {
+  overflow-y: auto;
+  height: 100%;
+
+  li {
+    cursor: pointer;
+    padding: 0.5em 1em;
+    border-bottom: 1px solid rgba(68, 68, 68, 0.4);
+    box-shadow: 0px 1px 5px #000;
   }
 }
+
 .pendente-container-btn {
   display: flex;
   gap: 1em;
@@ -538,9 +611,10 @@ export default {
   .content-left,
   .content-right {
     box-shadow: 0px 0px 5px rgba(15, 15, 15, 0.61);
-    background-color: rgba(23, 23, 23, 0.5);
+    background-color: rgba(0, 0, 0, 0.393);
     border: 1px solid rgba(99, 99, 99, 0.877);
     height: 100%;
+    overflow-y: auto;
     h2 {
       text-align: center;
     }
@@ -550,21 +624,6 @@ export default {
   }
   .content-right {
     width: 70%;
-  }
-}
-
-.content-social-btn {
-  position: relative;
-  display: flex;
-  padding: 0.6em 0;
-  align-items: center;
-  justify-content: center;
-  gap: 0.6em;
-  border-top: 1px solid rgba(190, 190, 190, 0.6);
-  border-bottom: 1px solid rgba(190, 190, 190, 0.6);
-  width: 100%;
-  h2 {
-    margin: 0;
   }
 }
 
@@ -611,9 +670,19 @@ export default {
     list-style: none;
     gap: 1em;
     li {
+      cursor: pointer;
       padding: 0.4em;
       background-color: rgba(0 0 0 / 0.7);
+      width: 150px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      @media screen and (max-width: 738px) {
+        width: 100%;
+      }
       p {
+        text-overflow: ellipsis;
+        white-space: nowrap;
         font-size: 0.8em;
         margin: 0.3em 0;
       }
@@ -668,52 +737,10 @@ export default {
         }
       }
     }
+    li:hover {
+      background-color: rgba(0 0 0 / 0.9);
+    }
   }
-}
-
-.content-personagens-resumo {
-  cursor: pointer;
-  text-align: center;
-  font-family: "Consolas";
-  width: 100%;
-}
-.content-personagens-resumo ul {
-  padding: 0;
-  margin: 0;
-  list-style: none;
-  display: block;
-}
-.content-personagens-resumo ul li {
-  margin: 0;
-  padding: 0;
-  display: flex;
-  background-color: rgba(0 0 0 / 0.3);
-  border-bottom: 1px solid rgba(255 255 255 / 0.7);
-}
-.content-personagens-resumo ul li div {
-  margin: 0;
-  padding: 0;
-  display: flex;
-}
-.content-personagens-resumo ul li:hover {
-  background-color: rgba(255 255 255 / 0.1);
-}
-
-.content-personagens-resumo ul li p,
-.content-personagens-resumo ul li label {
-  margin: 5px 0;
-  padding: 0 20px;
-  border-right: 1px solid rgba(255 255 255 / 0.7);
-  cursor: pointer;
-}
-.content-personagens-resumo ul li label {
-  border: none;
-}
-.content-personagens-resumo ul li select {
-  background-color: rgba(0 0 0 / 0.4);
-  color: #fff;
-  font-family: "Consolas";
-  font-size: 14px;
 }
 
 //MODAL PARDRÃO
@@ -722,9 +749,9 @@ export default {
   padding: 0;
   border: 1px solid bisque;
   background-color: rgba(0 0 0 / 0.5);
-  min-width: 34vw;
-  max-width: 36vw;
-  width: 35vw;
+  //min-width: 34vw;
+  //max-width: 36vw;
+  //width: 35vw;
   height: auto;
   box-shadow: 0px 0px 3px #f3eacd;
   position: relative;
@@ -842,5 +869,14 @@ export default {
 .session-content-p:hover {
   box-shadow: 0px 0px 5px #fff;
   transition: ease 0.5s;
+}
+@media screen and (max-width: 600px) {
+  .hide-small {
+    display: none;
+  }
+  .container-home-sessao {
+    width: 99%;
+    gap: 5px;
+  }
 }
 </style>
