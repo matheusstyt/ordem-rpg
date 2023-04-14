@@ -357,27 +357,31 @@
     created() {
         this.armamentos_sessao_all = armamentos.armamentos;
         
+        try {
+            this.data_personagem = this.$route.params
         
-        this.data_personagem = this.$route.params
+            this.lesao_grave = Boolean(this.data_personagem.lesao_grave)
+            this.inconsciente = Boolean(this.data_personagem.inconsciente)
+            this.morrendo = Boolean(this.data_personagem.morrendo)
+            this.traumatizado = Boolean(this.data_personagem.traumatizado)
+            this.enlouquecendo = Boolean(this.data_personagem.enlouquecendo)
+
+            this.vida = JSON.parse(this.data_personagem.vida)
+            this.sanidade = JSON.parse(this.data_personagem.sanidade)
+            this.ocultismo = JSON.parse(this.data_personagem.ocultismo)
+            this.esforco = JSON.parse(this.data_personagem.esforco)
+
+            this.atributos = JSON.parse(this.data_personagem.atributos)
+            this.pericias = JSON.parse(this.data_personagem.pericias)
+            this.resistencias = JSON.parse(this.data_personagem.resistencias)
+            this.armamentos_list = JSON.parse(this.data_personagem.armamentos)
+            this.acessorios_list = JSON.parse(this.data_personagem.acessorios)
+
+            this.perfil_carregado = this.data_personagem.perfil_img
+        } catch (error) {
+            this.$router.go(-1);
+        }
         
-        this.lesao_grave = Boolean(this.data_personagem.lesao_grave)
-        this.inconsciente = Boolean(this.data_personagem.inconsciente)
-        this.morrendo = Boolean(this.data_personagem.morrendo)
-        this.traumatizado = Boolean(this.data_personagem.traumatizado)
-        this.enlouquecendo = Boolean(this.data_personagem.enlouquecendo)
-
-        this.vida = JSON.parse(this.data_personagem.vida)
-        this.sanidade = JSON.parse(this.data_personagem.sanidade)
-        this.ocultismo = JSON.parse(this.data_personagem.ocultismo)
-        this.esforco = JSON.parse(this.data_personagem.esforco)
-
-        this.atributos = JSON.parse(this.data_personagem.atributos)
-        this.pericias = JSON.parse(this.data_personagem.pericias)
-        this.resistencias = JSON.parse(this.data_personagem.resistencias)
-        this.armamentos_list = JSON.parse(this.data_personagem.armamentos)
-        this.acessorios_list = JSON.parse(this.data_personagem.acessorios)
-
-        this.perfil_carregado = this.data_personagem.perfil_img
 
 
     },
