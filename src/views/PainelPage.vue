@@ -139,13 +139,11 @@
 import axios from "axios";
 import preloader from "../components/gif/preloader.vue";
 import logout from "../components/svg/logout.vue";
-import System from "../components/sistema/ConfigSystem.vue";
 import ModalSessao from "@/components/painel/ModalNewSessao.vue";
 import ModalFriend from "@/components/painel/ModalNewFriend.vue";
-import SessaoPersonagens from "../components/SessaoPersonagens.vue";
 
 export default {
-  components: { ModalSessao, ModalFriend, SessaoPersonagens, System, logout, preloader },
+  components: { ModalSessao, ModalFriend, logout, preloader },
   props: {
     data: Object,
     vida: Object,

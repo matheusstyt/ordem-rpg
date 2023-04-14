@@ -25,6 +25,7 @@
     "socket.io": "^4.5.1",
     "vue": "^3.2.13",
     "vue-class-component": "^8.0.0-0",
+    "vue-image-crop-upload": "^3.0.3",
     "vue-router": "^4.0.3",
     "vue-toast-notification": "^3.1.1",
     "webpack": "^5.74.0"

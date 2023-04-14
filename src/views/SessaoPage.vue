@@ -37,7 +37,10 @@
       <div class="container-personagens">
         <ul>
           <template v-for="(item, index) in list_personagens" :key="item.id">
-            <li>
+            <li @click="go_personagem(item)">
+              <div class="detalhe-perfil-content">
+                <img :src="item.perfil_img" alt="">
+              </div>
               <p>Nome: {{ item.nome }}</p>
               <p>Classe: {{ item.classe }}</p>
               <p>Patente: {{ item.patente }}</p>
@@ -150,7 +153,6 @@
 import axios from "axios";
 import preloader from "../components/gif/preloader.vue";
 import logout from "../components/svg/logout.vue";
-import System from "../components/sistema/ConfigSystem.vue";
 
 import ModalResistencias from "@/components/sessao/ModalResistencias.vue";
 import ModalPericias from "@/components/sessao/ModalPericias.vue";
@@ -162,7 +164,6 @@ import ModalAcessorios from "@/components/sessao/ModalAcessorios.vue";
 
 import ModalJogador from "@/components/sessao/add/ModalNewJogador.vue";
 
-import SessaoPersonagens from "@/components/SessaoPersonagens.vue";
 
 import { carregar_personagem } from "@/api/personagem/get_personagem.js";
 
@@ -174,8 +175,6 @@ export default {
     ModalArmamentos,
     ModalAcessorios,
     ModalJogador,
-    SessaoPersonagens,
-    System,
     logout,
     preloader,
   },
@@ -276,9 +275,50 @@ export default {
           console.log(error);
         });
     },
+    go_personagem(personagem){
+      this.$router.push({
+        name: 'personagem',
+        params: { 
+
+          "id" : parseInt(personagem.id),
+          "nome" : personagem.nome,
+          "origem" : personagem.origem,
+          "idade" : personagem.idade,
+          "sexo" : personagem.sexo,
+          "naturalidade" : personagem.naturalidade,
+          "residencia" : personagem.residencia,
+          "classe" : personagem.classe,
+          "NEX" : personagem.NEX,
+          "trilha" : personagem.trilha,
+          "patente" : personagem.patente,
+
+          "lesao_grave" : Boolean(personagem.lesao_grave) ,
+          "inconsciente" : Boolean(personagem.inconsciente),
+          "morrendo" : Boolean(personagem.morrendo),
+          "traumatizado" : Boolean(personagem.traumatizado),
+          "enlouquecendo" : Boolean(personagem.enlouquecendo),
+
+          "perfil_img" : personagem.perfil_img,
+
+          "acessorios" : JSON.stringify(personagem.acessorios.acessorio),
+          "armamentos" : JSON.stringify(personagem.armamentos.armamento),
+
+          "atributos" : personagem.atributos,
+          "pericias" : personagem.pericias,
+          "resistencias" : personagem.resistencias,
+
+          "antescendentes" : personagem.antescendentes,
+
+          "esforco" : JSON.stringify(personagem.esforco),
+          "ocultismo" : JSON.stringify(personagem.ocultismo),
+          "sanidade" : JSON.stringify(personagem.sanidade),
+          "vida" : JSON.stringify(personagem.vida) 
+
+
+      }
+      })
+    },
     showConfig() {
-      console.log(sessionStorage.getItem("user_id"));
-      console.log(this.sessao_atual.fk_mestre);
       if (parseInt(sessionStorage.getItem("user_id")) === this.sessao_atual.fk_mestre) {
         this.show_config = true;
       }
@@ -679,6 +719,18 @@ ul {
       white-space: nowrap;
       @media screen and (max-width: 738px) {
         width: 100%;
+      }
+      .detalhe-perfil-content{
+        margin: 0 auto;
+        border-radius: 50%;
+        width: 120px;
+        overflow: hidden;
+        aspect-ratio: 1/1;
+        border: 5px solid rgba(75, 185, 75, 0.741);
+        img{
+          height: 100%;
+          width: 100%;
+        }
       }
       p {
         text-overflow: ellipsis;

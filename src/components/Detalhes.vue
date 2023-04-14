@@ -2,7 +2,7 @@
     <div class="caixa-form-detalhes">
         <div class="detalhes-inputs" action="">
 
-            <h2>DETALHES PESSOAIS</h2>
+            <h2>INFORMARÇÕES PESSOAIS</h2>
 
             <div class="input-field">
                 <label for="jogador">Nome</label>

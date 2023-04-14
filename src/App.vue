@@ -1,20 +1,34 @@
 <template>
   <div class="header" v-if="isAuthenticated">
-    <div class="header-content">
+    <div class="header-content" id="header-main">
       <div class="nav-p" @click="go_inicio">
         <p>Início</p>
       </div>
       <div class="nav-p" @click="go_sessoes">
         <p>Sessões</p>
       </div>
-      <!-- <div class="nav-p"  @click="go_meu_sistema">
-        <p>Meu Sistema</p>
-      </div> -->
       <div class="nav-p">
         <h3>{{ isAuthenticated }}</h3>
       </div>
       <div class="nav-p" @click="logout()">
         <logout />
+      </div>
+    </div>
+    <div class="header-content" id="header-personagem">
+      <div class="nav-p" @click="go_back">
+        <p>Voltar</p>
+      </div>
+      <div class="nav-p" @click="go_sessoes">
+        <p>Inventário</p>
+      </div>
+      <div class="nav-p" @click="go_sessoes">
+        <p>Rituais</p>
+      </div>
+      <div class="nav-p" @click="go_sessoes">
+        <p>Antescendentes</p>
+      </div>
+      <div class="nav-p">
+        <h3>{{ isAuthenticated }}</h3>
       </div>
     </div>
   </div>
@@ -44,6 +58,10 @@ export default {
     go_meu_sistema() {
       window.location.href = "/sistema";
     },
+
+    go_back(){
+      this.$router.go(-1);
+    }
   },
   mounted() {
     this.user = sessionStorage.getItem("username");
@@ -106,7 +124,9 @@ button {
     }
   }
 }
-
+#header-personagem{
+  display: none;
+}
 #app {
   background: black;
   background-image: url("./img/background.webp");

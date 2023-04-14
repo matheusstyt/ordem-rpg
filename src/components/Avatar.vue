@@ -4,8 +4,6 @@
       <div class="modal-modificar">
         <h2>TESTE DE SANIDADE</h2>
         <h3>Rolagem de dado</h3>
-        <!-- <h4 :style="displayTesteResultado">{{valorTeste}}</h4>
-            <p :style="displayTesteTipo">{{tipoTeste}}</p> -->
 
         <h4
           v-if="result_number_sanidade"
@@ -136,31 +134,19 @@
           <td>{{ movimento }}</td>
         </tr>
       </table>
+      <template v-if="perfil64">
+        <div class="perfil-carregado">
+          <img :src="perfil64" alt="">
+        </div>
+      </template>
+      <template v-else>
+        <perfil @u_imagem_base64="u_imagem_base64" />
+      </template>
+      
 
-      <div @click="toggleShow" class="box-perfil">
-        <img src="@/assets/img/perfil1.jpg" alt="" />
-      </div>
+
     </div>
-    <!-- <div>
-                <a class="btn" @click="toggleShow">set avatar</a>
-                <my-upload field="img"
-                    langType='pt-br'
-                    @crop-success="cropSuccess"
-                    @crop-upload-success="cropUploadSuccess"
-                    @crop-upload-fail="cropUploadFail"
-                    method="POST"
-                    v-model="show"
-                    :width="300"
-                    :height="300"
-                    url="http://localhost:3000/upload"
-                    noSquare="true"
-                    :params="params"
-                    :headers="headers"
-                    img-format="png">
-
-                    </my-upload>
-                <img :src="imgDataUrl">
-            </div> -->
+  
     <div class="content-barra">
       <h4>Vida</h4>
       <div class="back-vida front-barra-padrao" @click="open_modal_vida">
@@ -260,16 +246,23 @@
   </div>
 </template>
 <script>
-import ToastPlugin from "vue-toast-notification";
+import toast from "vue-toast-notification";
 import "vue-toast-notification/dist/theme-bootstrap.css";
 
 import { createToast } from "mosha-vue-toastify";
 import "mosha-vue-toastify/dist/style.css";
+import perfil from "@/components/avatar/perfil"
+
+
 export default {
   components: {
-    ToastPlugin,
+    toast, perfil
   },
   props: {
+    perfil64 : {
+      required : false, 
+      type : String
+    },
     l_vida: Object,
     l_sanidade: Object,
     l_ocultismo: Object,
@@ -316,8 +309,6 @@ export default {
         token: "123456798",
         name: "avatar",
       },
-
-      imgDataUrl: "", // the datebase64 url of created image,
       // CHECK BOX
       l_lesao_grave: false,
       l_inconsciente: false,
@@ -462,42 +453,8 @@ export default {
         this.isExecuting = false;
       }, 6000);
     },
-    // perfil avatar
-    toggleShow() {
-      this.show = !this.show;
-    },
-    /**
-     * crop success
-     *
-     * [param] imgDataUrl
-     * [param] field
-     */
-    cropSuccess(imgDataUrl, field) {
-      console.log("-------- crop success --------");
-      this.imgDataUrl = imgDataUrl;
-      console.log(imgDataUrl);
-    },
-    /**
-     * upload success
-     *
-     * [param] jsonData  server api return data, already json encode
-     * [param] field
-     */
-    cropUploadSuccess(jsonData, field) {
-      console.log("-------- upload success --------");
-      console.log(jsonData);
-      console.log("field: " + field);
-    },
-    /**
-     * upload fail
-     *
-     * [param] status    server api return error status, like 500
-     * [param] field
-     */
-    cropUploadFail(status, field) {
-      console.log("-------- upload fail --------");
-      console.log(status);
-      console.log("field: " + field);
+    u_imagem_base64(value){
+      this.$emit("u_imagem_base64", value)
     },
     toast(msg, type) {
       createToast(msg, { type: type, timeout: 3000 });
@@ -578,12 +535,12 @@ export default {
   }
 }
 
-.box-perfil {
-  background-color: #a2a2a2;
+.perfil-carregado {
+  cursor: pointer;
   width: 140px;
   height: 140px;
   border-radius: 50%;
-  border: 2px solid rgba(190, 190, 190, 0.6);
+  border: 5px solid rgba(98, 236, 60, 0.6);
   overflow: hidden;
 
   @media screen and (max-width: 600px) {
@@ -592,11 +549,11 @@ export default {
   }
 }
 
-.box-perfil:hover {
+.perfil-carregado:hover {
   background-color: #a2a2a2;
-  border: 2px solid rgb(233, 233, 233);
+  border: 5px solid rgba(85, 207, 51, 0.849);
 }
-.box-perfil img {
+.perfil-carregado img {
   width: 100%;
   height: 100%;
 }

@@ -72,6 +72,7 @@
         @u_morrendo="u_morrendo"
         @u_traumatizado="u_traumatizado"
         @u_enlouquecendo="u_enlouquecendo"
+        @u_imagem_base64="u_imagem_base64"
       />
     </template>
     <template v-if="carrosel == 5">
@@ -269,6 +270,7 @@ export default {
       residencia: "",
       // fim dados detalhes
       // dados do avatar
+      imagem_base64 : "",
       vida: { atual: 23, maximo: 40 },
       sanidade: { atual: 68, maximo: 100 },
       ocultismo: { atual: 50, maximo: 50 },
@@ -365,6 +367,10 @@ export default {
     };
   },
   methods: {
+    u_imagem_base64(value){
+      this.imagem_base64 = value
+      console.log(value)
+    },
     u_lesao_grave(value) {
       this.lesao_grave = value;
     },
@@ -428,6 +434,7 @@ export default {
           sessionStorage.getItem("session_id"),
           sessionStorage.getItem("user_id"),
           {
+            imagem_base64 : this.imagem_base64,
             vida: this.vida,
             sanidade: this.sanidade,
             ocultismo: this.ocultismo,

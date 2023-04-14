@@ -6,9 +6,9 @@ const headers = { Authorization: "Token " + sessionStorage.getItem("token") };
 
 export async function salvar_personagem(session_id, user_id, data) {
     var id_vida, id_sandiade, id_ocultismo, id_esforco, id_antescendentes, 
-        id_atributos, id_pericias, id_resistencias, id_armamentos = null, id_acessorios = null, id_inventario;
+        id_atributos, id_pericias, id_resistencias, id_perfil, id_armamentos = null, id_acessorios = null, id_inventario;
     try {
-
+        id_perfil = await salvar_img_perfil(data.imagem_base64)
         id_vida = await salvar_vida(data.vida)
         id_sandiade = await salvar_sanidade(data.sanidade)
         id_ocultismo = await salvar_ocultismo(data.ocultismo)
@@ -36,6 +36,7 @@ export async function salvar_personagem(session_id, user_id, data) {
             traumatizado : data.traumatizado,
             enlouquecendo : data.enlouquecendo,
 
+            fk_perfil_img : id_perfil,
             fk_vida : id_vida,
             fk_sanidade : id_sandiade,
             fk_ocultismo : id_ocultismo,
@@ -68,7 +69,19 @@ export async function salvar_personagem(session_id, user_id, data) {
     } catch (error) {
         console.log(error)
     }
-    
+    async function salvar_img_perfil(data_url){
+        const body_img = { image : data_url };
+            try {
+                const res = await axios.post(`${host}:${port}/perfil/`, body_img, { headers : {
+                    'Content-Type': 'multipart/form-data',
+                     Authorization: "Token " + sessionStorage.getItem("token")
+                } } )
+                console.log(`perfil - ${res.data.id}`)
+                return res.data.id
+            } catch (error) {
+                return null
+            }
+    }
     async function salvar_vida(body_vida) {
         // vida post
         try {
