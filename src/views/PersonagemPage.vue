@@ -705,10 +705,10 @@
   }
   @media screen and (max-width: 600px) {
     .geral-avatar{
-        width: 90%;
+        width: 100%;
         max-width: 100%;
     }
-    }
+  }
     #app{
         height: auto;
     }

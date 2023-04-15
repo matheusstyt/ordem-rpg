@@ -151,8 +151,6 @@ body {
   font-family: "Itim", sans-serif;
   margin: 0;
   padding: 0;
-  @media screen and (max-width: 400px) {
-    overflow: hidden;
-  }
+ 
 }
 </style>

@@ -11,7 +11,7 @@
               alt=""
             />
             <p>{{ atributo.nome }}</p>
-            <input v-model="atributo.valor" type="number" />
+            <h5>{{ atributo.valor }}</h5>
           </li>
         </ul>
     </div>
@@ -62,14 +62,19 @@ export default {
     align-items: center;
     justify-content: center;
     gap: 1em;
+    @media screen and (max-width: 600px) {
+    
+    }
     li {
       background-color: rgba(0, 0, 0, 0.627);
       border-radius: 10px;
       display: flex;
       align-items: center;
       flex-direction: column;
+      
       p {
-        font-size: 1.1em;
+        font-size: 0.9em;
+        margin: 0.3em 0;
       }
       img {
         height: 2em;
@@ -85,6 +90,21 @@ export default {
         background-color: rgba(63, 63, 63, 0.788);
         transform: none;
         transition: all 0.3s ease;
+      }
+      h5{
+        width: 100%;
+        text-align: center;
+        border: none;
+        border-bottom: 2px solid #a2a2a2;
+        border-top-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+        text-transform: uppercase;
+        padding: 3px 7px;
+        background: rgba(7 7 7 / 0.5);
+      
+        color: #fff;
+        font-family: "Itim", sans-serif;
+
       }
 
       img:active {

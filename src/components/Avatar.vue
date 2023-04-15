@@ -520,8 +520,13 @@ export default {
   display: flex;
   flex-flow: column;
   width: 70vw;
-}
 
+}
+@media screen and (max-width: 600px) {
+    .geral-avatar{
+      width: 95vw;
+    }
+  }
 .container-avatar {
   background: rgba(7 7 7 / 0.7);
   border-radius: 1.8em;

@@ -95,7 +95,7 @@ export default {
     },
     get_armamentos() {
       const headers = { Authorization: "Token " + sessionStorage.getItem("token") };
-      const url = "http://170.10.0.50:8000/armamentosSession/";
+      const url = "http://192.168.100.26:8000/armamentosSession/";
 
       axios
         .get(url, {
@@ -115,7 +115,7 @@ export default {
     },
     get_armamento(id) {
       const headers = { Authorization: "Token " + sessionStorage.getItem("token") };
-      const url = "http://170.10.0.50:8000/armamentoSession/";
+      const url = "http://192.168.100.26:8000/armamentoSession/";
 
       axios
         .get(url, { params: { id: id }, headers: headers })
@@ -135,7 +135,7 @@ export default {
       });
 
       function post_armamento(body) {
-        const url = "http://170.10.0.50:8000/armamento/";
+        const url = "http://192.168.100.26:8000/armamento/";
 
         axios
           .post(url, body, { headers: headers })
@@ -148,7 +148,7 @@ export default {
           });
       }
       function post_armamentos(id) {
-        const url = "http://170.10.0.50:8000/armamentos/";
+        const url = "http://192.168.100.26:8000/armamentos/";
         const body_armamentos = {
           fk_armamento: id,
           fk_session: sessionStorage.getItem("session_id"),
@@ -170,7 +170,7 @@ export default {
         console.log(armamentos);
         if (id === armamentos.fk_armamento) {
           const headers = { Authorization: "Token " + sessionStorage.getItem("token") };
-          const url = `http://170.10.0.50:8000/armamentos/${armamentos.id}/`;
+          const url = `http://192.168.100.26:8000/armamentos/${armamentos.id}/`;
           axios
             .delete(url, { headers: headers })
             .then((res) => {

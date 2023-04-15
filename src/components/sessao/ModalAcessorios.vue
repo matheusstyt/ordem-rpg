@@ -92,7 +92,7 @@ export default {
         },
         get_acessorios(){
             const headers = {'Authorization': 'Token ' + sessionStorage.getItem('token') };
-            const url = "http://170.10.0.50:8000/acessoriosSession/";
+            const url = "http://192.168.100.26:8000/acessoriosSession/";
 
             axios.get(url, { params : { fk_session : sessionStorage.getItem("session_id")}, headers : headers })
             .then( res => {
@@ -108,7 +108,7 @@ export default {
         },
         get_acessorio(id) {
             const headers = {'Authorization': 'Token ' + sessionStorage.getItem('token') };
-            const url = "http://170.10.0.50:8000/acessorioSession/";
+            const url = "http://192.168.100.26:8000/acessorioSession/";
 
             axios.get(url, { params : { id : id}, headers : headers })
             .then( res => {
@@ -127,7 +127,7 @@ export default {
             });
 
             function post_acessorio(body) {
-                const url = "http://170.10.0.50:8000/acessorioSession/";
+                const url = "http://192.168.100.26:8000/acessorioSession/";
 
                 axios.post(url, body, { headers : headers })
                 .then( res => {
@@ -139,7 +139,7 @@ export default {
                 })
             }
             function post_acessorios(id) {
-                const url = "http://170.10.0.50:8000/acessoriosSession/";
+                const url = "http://192.168.100.26:8000/acessoriosSession/";
                 const body_acessorios = {
                     fk_acessorio : id,
                     fk_session : sessionStorage.getItem("session_id")
@@ -162,7 +162,7 @@ export default {
                 console.log(acessorios)
                 if( id === acessorios.fk_acessorio ){
                     const headers = {'Authorization': 'Token ' + sessionStorage.getItem('token') };
-                    const url = `http://170.10.0.50:8000/acessorios/${acessorios.id}/`;
+                    const url = `http://192.168.100.26:8000/acessorios/${acessorios.id}/`;
                     axios.delete(url, { headers : headers })
                     .then( res => {
                         this.list_acessorios = []

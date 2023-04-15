@@ -256,7 +256,7 @@ export default {
       window.location.href = "/build";
     },
     async get_session() {
-      const url_session = `http://170.10.0.50:8000/session/${sessionStorage.getItem(
+      const url_session = `http://192.168.100.26:8000/session/${sessionStorage.getItem(
         "session_id"
       )}/`;
       const now = Date();
