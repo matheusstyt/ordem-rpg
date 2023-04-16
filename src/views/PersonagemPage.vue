@@ -1,10 +1,15 @@
 <template>
+  <modal-dado v-if="open_modal" 
+        :valor="valor_to_modal" 
+        :nome_atual="nome_to_modal" 
+        />
     <div class="personagem-container">
+      
         <Avatar
             :perfil64="perfil_carregado"
             :l_vida.sync="vida"
             :l_sanidade.sync="sanidade"
-            :l_ocultismo.sync="ocultismo"
+            :l_ocultismo.sync="ocultismo" 
             :l_esforco.sync="esforco"
             :l_acao.sync="acao"
             :l_movimento.sync="movimento"
@@ -33,8 +38,8 @@
         :trilha="data_personagem.trilha"
         :NEX="data_personagem.NEX"
         />
-        <info-atributos :atributos="atributos"/>
-        <info-pericias :pericias="pericias"/>
+        <info-atributos :atributos="atributos" @nome_atual="nome_atual" @valor="valor"/>
+        <info-pericias :pericias="pericias" @nome_atual="nome_atual" @valor="valor"/>
       <template v-if="carrosel === 3">
         <div class="loop pericias">
           <h3>Perícias</h3>
@@ -200,6 +205,7 @@
     </div>
   </template>
   <script>
+  import modal_dado from "@/components/personagem/girarDado.vue"
 
   import info_detalhes from "@/components/personagem/infoDetalhes.vue"
   import info_atributos from "@/components/personagem/infoAtributos.vue"
@@ -223,9 +229,11 @@
       Detalhes,
       Atributos,
       Avatar,
+      "modal-dado" : modal_dado
     },
     data() {
       return {
+        open_modal : false,
         data_personagem : null,
         carrosel: 1,
         isData: [
@@ -286,9 +294,20 @@
         acessorios_list : [],
         antescendentes: [],
         acessorios: [],
+        // dados result
+        nome_to_modal : "",
+        valor_to_modal : 0
+        
       };
     },
     methods: {
+      nome_atual(nome){
+        this.nome_to_modal = nome;
+      },
+      valor(valor){
+        this.valor_to_modal = valor
+        this.open_modal = true;
+      },
       u_imagem_base64(value){
         this.imagem_base64 = value
         console.log(value)

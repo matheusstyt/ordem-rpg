@@ -1,18 +1,19 @@
 <template>
-    <div class="loop pericias">
-        <h3>Perícias</h3>
-        <ul>
-          <li v-for="(pericia, index) in pericias" :key="index">
-            <img src="/img/d20_4.png" alt="" />
-            <p>{{ pericia.nome }}</p>
-            <h5> {{ pericia.valor }} </h5>
-          </li>
-        </ul>
-      </div>
+  <div class="loop pericias">
+    
+      <h3>Perícias</h3>
+      <ul>
+        <li v-for="(pericia, index) in pericias" :key="index" >
+          <img src="/img/d20_4.png" alt="" @click="go(pericia.nome, pericia.valor)"/>
+          <p>{{ pericia.nome }}</p>
+          <h5> {{ pericia.valor }} </h5>
+        </li>
+      </ul>
+    </div>
 </template>
 
 <script>
-export default {
+  export default {
     props:{
         pericias : Object,
     },
@@ -20,10 +21,21 @@ export default {
     },
     data(){
         return{
+          open_modal : false,
 
+          //dados de pericia 
+          is_pericia : false,
+          nome : "",
+          valor : 0
         }
+    },
+    methods:{
+      go(nome, valor){
+        this.$emit("nome_atual", nome);
+        this.$emit("valor", valor);
+      }
     }
-}
+  }
 
 </script>
 <style scoped lang="scss">

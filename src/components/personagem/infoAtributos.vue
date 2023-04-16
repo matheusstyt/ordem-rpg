@@ -7,8 +7,8 @@
             <img
               id="imgAtributo"
               src="/img/d20_3.png"
-              @click="modalDado(atributo.nome, atributo.valor)"
               alt=""
+              @click="go(atributo.nome, atributo.valor)"
             />
             <p>{{ atributo.nome }}</p>
             <h5>{{ atributo.valor }}</h5>
@@ -26,8 +26,17 @@ export default {
     },
     data(){
         return{
-
+          //dados de atributo 
+          is_atributo : false,
+          nome : "",
+          valor : 0
         }
+    },
+    methods:{
+      go(nome, valor){
+        this.$emit("nome_atual", nome);
+        this.$emit("valor", valor);
+      }
     }
 }
 
