@@ -156,8 +156,12 @@ export default {
   },
   data() {
     return {
-      loading: true,
+      loading: false,
       system: false,
+
+      host: require("@/config/env").host,
+      port: require("@/config/env").port,
+
       user_id: sessionStorage.getItem("user_id"),
       Usuario: sessionStorage.getItem("email"),
       email: sessionStorage.getItem("email"),
@@ -187,13 +191,14 @@ export default {
       this.modal_contact_opened = false;
     },
     async list_match() {
-      const url_session = "http://192.168.100.26:8000/session/";
-      const url_players = "http://192.168.100.26:8000/players/";
+
+      const url_session = `${this.host}:${this.port}/session/`;
+      const url_players = `${this.host}:${this.port}/players/`;
       const now = Date();
       const headers = { Authorization: "Token " + sessionStorage.getItem("token") };
 
       axios
-        .get(`http://192.168.100.26:8000/players/`, {
+        .get(`http://${this.host}:${this.port}/players/`, {
           params: { fk_user: this.user_id },
           headers: headers,
         })
@@ -203,7 +208,7 @@ export default {
 
           res.data.players.forEach((element) => {
             axios
-              .get(`http://192.168.100.26:8000/session/${element.fk_session}/`, {
+              .get(`${this.host}:${this.port}/session/${element.fk_session}/`, {
                 headers: headers,
               })
               .then((res) => {
@@ -220,7 +225,7 @@ export default {
         });
     },
     async get_session() {
-      const url_session = "http://192.168.100.26:8000/session/";
+      const url_session = `${this.host}:${this.port}/session/`;
       const now = Date();
       const headers = { Authorization: "Token " + sessionStorage.getItem("token") };
 
@@ -242,7 +247,7 @@ export default {
         });
     },
     async get_partida() {
-      const url = "http://192.168.100.26:8000/askplayer/";
+      const url = `${this.host}:${this.port}/askplayer/`;
       const now = Date();
       const headers = { Authorization: "Token " + sessionStorage.getItem("token") };
 
@@ -263,7 +268,7 @@ export default {
         });
     },
     async get_pendente() {
-      const url = "http://192.168.100.26:8000/ask/";
+      const url = `${this.host}:${this.port}/ask/`;
       const now = Date();
       const headers = { Authorization: "Token " + sessionStorage.getItem("token") };
 
@@ -283,7 +288,7 @@ export default {
         });
     },
     async get_contact() {
-      const url = "http://192.168.100.26:8000/contact/";
+      const url = `${this.host}:${this.port}/contact/`;
       const headers = { Authorization: "Token " + sessionStorage.getItem("token") };
 
       axios
@@ -304,7 +309,7 @@ export default {
     logout: function () {
       this.$router.push("/login");
       axios
-        .post("http://192.168.100.26:8000/logout/", null, {
+        .post(`${this.host}:${this.port}/logout/`, null, {
           headers: {
             Authorization: "Token " + sessionStorage.getItem("token"),
           },
@@ -330,7 +335,7 @@ export default {
       let formattedDate = formatter.format(now);
 
       if (sessionStorage.getItem("token")) {
-        const url = `http://192.168.100.26:8000/contact/`;
+        const url = `${this.host}:${this.port}/contact/`;
 
         const body_uni = {
           fk_user: fk_destino,
@@ -362,7 +367,7 @@ export default {
       }
     },
     excluir_pedido(id) {
-      const url = `http://192.168.100.26:8000/ask/${id}/`;
+      const url = `${this.host}:${this.port}/ask/${id}/`;
       const headers = { Authorization: "Token " + sessionStorage.getItem("token") };
       axios
         .delete(url, { headers: headers })
@@ -385,7 +390,7 @@ export default {
       let formattedDate = formatter.format(now);
 
       if (sessionStorage.getItem("token")) {
-        const url = `http://192.168.100.26:8000/players/`;
+        const url = `${this.host}:${this.port}/players/`;
 
         const body_uni = {
           fk_user: fk_destino,
@@ -405,7 +410,7 @@ export default {
       }
     },
     excluir_pedido_partida(id) {
-      const url = `http://192.168.100.26:8000/askplayer/${id}/`;
+      const url = `${this.host}:${this.port}/askplayer/${id}/`;
       const headers = { Authorization: "Token " + sessionStorage.getItem("token") };
       axios
         .delete(url, { headers: headers })

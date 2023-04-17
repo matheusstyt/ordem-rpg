@@ -45,6 +45,8 @@ export default {
     data(){
         return{
             user_id : sessionStorage.getItem('user_id'),
+            host: require("@/config/env").host,
+            port: require("@/config/env").port,
             resistencias_session : [],
             list_resistencias : [],
             nome_resistencia : ""
@@ -72,7 +74,7 @@ export default {
         },
         get_resistencias(){
             const headers = {'Authorization': 'Token ' + sessionStorage.getItem('token') };
-            const url = "http://192.168.100.26:8000/resistencias/";
+            const url = `${this.host}:${this.port}/resistencias/`;
 
             axios.get(url, { params : { fk_session : sessionStorage.getItem("session_id")}, headers : headers })
             .then( res => {
@@ -87,7 +89,7 @@ export default {
         },
         get_resistencia(id) {
             const headers = {'Authorization': 'Token ' + sessionStorage.getItem('token') };
-            const url = "http://192.168.100.26:8000/resistencia/";
+            const url = `${this.host}:${this.port}/resistencia/`;
 
             axios.get(url, { params : { id : id}, headers : headers })
             .then( res => {
@@ -106,7 +108,7 @@ export default {
             });
 
             function post_resistencia(body) {
-                const url = "http://192.168.100.26:8000/resistencia/";
+                const url = `${this.host}:${this.port}/resistencia/`;
                 console.log(body)
                 axios.post(url, body, { headers : headers })
                 .then( res => {
@@ -118,7 +120,7 @@ export default {
                 })
             }
             function post_resistencias(id) {
-                const url = "http://192.168.100.26:8000/resistencias/";
+                const url = `${this.host}:${this.port}/resistencias/`;
                 const body_resistencias = {
                     fk_resistencia : id,
                     fk_session : sessionStorage.getItem("session_id")
@@ -139,7 +141,7 @@ export default {
                 console.log(resistencias)
                 if( id === resistencias.fk_resistencia ){
                     const headers = {'Authorization': 'Token ' + sessionStorage.getItem('token') };
-                    const url = `http://192.168.100.26:8000/resistencias/${resistencias.id}/`;
+                    const url = `${this.host}:${this.port}/resistencias/${resistencias.id}/`;
                     axios.delete(url, { headers : headers })
                     .then( res => {
                         this.list_resistencias = []

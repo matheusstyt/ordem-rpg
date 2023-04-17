@@ -45,6 +45,8 @@ export default {
     data(){
         return{
             user_id : sessionStorage.getItem('user_id'),
+            host: require("@/config/env").host,
+            port: require("@/config/env").port,
             atributos_session : [],
             list_atributos : [],
             nome_atributo : ""
@@ -72,7 +74,7 @@ export default {
         },
         get_atributos(){
             const headers = {'Authorization': 'Token ' + sessionStorage.getItem('token') };
-            const url = "http://192.168.100.26:8000/atributos/";
+            const url = `${this.host}:${this.port}/atributos/`;
 
             axios.get(url, { params : { fk_session : sessionStorage.getItem("session_id")}, headers : headers })
             .then( res => {
@@ -87,7 +89,7 @@ export default {
         },
         get_atributo(id) {
             const headers = {'Authorization': 'Token ' + sessionStorage.getItem('token') };
-            const url = "http://192.168.100.26:8000/atributo/";
+            const url = `${this.host}:${this.port}/atributo/`;
 
             axios.get(url, { params : { id : id}, headers : headers })
             .then( res => {
@@ -106,7 +108,7 @@ export default {
             });
 
             function post_atributo(body) {
-                const url = "http://192.168.100.26:8000/atributo/";
+                const url = `${this.host}:${this.port}/atributo/`;
 
                 axios.post(url, body, { headers : headers })
                 .then( res => {
@@ -118,7 +120,7 @@ export default {
                 })
             }
             function post_atributos(id) {
-                const url = "http://192.168.100.26:8000/atributos/";
+                const url = `${this.host}:${this.port}/atributos/`;
                 const body_atributos = {
                     fk_atributo : id,
                     fk_session : sessionStorage.getItem("session_id")
@@ -140,7 +142,7 @@ export default {
                 console.log(atributos)
                 if( id === atributos.fk_atributo ){
                     const headers = {'Authorization': 'Token ' + sessionStorage.getItem('token') };
-                    const url = `http://192.168.100.26:8000/atributos/${atributos.id}/`;
+                    const url = `${this.host}:${this.port}/atributos/${atributos.id}/`;
                     axios.delete(url, { headers : headers })
                     .then( res => {
                         this.list_atributos = []

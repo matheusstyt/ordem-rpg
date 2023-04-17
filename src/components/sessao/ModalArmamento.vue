@@ -95,7 +95,7 @@ export default {
     },
     get_armamentos() {
       const headers = { Authorization: "Token " + sessionStorage.getItem("token") };
-      const url = "http://192.168.100.26:8000/armamentosSession/";
+      const url = `${this.host}:${this.port}/armamentosSession/`;
 
       axios
         .get(url, {
@@ -115,7 +115,7 @@ export default {
     },
     get_armamento(id) {
       const headers = { Authorization: "Token " + sessionStorage.getItem("token") };
-      const url = "http://192.168.100.26:8000/armamentoSession/";
+      const url = `${this.host}:${this.port}/armamentoSession/`;
 
       axios
         .get(url, { params: { id: id }, headers: headers })
@@ -126,64 +126,6 @@ export default {
         .catch((error) => {
           console.log(error);
         });
-    },
-    salvar_armamentos() {
-      const headers = { Authorization: "Token " + sessionStorage.getItem("token") };
-
-      this.list_armamentos.forEach((armamento) => {
-        post_armamento(armamento);
-      });
-
-      function post_armamento(body) {
-        const url = "http://192.168.100.26:8000/armamento/";
-
-        axios
-          .post(url, body, { headers: headers })
-          .then((res) => {
-            console.log(res);
-            post_armamentos(res.data.id);
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      }
-      function post_armamentos(id) {
-        const url = "http://192.168.100.26:8000/armamentos/";
-        const body_armamentos = {
-          fk_armamento: id,
-          fk_session: sessionStorage.getItem("session_id"),
-        };
-        axios
-          .post(url, body_armamentos, { headers: headers })
-          .then((res) => {
-            window.location.reload();
-            console.log(res);
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      }
-    },
-    delete_armamentos(id) {
-      console.log(id);
-      this.armamentos_session.forEach((armamentos) => {
-        console.log(armamentos);
-        if (id === armamentos.fk_armamento) {
-          const headers = { Authorization: "Token " + sessionStorage.getItem("token") };
-          const url = `http://192.168.100.26:8000/armamentos/${armamentos.id}/`;
-          axios
-            .delete(url, { headers: headers })
-            .then((res) => {
-              this.list_armamentos = [];
-              setTimeout(() => {
-                this.get_armamentos();
-              }, 100);
-            })
-            .catch((error) => {
-              console.log(error);
-            });
-        }
-      });
     },
     open_modal() {
       this.modal_opened = true;

@@ -45,6 +45,8 @@ export default {
     data(){
         return{
             user_id : sessionStorage.getItem('user_id'),
+            host: require("@/config/env").host,
+            port: require("@/config/env").port,
             pericias_session : [],
             list_pericias : [],
             nome_pericia : ""
@@ -72,7 +74,8 @@ export default {
         },
         get_pericias(){
             const headers = {'Authorization': 'Token ' + sessionStorage.getItem('token') };
-            const url = "http://192.168.100.26:8000/pericias/";
+            const url = `${this.host}:${this.port}/pericias/`;
+
 
             axios.get(url, { params : { fk_session : sessionStorage.getItem("session_id")}, headers : headers })
             .then( res => {
@@ -87,7 +90,7 @@ export default {
         },
         get_pericia(id) {
             const headers = {'Authorization': 'Token ' + sessionStorage.getItem('token') };
-            const url = "http://192.168.100.26:8000/pericia/";
+            const url = `${this.host}:${this.port}/pericia/`;
 
             axios.get(url, { params : { id : id}, headers : headers })
             .then( res => {
@@ -106,7 +109,7 @@ export default {
             });
 
             function post_pericia(body) {
-                const url = "http://192.168.100.26:8000/pericia/";
+                const url = `${this.host}:${this.port}/pericia/`;
 
                 axios.post(url, body, { headers : headers })
                 .then( res => {
@@ -118,7 +121,7 @@ export default {
                 })
             }
             function post_pericias(id) {
-                const url = "http://192.168.100.26:8000/pericias/";
+                const url = `${this.host}:${this.port}/pericias/`;
                 const body_pericias = {
                     fk_pericia : id,
                     fk_session : sessionStorage.getItem("session_id")
@@ -140,7 +143,7 @@ export default {
                 console.log(pericias)
                 if( id === pericias.fk_pericia ){
                     const headers = {'Authorization': 'Token ' + sessionStorage.getItem('token') };
-                    const url = `http://192.168.100.26:8000/pericias/${pericias.id}/`;
+                    const url = `${this.host}:${this.port}/pericias/${pericias.id}/`;
                     axios.delete(url, { headers : headers })
                     .then( res => {
                         this.list_pericias = []

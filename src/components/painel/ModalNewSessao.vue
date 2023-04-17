@@ -41,6 +41,8 @@ axios.defaults.headers.common["Authorization"] = `Bearer ${sessionStorage.getIte
 export default {
   data() {
     return {
+      host: require("@/config/env").host,
+      port: require("@/config/env").port,
       data_atual: null,
       qtd_session: 3,
       desc_session: "",
@@ -61,7 +63,7 @@ export default {
     },
     save_session() {
       if (sessionStorage.getItem("token")) {
-        const url = `http://192.168.100.26:8000/session/?fk_mestre=${sessionStorage.getItem(
+        const url = `${this.host}:${this.port}/session/?fk_mestre=${sessionStorage.getItem(
           "user_id"
         )}`;
 

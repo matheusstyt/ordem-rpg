@@ -57,6 +57,8 @@ export default {
     data(){
         return{
             user_id : sessionStorage.getItem('user_id'),
+            host: require("@/config/env").host,
+            port: require("@/config/env").port,
             acessorios_session : [],
             list_acessorios : [],
 
@@ -92,7 +94,7 @@ export default {
         },
         get_acessorios(){
             const headers = {'Authorization': 'Token ' + sessionStorage.getItem('token') };
-            const url = "http://192.168.100.26:8000/acessoriosSession/";
+            const url = `${this.host}:${this.port}/acessoriosSession/`;
 
             axios.get(url, { params : { fk_session : sessionStorage.getItem("session_id")}, headers : headers })
             .then( res => {
@@ -108,7 +110,7 @@ export default {
         },
         get_acessorio(id) {
             const headers = {'Authorization': 'Token ' + sessionStorage.getItem('token') };
-            const url = "http://192.168.100.26:8000/acessorioSession/";
+            const url = `${this.host}:${this.port}/acessorioSession/`;
 
             axios.get(url, { params : { id : id}, headers : headers })
             .then( res => {
@@ -127,8 +129,7 @@ export default {
             });
 
             function post_acessorio(body) {
-                const url = "http://192.168.100.26:8000/acessorioSession/";
-
+                const url = `${this.host}:${this.port}/acessorioSession/`;
                 axios.post(url, body, { headers : headers })
                 .then( res => {
                     console.log(res)
@@ -139,7 +140,7 @@ export default {
                 })
             }
             function post_acessorios(id) {
-                const url = "http://192.168.100.26:8000/acessoriosSession/";
+                const url = `${this.host}:${this.port}/acessoriosSession/`;
                 const body_acessorios = {
                     fk_acessorio : id,
                     fk_session : sessionStorage.getItem("session_id")
@@ -162,7 +163,7 @@ export default {
                 console.log(acessorios)
                 if( id === acessorios.fk_acessorio ){
                     const headers = {'Authorization': 'Token ' + sessionStorage.getItem('token') };
-                    const url = `http://192.168.100.26:8000/acessorios/${acessorios.id}/`;
+                    const url = `${this.host}:${this.port}/acessorios/${acessorios.id}/`;
                     axios.delete(url, { headers : headers })
                     .then( res => {
                         this.list_acessorios = []

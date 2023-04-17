@@ -66,6 +66,8 @@ export default {
   data() {
     return {
       user_id: sessionStorage.getItem("user_id"),
+      host: require("@/config/env").host,
+      port: require("@/config/env").port,
       desc_armamento: "",
       categoria_1: "",
       categoria_2: "",
@@ -107,7 +109,7 @@ export default {
       };
       console.table(body_armamento);
 
-      const url = "http://192.168.100.26:8000/armamentoSession/";
+      const url = `${this.host}:${this.port}/armamentoSession/`;
 
       axios
         .post(url, body_armamento, { headers: headers })
@@ -122,7 +124,7 @@ export default {
     post_armamentos(id) {
       const headers = { Authorization: "Token " + sessionStorage.getItem("token") };
 
-      const url = "http://192.168.100.26:8000/armamentosSession/";
+      const url = `${this.host}:${this.port}/armamentoSession/`;
       const body_atributos = {
         fk_armamento: id,
         fk_session: sessionStorage.getItem("session_id"),
@@ -139,8 +141,8 @@ export default {
         });
     },
     salvar_armamento_user(id) {
-      const url = "http://192.168.100.26:8000/armamentoUser/";
-
+      const url = `${this.host}:${this.port}/armamentoUser/`;
+      
       const headers = { Authorization: "Token " + sessionStorage.getItem("token") };
 
       const body_armamento_user = {

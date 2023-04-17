@@ -1,6 +1,6 @@
 <template>
     <div class="container-girar-dado">
-        <button>x</button>
+        <button @click="close">x</button>
         <h3>Rolagem de dados - {{ nome_atual }}</h3>
         <div class="content-conf-dado">
             <input type="number" name="" id="" v-model="qtd_dado">
@@ -70,6 +70,9 @@ export default {
         }
     },
     methods: {
+        close(){
+            this.$emit("close_modal", false);
+        },
         resultado_dados (){
             var valor_temp;
 

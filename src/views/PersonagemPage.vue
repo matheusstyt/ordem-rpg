@@ -1,8 +1,12 @@
 <template>
-  <modal-dado v-if="open_modal" 
-        :valor="valor_to_modal" 
-        :nome_atual="nome_to_modal" 
-        />
+  <div class="modal-screen">
+    <modal-dado v-if="open_modal" 
+      :valor="valor_to_modal" 
+      :nome_atual="nome_to_modal" 
+      @close_modal="close_modal"
+    />
+  </div>
+  
     <div class="personagem-container">
       
         <Avatar
@@ -301,6 +305,9 @@
       };
     },
     methods: {
+      close_modal(value){
+        this.open_modal = value;
+      },
       nome_atual(nome){
         this.nome_to_modal = nome;
       },

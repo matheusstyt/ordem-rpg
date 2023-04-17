@@ -31,10 +31,12 @@ export default {
     },
     data(){
         return{
-            search_username : '',
-            new_contact : '',
-            id_contact : 0,
-            display_contact : false
+          host: require("@/config/env").host,
+          port: require("@/config/env").port,
+          search_username : '',
+          new_contact : '',
+          id_contact : 0,
+          display_contact : false
         }
     }, 
     methods:{
@@ -45,7 +47,7 @@ export default {
             this.data_atual = formattedDate;
         },
         search_user(){
-            const url = "http://192.168.100.26:8000/users/";
+            const url = `${this.host}:${this.port}/users/`;
             const headers = {'Authorization': 'Token ' + sessionStorage.getItem('token') };
 
             axios.get(url, { params: { username : this.search_username}, headers : headers })
@@ -68,30 +70,29 @@ export default {
         },
         enviar(){
             if(sessionStorage.getItem("token")){
-                
-                const url = `http://192.168.100.26:8000/askplayer/`;
+              const url = `${this.host}:${this.port}/askplayer/`;
 
-                const body_ask = {
-                    fk_sessao : parseInt(this.session_id),
-                    fk_mestre : parseInt(sessionStorage.getItem("user_id")), 
-                    destino : this.id_contact,
-                    status : false
+              const body_ask = {
+                  fk_sessao : parseInt(this.session_id),
+                  fk_mestre : parseInt(sessionStorage.getItem("user_id")), 
+                  destino : this.id_contact,
+                  status : false
 
-                }
-                console.table(body_ask)
-                const headers = {'Authorization': 'Token ' + sessionStorage.getItem('token') };
+              }
+              console.table(body_ask)
+              const headers = {'Authorization': 'Token ' + sessionStorage.getItem('token') };
 
-                axios.post(url, body_ask, { headers : headers })
-                .then( res => {
-                    this.display_contact = false
-                    this.search_username = ''
-                    this.new_contact = ''
-                    this.id_contact = 0
-                    
-                })
-                .catch( error => { 
-                    console.log(error)
-                })
+              axios.post(url, body_ask, { headers : headers })
+              .then( res => {
+                  this.display_contact = false
+                  this.search_username = ''
+                  this.new_contact = ''
+                  this.id_contact = 0
+                  
+              })
+              .catch( error => { 
+                  console.log(error)
+              })
             }
         }
         

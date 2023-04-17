@@ -192,6 +192,10 @@ export default {
     return {
       loading: true,
       system: false,
+      
+      host: require("@/config/env").host,
+      port: require("@/config/env").port,
+
       session_name: sessionStorage.getItem("session_descricao"),
       session_id: sessionStorage.getItem("session_id"),
       Usuario: sessionStorage.getItem("email"),
@@ -256,9 +260,7 @@ export default {
       window.location.href = "/build";
     },
     async get_session() {
-      const url_session = `http://192.168.100.26:8000/session/${sessionStorage.getItem(
-        "session_id"
-      )}/`;
+      const url_session = `${this.host}:${this.port}/session/${sessionStorage.getItem( "session_id" )}/`;
       const now = Date();
       const headers = { Authorization: "Token " + sessionStorage.getItem("token") };
 
