@@ -120,6 +120,7 @@ export default {
   
   .new-contact-box{
     background-color: #1b1b1b;
+    position: relative;
     padding: 1em;
     border: 1px solid bisque;
     background-color: rgba(0  0  0 / 0.7);
@@ -127,6 +128,7 @@ export default {
     max-width: 60%;
     height: auto;
     box-shadow: 0px 0px 3px #858585;
+    top: 4vmax;
     display: flex;
     flex-direction: column;
     align-items: center;

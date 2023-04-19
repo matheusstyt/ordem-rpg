@@ -1,6 +1,6 @@
 <template>
-  <div class="modal-session" v-if="modal_contact_opened === true">
-    <button class="btn-x" @click="close_modal_contact()">X</button>
+  <div class="modal-session" v-if="modal_player_opened === true">
+    <button class="btn-x" @click="close_modal_player()">X</button>
     <ModalJogador :session_id="session_id" />
   </div>
 
@@ -38,7 +38,7 @@
         <ul>
           <template v-for="(item, index) in list_personagens" :key="item.id">
             <li @click="go_personagem(item)">
-              <div class="detalhe-perfil-content">
+              <div class="detalhe-perfil-content" :style="{ border: `5px solid ${item.status_color}` }">
                 <img :src="item.perfil_img" alt="">
               </div>
               <p>Nome: {{ item.nome }}</p>
@@ -52,10 +52,7 @@
                   <div
                     class="front-bar"
                     id="front-vida"
-                    :style="{
-                      width: `${(item.vida.atual / item.vida.maximo) * 100}%`,
-                    }"
-                  >
+                    :style="{ width: `${(item.vida.atual / item.vida.maximo) * 100}%` }" >
                     <p>{{ item.vida.atual }}/{{ item.vida.maximo }}</p>
                   </div>
                 </div>
@@ -66,10 +63,7 @@
                   <div
                     class="front-bar"
                     id="front-sanidade"
-                    :style="{
-                      width: `${(item.sanidade.atual / item.sanidade.maximo) * 100}%`,
-                    }"
-                  >
+                    :style="{ width: `${(item.sanidade.atual / item.sanidade.maximo) * 100}%` }" >
                     <p>{{ item.sanidade.atual }}/{{ item.sanidade.maximo }}</p>
                   </div>
                 </div>
@@ -80,10 +74,7 @@
                   <div
                     class="front-bar"
                     id="front-ocultismo"
-                    :style="{
-                      width: `${(item.ocultismo.atual / item.ocultismo.maximo) * 100}%`,
-                    }"
-                  >
+                    :style="{ width: `${(item.ocultismo.atual / item.ocultismo.maximo) * 100}%` }">
                     <p>{{ item.ocultismo.atual }}/{{ item.ocultismo.maximo }}</p>
                   </div>
                 </div>
@@ -94,10 +85,7 @@
                   <div
                     class="front-bar"
                     id="front-esforco"
-                    :style="{
-                      width: `${(item.esforco.atual / item.esforco.maximo) * 100}%`,
-                    }"
-                  >
+                    :style="{ width: `${(item.esforco.atual / item.esforco.maximo) * 100}%` }">
                     <p>{{ item.esforco.atual }}/{{ item.esforco.maximo }}</p>
                   </div>
                 </div>
@@ -121,7 +109,7 @@
           <h3 class="hide-small">Jogadores</h3>
         </div>
 
-        <button>+</button>
+        <button @click="open_modal_player">+</button>
       </div>
       <div class="coluna-lateral">
         <div class="content-social ativos">
@@ -210,7 +198,7 @@ export default {
       modal_acessorios_opened: false,
       modal_rituais_opened: false,
 
-      modal_contact_opened: false,
+      modal_player_opened: false,
       sessao_atual: false,
       list_pendente: null,
       list_contact: null,
@@ -236,7 +224,7 @@ export default {
       this.modal_resistencias_opened = true;
     },
     open_modal_player() {
-      this.modal_contact_opened = true;
+      this.modal_player_opened = true;
     },
     close_modal_resistencias() {
       this.modal_resistencias_opened = false;
@@ -253,8 +241,8 @@ export default {
     close_modal_acessorios() {
       this.modal_acessorios_opened = false;
     },
-    close_modal_contact() {
-      this.modal_contact_opened = false;
+    close_modal_player() {
+      this.modal_player_opened = false;
     },
     novo_personagem() {
       window.location.href = "/build";
@@ -365,6 +353,9 @@ export default {
 };
 </script>
 <style lang="scss">
+#app{
+      height: 100vh;
+}
 /* Estilização do Scroll */
 
 /* Cor da barra de rolagem */
@@ -714,6 +705,7 @@ ul {
     height: 100%;
     display: flex;
     flex-flow: row wrap;
+    justify-content: space-evenly;
     width: auto;
     background-color: transparent;
     list-style: none;
@@ -735,7 +727,6 @@ ul {
         width: 120px;
         overflow: hidden;
         aspect-ratio: 1/1;
-        border: 5px solid rgba(75, 185, 75, 0.741);
         img{
           height: 100%;
           width: 100%;

@@ -150,10 +150,7 @@
     <div class="content-barra">
       <h4>Vida</h4>
       <div class="back-vida front-barra-padrao" @click="open_modal_vida">
-        <div
-          class="front-vida back-barra-padrao"
-          :style="{ width: `${porcentagem_vida}%` }"
-        >
+        <div class="front-vida back-barra-padrao" :style="{ width: `${porcentagem_vida}%` }" >
           <p class="percentual_barra">{{ l_vida.atual }}/{{ l_vida.maximo }}</p>
         </div>
       </div>
@@ -467,7 +464,7 @@ export default {
     porcentagem_vida(value){
       // DIFINE AS CORES CORRESPONDENTES A PORCENTAGEM DE VIDA
    
-      if ( this.isBuild ){
+      if ( this.perfil64 ){
         let status_perfil = document.getElementById("status-perfil");
         if(value >=75){
           status_perfil.style = "border: 5px solid rgb(98, 236, 60);"

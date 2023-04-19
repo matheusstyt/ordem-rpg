@@ -4,12 +4,8 @@
         <h3>Atributos</h3>
         <ul>
           <li v-for="(atributo, index) in atributos" :key="index">
-            <img
-              id="imgAtributo"
-              src="/img/d20_3.png"
-              alt=""
-              @click="go(atributo.nome, atributo.valor)"
-            />
+            <img id="imgAtributo" src="/img/d20_3.png" alt="IMG_D20"
+              @click="go(atributo.nome, atributo.valor)" />
             <p>{{ atributo.nome }}</p>
             <h5>{{ atributo.valor }}</h5>
           </li>
