@@ -327,6 +327,13 @@ export default {
     },
   },
   mounted() {
+    // ativando header principal
+    var main = document.getElementById("header-main");
+    var header = document.getElementById("header-personagem");
+    main.style = "display: flex;"
+    header.style = "display : none;"
+
+    
     carregar_personagem(this.session_id).then((dados) => {
       this.list_personagens = dados.personagem;
       console.log(this.list_personagens);

@@ -1,8 +1,9 @@
 <template>
-  <div class="modal-screen">
-    <modal-dado v-if="open_modal" 
+  <div class="modal-screen" v-if="open_modal">
+    <modal-dado  
       :valor="valor_to_modal" 
-      :nome_atual="nome_to_modal" 
+      :nome_atual="nome_to_modal"
+      :is_pericia="is_pericia_value"
       @close_modal="close_modal"
     />
   </div>
@@ -42,8 +43,8 @@
         :trilha="data_personagem.trilha"
         :NEX="data_personagem.NEX"
         />
-        <info-atributos :atributos="atributos" @nome_atual="nome_atual" @valor="valor"/>
-        <info-pericias :pericias="pericias" @nome_atual="nome_atual" @valor="valor"/>
+        <info-atributos :atributos="atributos" @nome_atual="nome_atual" @valor="valor" @is_pericia="is_pericia"/>
+        <info-pericias :pericias="pericias" @nome_atual="nome_atual" @valor="valor" @is_pericia="is_pericia"/>
       <template v-if="carrosel === 3">
         <div class="loop pericias">
           <h3>Perícias</h3>
@@ -300,13 +301,17 @@
         acessorios: [],
         // dados result
         nome_to_modal : "",
-        valor_to_modal : 0
+        valor_to_modal : 0,
+        is_pericia_value : true
         
       };
     },
     methods: {
       close_modal(value){
         this.open_modal = value;
+      },
+      is_pericia(value){
+        this.is_pericia_value = value;
       },
       nome_atual(nome){
         this.nome_to_modal = nome;
@@ -451,11 +456,23 @@
   label {
     color: #ffff;
   }
+  .modal-screen{
+    background-color: #00000090;
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top : 0;
+    z-index: 2;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
   .personagem-container {
     background: rgba(0, 0, 0, 0);
   
     width: 100vw;
-    margin-top: 3vmax;
+    //margin-top: 3vmax;
     display: flex;
     align-items: center;
     justify-content: center;

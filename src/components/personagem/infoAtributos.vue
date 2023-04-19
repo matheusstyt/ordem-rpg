@@ -36,6 +36,7 @@ export default {
       go(nome, valor){
         this.$emit("nome_atual", nome);
         this.$emit("valor", valor);
+        this.$emit("is_pericia", false);
       }
     }
 }

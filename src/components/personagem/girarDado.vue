@@ -1,7 +1,8 @@
 <template>
     <div class="container-girar-dado">
         <button @click="close">x</button>
-        <h3>Rolagem de dados - {{ nome_atual }}</h3>
+        <h3>Rolagem de dados - {{ tipo }}</h3>
+        <h3> {{ nome_atual }} - {{ valor }}</h3>
         <div class="content-conf-dado">
             <input type="number" name="" id="" v-model="qtd_dado">
             <p>d</p>
@@ -24,7 +25,7 @@
             </template>
         </div>
         <h4>Maior valor : {{maior_valor}}</h4>
-        <h3>{{string_result}}</h3>
+        <h3 id="result-color">{{string_result}}</h3>
     </div>
 </template>
 <script>
@@ -32,14 +33,32 @@ export default {
     props : {
         valor : Number,
         nome_atual : String,
+        is_pericia : Boolean
+    },
+    mounted() {
+    
+        if(this.is_pericia){
+            this.tipo = "Perícias";
+        }else{
+            this.tipo = "Atributos";
+        }
+    },
+    watch : {
+        is_pericia(value){
+            if(value){
+                this.tipo = "Perícias";
+            }else{
+                this.tipo = "Atributos";
+            }
+        }
     },
     data(){
         return{
-    
-            is_pericia : true,
+            tipo : "Perícias",
+      
             qual : "",
             qtd_dado : 1,
-            tipo_dado : 6,
+            tipo_dado : 20,
             soma_extra : 0,
             historico : [],
             maior_valor : 0,
@@ -105,18 +124,23 @@ export default {
             console.log(result)
             if(this.valor != 20 && result == 1){
                 console.log('Desastre')
+                document.getElementById("result-color").style = "background-color : red;"
                 return 'Desastre'}
             if(result >= tipo.extremo){
                 console.log('Extremo')
+                document.getElementById("result-color").style = "background-color : #c725ba;"
                 return 'Extremo'}
             if(result >= tipo.bom && result < tipo.extremo){
                 console.log('Sucesso Bom')
+                document.getElementById("result-color").style = "background-color : blue;"
                 return 'Sucesso Bom'
             }if(result >= tipo.normal && result < tipo.bom){
                 console.log('Sucesso Normal')
+                document.getElementById("result-color").style = "background-color : green;"
                 return 'Sucesso Normal'
             }if(result < tipo.normal){
                 console.log('Fracasso')
+                document.getElementById("result-color").style = "background-color : red;"
                 return 'Fracasso'}
             }
 
@@ -128,8 +152,10 @@ export default {
     border: 1px solid #fff;
     background-color: rgba(0, 0, 0, 0.822);
     padding: 1em;
-    position: fixed;
+    position: relative;
     z-index: 3;
+    max-width: 90%;
+    overflow-x: auto;
     button{
         position: absolute;
         top: 0;
@@ -180,9 +206,18 @@ export default {
     .result-list{
         display: flex;
         gap: 0.5em;
+        p{
+            background-color: #ffffff;
+            color: #000;
+            padding: 0.2em 0.4em;
+        }
     }
-    h4{
+    h4, h3{
+        font-family: "Consolas";
         text-align: center;
+    }
+    #result-color{
+        text-shadow: 0px 0px 1px #fff;
     }
 }
 
