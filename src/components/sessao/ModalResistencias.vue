@@ -31,6 +31,7 @@
                 
             </li>
         </ul>
+        <button @click="fechar_modal()">Fechar</button>
       </div>
 </template>
 <script>
@@ -154,6 +155,9 @@ export default {
                     });
                 }
             }); 
+        },
+        fechar_modal(){
+          this.$emit("close_modal_resistencias", false);
         }
     }, mounted(){
         // GET HORA ATUAL

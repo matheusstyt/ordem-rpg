@@ -13,7 +13,7 @@
                 <check @click="enviar()" />
               </div>
         </div>
-        <button @click="save_session()">Fechar</button>
+        <button @click="fechar_modal()">Fechar</button>
       </div>
 </template>
 <script>
@@ -94,6 +94,9 @@ export default {
                   console.log(error)
               })
             }
+        },
+        fechar_modal(){
+          this.$emit("close_modal_player", false);
         }
         
     }, mounted(){

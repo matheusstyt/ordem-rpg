@@ -43,6 +43,7 @@
                 <td><img src="@/assets/ico/remove_ico.svg" alt="" srcset=""></td>
             </tr>
         </table>
+        <button @click="fechar_modal()">Fechar</button>
       </div>
 </template>
 <script>
@@ -186,6 +187,9 @@ export default {
           this.list_acessorios = []
           this.get_acessorios();
         },
+        fechar_modal(){
+          this.$emit("close_modal_acessorios", false);
+        }
 
     }, mounted(){
         // GET HORA ATUAL
@@ -331,6 +335,7 @@ export default {
         width: 100%;
         min-height: 5vmax;
         text-align: center;
+        margin-bottom: 1em;
         tr:nth-child(even){
             background-color: rgba(46, 46, 46, 0.418);
         }

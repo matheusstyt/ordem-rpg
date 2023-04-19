@@ -1,29 +1,22 @@
 <template>
   <div class="modal-session" v-if="modal_player_opened === true">
-    <button class="btn-x" @click="close_modal_player()">X</button>
-    <ModalJogador :session_id="session_id" />
+    <ModalJogador :session_id="session_id" @close_modal_player="close_modal_player" />
   </div>
-
   <div class="modal-session" v-if="modal_atributos_opened === true">
-    <button class="btn-x" @click="close_modal_atributos()">X</button>
-    <ModalAtributos />
+    <ModalAtributos @close_modal_atributos="close_modal_atributos"/>
   </div>
   <div class="modal-session" v-if="modal_pericias_opened === true">
-    <button class="btn-x" @click="close_modal_pericias()">X</button>
-    <ModalPericias />
+    <ModalPericias @close_modal_pericias="close_modal_pericias"/>
   </div>
   <div class="modal-session" v-if="modal_resistencias_opened === true">
-    <button class="btn-x" @click="close_modal_resistencias()">X</button>
-    <ModalResistencias />
+    <ModalResistencias @close_modal_resistencias="close_modal_resistencias"/>
   </div>
   <div class="modal-session" v-if="modal_armamentos_opened === true">
-    <button class="btn-x" @click="close_modal_armamentos()">X</button>
-    <ModalArmamentos />
+    <ModalArmamentos @close_modal_armamentos="close_modal_armamentos"/>
   </div>
 
   <div class="modal-session" v-if="modal_acessorios_opened === true">
-    <button class="btn-x" @click="close_modal_acessorios()">X</button>
-    <ModalAcessorios />
+    <ModalAcessorios @close_modal_acessorios="close_modal_acessorios"/>
   </div>
 
   <preloader v-if="loading" />
@@ -208,6 +201,9 @@ export default {
     };
   },
   methods: {
+    fechar_personagem_modal(value){
+      this.modal_player_opened = value;
+    },
     open_modal_acessorios() {
       this.modal_acessorios_opened = true;
     },
@@ -374,7 +370,7 @@ export default {
   background-color: #999999;
 }
 .modal-session {
-  background-color: rgba(0 0 0 / 0.4);
+  background-color: rgba(0 0 0 / 0.7);
   width: 100%;
   height: 100%;
   position: absolute;
