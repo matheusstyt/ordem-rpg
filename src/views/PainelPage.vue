@@ -198,7 +198,7 @@ export default {
       const headers = { Authorization: "Token " + sessionStorage.getItem("token") };
 
       axios
-        .get(`http://${this.host}:${this.port}/players/`, {
+        .get(`${this.host}:${this.port}/players/`, {
           params: { fk_user: this.user_id },
           headers: headers,
         })

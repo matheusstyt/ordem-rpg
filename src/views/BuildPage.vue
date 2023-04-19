@@ -36,7 +36,7 @@
               alt=""
             />
             <p>{{ atributo.nome }}</p>
-            <input v-model="atributo.valor" type="number" />
+            <input v-model="atributo.valor" type="number" min="0" :max="20"/>
           </li>
         </ul>
       </div>
@@ -48,7 +48,7 @@
           <li v-for="(pericia, index) in pericias" :key="index">
             <img src="/img/d20_4.png" alt="" />
             <p>{{ pericia.nome }}</p>
-            <input v-model="pericia.valor" type="number" />
+            <input v-model="pericia.valor" type="number" min="0" :max="20"/>
           </li>
         </ul>
       </div>
@@ -389,6 +389,8 @@ export default {
     btnPrev() {
       if (this.carrosel > 1) {
         this.carrosel = this.carrosel - 1;
+      }else{
+        this.$router.go(-1);
       }
     },
     btnNext() {

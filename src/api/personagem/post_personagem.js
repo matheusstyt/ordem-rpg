@@ -26,6 +26,7 @@ export async function salvar_personagem(session_id, user_id, data) {
             classe : data.classe,
             NEX : data.NEX,
             trilha : data.trilha,
+            sexo : data.sexo,
             patente : data.patente,
             nascimento : data.nascimento,
             residencia : data.residencia,

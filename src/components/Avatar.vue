@@ -135,7 +135,7 @@
         </tr>
       </table>
       <template v-if="perfil64">
-        <div class="perfil-carregado">
+        <div class="perfil-carregado" id="status-perfil">
           <img :src="perfil64" alt="">
         </div>
       </template>
@@ -464,6 +464,28 @@ export default {
     this.started();
   },
   watch: {
+    porcentagem_vida(value){
+      // DIFINE AS CORES CORRESPONDENTES A PORCENTAGEM DE VIDA
+   
+      if ( this.isBuild ){
+        let status_perfil = document.getElementById("status-perfil");
+        if(value >=75){
+          status_perfil.style = "border: 5px solid rgb(98, 236, 60);"
+        }else if ( value >=50 && value < 75){
+          status_perfil.style = "border: 5px solid rgb(223, 203, 20);"
+        }
+        else if ( value >=25 && value < 50){
+          status_perfil.style = "border: 5px solid rgb(255, 106, 0);"
+        }
+        else if ( value >= 1 && value < 25){
+          status_perfil.style = "border: 5px solid rgb(244, 16, 16);"
+        }
+        else{
+          status_perfil.style = "border: 5px solid rgb(158, 158, 158);"
+        }
+      }
+      
+    },
     l_lesao_grave(value) {
       if (value) {
         createToast("Lesão Grave - ativado", { type: "warning", timeout: 3000 });
@@ -545,7 +567,8 @@ export default {
   width: 140px;
   height: 140px;
   border-radius: 50%;
-  border: 5px solid rgba(98, 236, 60, 0.6);
+  border: 5px solid rgb(158, 158, 158);
+  opacity: 0.8;
   overflow: hidden;
 
   @media screen and (max-width: 600px) {
@@ -555,8 +578,8 @@ export default {
 }
 
 .perfil-carregado:hover {
-  background-color: #a2a2a2;
-  border: 5px solid rgba(85, 207, 51, 0.849);
+  background-color: #e2e2e2;
+  opacity: 1;
 }
 .perfil-carregado img {
   width: 100%;
@@ -690,6 +713,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 3;
   .modal-modificar {
     background-color: rgba(0 0 0 / 0.7);
     text-align: center;

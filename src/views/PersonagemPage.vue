@@ -286,15 +286,6 @@
         // dados de armamentos sessao / personagem
         movimento: 1,
         peso: 0,
-        // armamentos_sessao_all: [],
-  
-        // armamento_simples_sessao: [],
-        // armamento_tatico_sessao: [],
-        // armamento_pesado_sessao: [],
-  
-        // armamento_simples_personagem: [],
-        // armamento_tatico_personagem: [],
-        // armamento_pesado_personagem: [],
         armamentos_list : [],
         acessorios_list : [],
         antescendentes: [],
