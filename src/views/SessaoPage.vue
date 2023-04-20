@@ -25,9 +25,13 @@
       <div class="content-session-add">
         <h3>Mestre: {{ sessao_atual.mestre }}</h3>
         <h3 class="hide-small">Descrição: {{ sessao_atual.descricao }}</h3>
-        <button @click="novo_personagem()">criar novo</button>
+        <!-- <button @click="novo_personagem()">criar novo</button> -->
       </div>
       <div class="container-personagens">
+        <div id="title-personagem">
+          <h3>Ficha's Personagens</h3>
+          <button>+</button>
+        </div>
         <ul>
           <template v-for="(item, index) in list_personagens" :key="item.id">
             <li @click="go_personagem(item)">
@@ -89,6 +93,12 @@
         </ul>
 
         <!-- <h5 class="content-add-person">+</h5> -->
+      </div>
+      <div class="container-npcs">
+        <div id="title-npc">
+          <h3>Ficha's NPC's</h3>
+          <button>+</button>
+        </div>
       </div>
     </div>
     <div class="content-left">
@@ -314,8 +324,8 @@ export default {
     // ativando header principal
     var main = document.getElementById("header-main");
     var header = document.getElementById("header-personagem");
-    main.style = "display: flex;"
-    header.style = "display : none;"
+    //main.style = "display: flex;"
+   // header.style = "display : none;"
 
     
     carregar_personagem(this.session_id).then((dados) => {
@@ -349,9 +359,7 @@ export default {
 };
 </script>
 <style lang="scss">
-#app{
-      height: 100vh;
-}
+
 /* Estilização do Scroll */
 
 /* Cor da barra de rolagem */
@@ -387,41 +395,7 @@ export default {
   gap: 0.5em;
 }
 
-.header {
-  width: 100%;
-  background-color: rgba(0 0 0 / 0.1);
-  height: 2.5em;
-  margin-bottom: 1em;
-  .header-content {
-    background-color: rgba(0 0 0 / 0.7);
-    height: 100%;
 
-    display: flex;
-    align-items: center;
-    justify-content: space-evenly;
-    border-bottom-right-radius: 2em;
-    border-bottom-left-radius: 2em;
-    margin: 0 auto;
-    p {
-      cursor: pointer;
-      margin: 0;
-    }
-    p:hover {
-      color: rgb(255, 188, 188);
-    }
-    h3 {
-      cursor: pointer;
-      margin: 0;
-    }
-    h3:hover {
-      color: rgba(177, 177, 177, 0.8);
-    }
-    svg {
-      stroke: rgba(236, 139, 21, 0.829);
-      cursor: pointer;
-    }
-  }
-}
 
 .container-new-session {
   width: 100%;
@@ -541,7 +515,7 @@ export default {
   .content-social {
     background-color: rgb(43 43 43 / 0.1);
     width: 100%;
-    height: 50%;
+ 
     max-height: 50%;
     overflow-y: auto;
     h3 {
@@ -641,25 +615,23 @@ ul {
   display: flex;
   padding-top: 2vmax;
   gap: 1em;
-  height: 80vh;
-  width: 75vw;
+
+  //width: 75vw;
 
   .content-left,
   .content-right {
     box-shadow: 0px 0px 5px rgba(15, 15, 15, 0.61);
-    background-color: rgba(0, 0, 0, 0.393);
-    border: 1px solid rgba(99, 99, 99, 0.877);
-    height: 100%;
-    overflow-y: auto;
+   // border: 1px solid rgba(99, 99, 99, 0.877);
+    
     h2 {
       text-align: center;
     }
   }
   .content-left {
-    width: 30%;
+  //  width: 20vw;
   }
   .content-right {
-    width: 70%;
+    width: 50vw;
   }
 }
 
@@ -674,10 +646,34 @@ ul {
   background-color: rgba(19, 82, 29, 0.7);
 }
 .container-personagens {
-  margin: 0;
+  background-color: rgba(0, 0, 0, 0.393);
+  margin: 1em 0;
   padding: 0;
-
-  padding: 1em;
+  overflow-y: auto;
+  border: 1px solid #ffffff7f;
+  border-radius: 0.3em;
+  height: auto;
+  min-height: 380px;
+  #title-personagem{
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #ffffff7f;
+    h3{
+      margin: 0.5em;
+      padding: 0;
+      padding-left: 1em;
+    }
+    button{
+      cursor: pointer;
+      background-color: #3fd52541;
+      margin: 0.5em;
+    }
+    button:hover{
+      background-color: #3fd525be;
+      color: #fff;
+      margin: 0.5em;
+    }
+  }
   h5 {
     width: 20%;
     aspect-ratio: 9/16;
@@ -696,7 +692,7 @@ ul {
   }
   ul {
     margin: 0;
-    padding: 0;
+    padding: 0.5em 0;
     width: 100%;
     height: 100%;
     display: flex;
@@ -706,6 +702,8 @@ ul {
     background-color: transparent;
     list-style: none;
     gap: 1em;
+    max-height: 390px;
+    overflow-y: auto;
     li {
       cursor: pointer;
       padding: 0.4em;
@@ -790,7 +788,30 @@ ul {
     }
   }
 }
-
+.container-npcs{
+  background-color: rgba(0, 0, 0, 0.393);
+  margin: 1em 0;
+  padding: 0;
+  overflow-y: auto;
+  border: 1px solid #ffffff7f;
+  border-radius: 0.3em;
+  height: auto;
+  min-height: 380px;
+  #title-npc{
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #ffffff7f;
+    h3{
+      margin: 0.5em;
+      padding: 0;
+      padding-left: 1em;
+    }
+    button{
+      background-color: #00000080;
+      margin: 0.5em;
+    }
+  }
+}
 //MODAL PARDRÃO
 .session-content-p {
   top: 4vmax;
@@ -927,4 +948,6 @@ ul {
     gap: 5px;
   }
 }
+
+
 </style>

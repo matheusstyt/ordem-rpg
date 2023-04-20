@@ -484,42 +484,6 @@ export default {
   gap: 0.5em;
 }
 
-.header {
-  width: 100%;
-  background-color: rgba(0 0 0 / 0.1);
-  height: 2.5em;
-  margin-bottom: 1em;
-  .header-content {
-    background-color: rgba(0 0 0 / 0.7);
-    height: 100%;
-
-    display: flex;
-    align-items: center;
-    justify-content: space-evenly;
-    border-bottom-right-radius: 2em;
-    border-bottom-left-radius: 2em;
-    margin: 0 auto;
-    p {
-      cursor: pointer;
-      margin: 0;
-    }
-    p:hover {
-      color: rgb(255, 188, 188);
-    }
-    h3 {
-      cursor: pointer;
-      margin: 0;
-    }
-    h3:hover {
-      color: rgba(177, 177, 177, 0.8);
-    }
-    svg {
-      stroke: rgba(236, 139, 21, 0.829);
-      cursor: pointer;
-    }
-  }
-}
-
 .container-new-session {
   width: 100%;
   display: flex;

@@ -9,8 +9,8 @@
   </div>
   
     <div class="personagem-container">
-      
-        <Avatar
+        <div class="main-personagem">
+          <Avatar
             :perfil64="perfil_carregado"
             :l_vida.sync="vida"
             :l_sanidade.sync="sanidade"
@@ -30,7 +30,23 @@
             @u_traumatizado="u_traumatizado"
             @u_enlouquecendo="u_enlouquecendo"
             @u_imagem_base64="u_imagem_base64"
-        />
+          />
+          <ul>
+            <li>
+              <img src="@/assets/img/personagem/antescendentes_ico.png" alt="">
+              <p>Antescendentes</p>
+            </li>
+            <li>
+              <img src="@/assets/img/personagem/inventario_ico.png" alt="">
+              <p>Inventário</p>
+            </li>
+            <li>
+              <img src="@/assets/img/personagem/energia.webp" alt="">
+              <p>Rituais</p>
+            </li>
+          </ul>
+        </div>
+        
         <detalhes-info  
         :nome="data_personagem.nome"
         :origem="data_personagem.origem"
@@ -468,6 +484,48 @@
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    .main-personagem{
+      display: flex;
+      justify-content: center;
+      ul{
+        padding: 0.5em;
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        align-items: center;
+        justify-content: space-evenly;
+        gap: 1em;
+        
+        li{
+          width: 70px;
+          //height: 70px;
+          background-color: #000000be;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          border-radius: 50%;
+          opacity: 0.8;
+          border: 1px solid #ffffff46;
+          img{
+            width: 90%;
+            aspect-ratio: 1/1;
+          }
+          p{
+            margin: 0;
+            font-size: 0.7em;
+          }
+          &:hover{
+            opacity: 1;
+          }
+          &:active{
+            opacity: 1;
+          }
+        }
+        
+      }
+    }
   }
   
   // estilo de detalhes

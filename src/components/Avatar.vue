@@ -483,46 +483,46 @@ export default {
       }
       
     },
-    l_lesao_grave(value) {
-      if (value) {
-        createToast("Lesão Grave - ativado", { type: "warning", timeout: 3000 });
-      } else {
-        createToast("Lesão Grave - desativado", { type: "default", timeout: 3000 });
-      }
-      this.$emit("u_lesao_grave", value);
-    },
-    l_inconsciente(value) {
-      if (value) {
-        createToast("Inconsciente - ativado", { type: "danger", timeout: 3000 });
-      } else {
-        createToast("Inconsciente - desativado", { type: "default", timeout: 3000 });
-      }
-      this.$emit("u_inconsciente", value);
-    },
-    l_morrendo(value) {
-      if (value) {
-        createToast("Morrendo - ativado", { type: "danger", timeout: 3000 });
-      } else {
-        createToast("Morrendo - desativado", { type: "default", timeout: 3000 });
-      }
-      this.$emit("u_morrendo", value);
-    },
-    l_traumatizado(value) {
-      if (value) {
-        createToast("Traumatizado - ativado", { type: "warning", timeout: 3000 });
-      } else {
-        createToast("Traumatizado - desativado", { type: "default", timeout: 3000 });
-      }
-      this.$emit("u_traumatizado", value);
-    },
-    l_enlouquecendo(value) {
-      if (value) {
-        createToast("Enlouquecendo - ativado", { type: "danger", timeout: 3000 });
-      } else {
-        createToast("Enlouquecendo - desativado", { type: "default", timeout: 3000 });
-      }
-      this.$emit("u_enlouquecendo", value);
-    },
+    // l_lesao_grave(value) {
+    //   if (value) {
+    //     createToast("Lesão Grave - ativado", { type: "warning", timeout: 3000 });
+    //   } else {
+    //     createToast("Lesão Grave - desativado", { type: "default", timeout: 3000 });
+    //   }
+    //   this.$emit("u_lesao_grave", value);
+    // },
+    // l_inconsciente(value) {
+    //   if (value) {
+    //     createToast("Inconsciente - ativado", { type: "danger", timeout: 3000 });
+    //   } else {
+    //     createToast("Inconsciente - desativado", { type: "default", timeout: 3000 });
+    //   }
+    //   this.$emit("u_inconsciente", value);
+    // },
+    // l_morrendo(value) {
+    //   if (value) {
+    //     createToast("Morrendo - ativado", { type: "danger", timeout: 3000 });
+    //   } else {
+    //     createToast("Morrendo - desativado", { type: "default", timeout: 3000 });
+    //   }
+    //   this.$emit("u_morrendo", value);
+    // },
+    // l_traumatizado(value) {
+    //   if (value) {
+    //     createToast("Traumatizado - ativado", { type: "warning", timeout: 3000 });
+    //   } else {
+    //     createToast("Traumatizado - desativado", { type: "default", timeout: 3000 });
+    //   }
+    //   this.$emit("u_traumatizado", value);
+    // },
+    // l_enlouquecendo(value) {
+    //   if (value) {
+    //     createToast("Enlouquecendo - ativado", { type: "danger", timeout: 3000 });
+    //   } else {
+    //     createToast("Enlouquecendo - desativado", { type: "default", timeout: 3000 });
+    //   }
+    //   this.$emit("u_enlouquecendo", value);
+    // },
   },
   created() {
     this.l_lesao_grave = this.lesao_grave;
@@ -541,11 +541,7 @@ export default {
   width: 70vw;
 
 }
-@media screen and (max-width: 600px) {
-    .geral-avatar{
-      width: 95vw;
-    }
-  }
+
 .container-avatar {
   background: rgba(7 7 7 / 0.7);
   border-radius: 1.8em;
