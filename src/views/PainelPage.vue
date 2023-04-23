@@ -23,7 +23,6 @@
         <div
           class="content-session-open"
           v-if="no_session === true"
-          style="display: block"
         >
           <ul>
             <li
@@ -31,11 +30,15 @@
               :key="session.id"
               @click="open_session(session.id, session.descricao)"
             >
-              <p>N°: {{ index + 1 }}</p>
-              <p>mestre: {{ session.mestre }}</p>
-              <p>descrição : {{ session.descricao }}</p>
-              <p>data de inicio: {{ session.data_criacao }}</p>
-              <p>status: {{ session.status }}</p>
+              <!-- <p>N°: {{ index + 1 }}</p> -->
+              <strong>
+                <h3>Título:</h3>
+              <p>{{ session.descricao }}</p>
+              </strong>
+              
+              <h3>Data de início:</h3>
+              <p>{{ session.data_criacao }}</p>
+              <!-- <p>status: {{ session.status }}</p> -->
             </li>
           </ul>
         </div>
@@ -54,13 +57,17 @@
               :key="match.id"
               @click="open_match(match.id, match.fk_mestre, match.descricao)"
             >
-              <p>N°: {{ index + 1 }}</p>
+              <strong>
+                <h3>Título:</h3>
+              <p>{{ match.descricao }}</p>
+              </strong>
+              <strong>
+                <h3>Mestre: </h3>
+                <p>{{ match.mestre }}</p>
 
-              <p>mestre: {{ match.mestre }}</p>
-              <p>descrição : {{ match.descricao }}</p>
-              <p>data de inicio: {{ match.data_criacao }}</p>
-
-              <!-- <p>Tempo decorrido: {{match.tempoDecorrido}}</p> -->
+              </strong>
+              <h3>Data de início:</h3>
+              <p>{{ match.data_criacao }}</p>
               <label for="status">status: {{ match.status }}</label>
             </li>
           </ul>
@@ -734,6 +741,7 @@ export default {
     .content-matches-list,
     .content-sessions-list {
       overflow-y: auto;
+
     }
     .content-matches-list {
       height: 50%;
@@ -781,27 +789,36 @@ export default {
   text-align: center;
   font-family: "Consolas";
   width: 100%;
+  
   ul {
     width: 100%;
+    height: 100%;
     padding: 0;
     margin: 0;
+    margin-top: 1em;
     list-style: none;
     display: flex;
-    flex-flow: column;
+    flex-flow: row wrap;
+    justify-content: space-evenly;
+    gap: 1em;
     li {
-      width: 100%;
-
+      strong{
+        display: flex;
+        align-items: center;
+        gap: 0.5em;
+        justify-content: center;
+      }
+      p, h3{
+        margin: 0;
+        padding: 0.3em 0.5em;
+      }
       display: flex;
+      flex-flow: column;
       justify-content: space-between;
       background-color: rgba(0 0 0 / 0.3);
-      border-bottom: 1px solid rgba(255 255 255 / 0.7);
-      label {
-        margin: 5px 0;
-        padding: 0 20px;
-        border-right: 1px solid rgba(255 255 255 / 0.7);
-        cursor: pointer;
-        border: none;
-      }
+      border: 1px dashed rgba(255 255 255 / 0.7);
+      border-radius: 1em;
+
     }
     li:hover {
       background-color: rgba(255 255 255 / 0.1);

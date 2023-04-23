@@ -577,7 +577,6 @@ ul {
     cursor: pointer;
     padding: 0.5em 1em;
     border-bottom: 1px solid rgba(68, 68, 68, 0.4);
-    box-shadow: 0px 1px 5px #000;
   }
 }
 

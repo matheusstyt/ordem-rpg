@@ -7,7 +7,101 @@
       @close_modal="close_modal"
     />
   </div>
-  
+  <div class="modal-screen" v-if="modal_inventario">
+    <div class="container-inventario">
+      <button @click="close_modal_inventario">Fechar</button>
+      <strong>
+        <h2>Inventário : 3 / 7</h2>
+      </strong>
+      <h3>Itens</h3>
+      
+      <table>
+          <thead>
+            <tr>
+              <th>Nome</th>
+              <th>Descrição</th>
+              <th>Espaços</th>
+              <th>Quantidade</th>
+              <th>Categoria</th>
+            </tr>
+            
+          </thead>
+            <tr v-for="(item, index) in inventario_list">
+              <td>{{item.nome}}</td>
+              <td>{{item.descricao}}</td>
+              <td>{{item.espaco}}</td>
+              <td>0</td>
+              <td>{{item.categoria}}</td>
+              <td><img src="@/assets/ico/remove_ico.svg" alt=""></td>
+              <td><img src="@/assets/ico/edit_ico.svg" alt=""></td>
+            </tr>
+              
+        </table>
+
+        <h3>Armamentos</h3>
+      
+      <table>
+          <thead>
+            <tr>
+              <th>Nome</th>
+              <th>Descrição</th>
+              <th>Tipo</th>
+              <th>Dano</th>
+              <th>Ataque</th>
+
+              <th>Crítico</th>
+              <th>Alcance</th>
+
+              <th>Categoria A</th>
+              <th>Categoria B</th>
+              <th>Categoria C</th>
+            </tr>
+            
+          </thead>
+            <tr v-for="(item, index) in armamentos_list">
+              <td>{{item.nome}}</td>
+              <td>{{item.descricao}}</td>
+              <td>{{item.tipo}}</td>
+              <td>{{item.dano}}</td>
+              <td>{{item.ataque}}</td>
+              <td>{{item.critico}}</td>
+              <td>{{item.alcance}}</td>
+              <td>{{item.categoria_0}}</td>
+              <td>{{item.categoria_1}}</td>
+              <td>{{item.categoria_2}}</td>
+              <td><img src="@/assets/ico/remove_ico.svg" alt=""></td>
+              <td><img src="@/assets/ico/edit_ico.svg" alt=""></td>
+            </tr>
+              
+        </table>
+    </div>
+  </div>
+  <div class="modal-screen" v-if="open_antescendentes">
+    <div id="pergaminho-folha">
+      <div class="pergaminho-container">
+      <div class="pergaminho-ponta left-3"></div>
+      <div class="pergaminho-obj-2 left-2"></div>
+      <div class="pergaminho-obj-1"></div>
+     <div id="pergaminho-main">
+      <!-- <h2>Antescendentes</h2> -->
+        <h2>Suas Histórias</h2>
+        <img src="@/assets/ico/cancel_ico.svg" @click="close_modal_antescendentes" alt="">
+     </div>
+     <div class="pergaminho-obj-1"></div>
+     <div class="pergaminho-obj-2 rigth-2"></div>
+     <div class="pergaminho-ponta rigth-3"></div>
+    </div>
+    <div class="folha-antiga">
+      <ul>
+        <li v-for="(item, index) in antescendentes">
+          <h3>{{ item.nome }}</h3>
+            <textarea name="" id="" cols="30" rows="7">{{ item.descricao }}</textarea>
+        </li>
+      </ul>
+    </div>
+    </div>
+    
+  </div>
     <div class="personagem-container">
         <div class="main-personagem">
           <Avatar
@@ -32,11 +126,11 @@
             @u_imagem_base64="u_imagem_base64"
           />
           <ul>
-            <li>
+            <li @click="open_modal_antescendentes">
               <img src="@/assets/img/personagem/antescendentes_ico.png" alt="">
               <p>Antescendentes</p>
             </li>
-            <li>
+            <li @click="open_modal_inventario">
               <img src="@/assets/img/personagem/inventario_ico.png" alt="">
               <p>Inventário</p>
             </li>
@@ -304,16 +398,32 @@
         peso: 0,
         armamentos_list : [],
         acessorios_list : [],
+        inventario_list : [],
         antescendentes: [],
         acessorios: [],
         // dados result
         nome_to_modal : "",
         valor_to_modal : 0,
-        is_pericia_value : true
-        
+        is_pericia_value : true,
+        // modals
+        //antescendentes
+        open_antescendentes : false,
+        modal_inventario : false
       };
     },
     methods: {
+      open_modal_antescendentes(){
+        this.open_antescendentes = true;
+      },
+      close_modal_antescendentes(){
+        this.open_antescendentes = false;
+      },
+      open_modal_inventario(){
+        this.modal_inventario = true;
+      },
+      close_modal_inventario(){
+        this.modal_inventario = false;
+      },
       close_modal(value){
         this.open_modal = value;
       },
@@ -409,13 +519,28 @@
             this.ocultismo = JSON.parse(this.data_personagem.ocultismo)
             this.esforco = JSON.parse(this.data_personagem.esforco)
 
+            this.antescendentes = JSON.parse(this.data_personagem.antescendentes)
+            console.log(this.antescendentes)
+            
             this.atributos = JSON.parse(this.data_personagem.atributos)
             this.pericias = JSON.parse(this.data_personagem.pericias)
             this.resistencias = JSON.parse(this.data_personagem.resistencias)
             this.armamentos_list = JSON.parse(this.data_personagem.armamentos)
             this.acessorios_list = JSON.parse(this.data_personagem.acessorios)
-
-            this.perfil_carregado = this.data_personagem.perfil_img
+            // percorrer e adicionar ao array inventario o resumo
+            var temp_arr = [];
+            this.armamentos_list.forEach(arma => {
+              temp_arr.push({
+                id: arma.id,
+                nome : arma.nome,
+                descricao : arma.descricao,
+                espaco : arma.espaco,
+                fk_personagem : arma.fk_personagem
+              });
+            });
+            this.inventario_list = this.acessorios_list.concat(temp_arr);
+            console.table(this.inventario_list)
+            this.perfil_carregado = this.data_personagem.perfil_img;
         } catch (error) {
             this.$router.go(-1);
         }
@@ -470,7 +595,6 @@
     position: fixed;
     top : 0;
     z-index: 2;
-
     display: flex;
     align-items: center;
     justify-content: center;
@@ -804,5 +928,159 @@
     #app{
         height: auto;
     }
+
+    // antescendentes folha de pergaminho protótipo
+    #pergaminho-folha{
+      min-width: 70%;
+      
+      z-index: 2;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+
+    }
+    .folha-antiga{
+      width: 80%;
+      max-height: 75vh;
+      aspect-ratio: 21/29;
+      margin-top: -1.2vmax;
+      z-index: 3;
+
+//      overflow-y: auto;
+
+      background-color: rgba(250, 221, 183, 0.963);
+      h2{
+        text-align: center;
+        color: #1a1a1a;
+      }
+      ul{
+        padding: 0;
+        margin: 0;
+        li{
+          h3{
+          text-align: left; 
+          padding-left: 0.5em;
+          box-shadow: none;
+          color: #301e12;
+
+
+          }
+          textarea{
+            color: #301e12;
+            padding-left: 0.5em;
+            background-color: rgba(255, 228, 196, 0.554);
+            border-radius: 0.5em;
+            border: 1px solid rgb(253, 211, 160);
+            box-shadow: 0px 0px 3px rgba(75, 54, 29, 0.785);
+            width: 95%;
+          }
+        }
+      }
+    }
+    // objeto pergaminho em css
+    .pergaminho-container{
+      width: 100%;
+      height: 7vmax;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      #pergaminho-main{
+        height: 65%;
+        width: 80%;
+        background-color: rgb(234, 211, 167);
+        border-bottom: 2px solid rgba(214, 152, 76, 0.737);
+        position: relative;
+        h2{
+          color: #301e12;
+          text-align: center;
+        }
+        img{
+          cursor: pointer;
+          height: 30%;
+          aspect-ratio: 1/1;
+          position: absolute;
+          top: 30%;
+          right: 15%;
+  
+        }
+      }
+      .pergaminho-obj-1{
+        height: 100%;
+        width: 5%;
+        background-color: #f08945;
+        border-radius: 1em;
+        border: 2px solid rgba(158, 110, 50, 0.737);
+
+      }
+      .pergaminho-obj-2{
+        height: 50%;
+        width: 2%;
+        background-color: #f0f045;
+      }
+      .left-2, .left-3{
+        border-top-left-radius: 1em;
+        border-bottom-left-radius: 1em;
+        border-left: 2px solid rgba(255, 208, 40, 0.737);
+      }
+      .rigth-2, .rigth-3{
+        border-top-right-radius: 1em;
+        border-bottom-right-radius: 1em;
+        border-right: 2px solid rgba(255, 208, 40, 0.737);
+
+      }
+      .pergaminho-ponta{
+        height: 15%;
+        width: 2%;
+        background-color: #f0f045;
+      }
+    }
+
+  .container-inventario{
+    position: relative;
+    button{
+      position: absolute;
+      cursor: pointer;
+      right:1%;
+      top: 2%;
+      background-color: #29292984;
+      &:hover{
+        background-color: #e94040;
+        color: #ffff;
+      }
+    }
+    width: 80vw;
+    min-height: 60vh; 
+    background-color: #000000be;
+    border-bottom-left-radius: 30%;
+    border-bottom-right-radius: 30%;
+    border-top-right-radius: 1em;
+    border-top-left-radius: 1em;
+    border-top: 3px solid #b5b5b55d;
+    border-bottom: 3px solid #b5b5b55d;
+    padding-bottom: 2em;
+    z-index: 3;
+    h2, h3{
+      text-align: center;
+    }
+    table{
+      width: 95%;
+      border: 1px solid #ffffff27;
+      margin: 0 auto;
+      tr:nth-child(even){
+        background-color: #29292992;
+      }
+      th{
+        text-align: left;
+      }
+      tr{
+        img{
+          cursor: pointer;
+          height: 1em;
+          aspect-ratio: 1/1;
+        }
+      }
+    }
+  }
   </style>
   
