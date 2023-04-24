@@ -95,7 +95,7 @@
       <ul>
         <li v-for="(item, index) in antescendentes">
           <h3>{{ item.nome }}</h3>
-            <textarea name="" id="" cols="30" rows="7">{{ item.descricao }}</textarea>
+            <textarea name="" id="" cols="30" rows="3">{{ item.descricao }}</textarea>
         </li>
       </ul>
     </div>
@@ -167,155 +167,6 @@
           </ul>
         </div>
       </template>
- 
-      <template v-if="carrosel == 5">
-        <!-- <div class="content-sessaormamentos">
-          <div class="content-sessao">
-            <table>
-              <thead>
-                <th colspan="7">ARMAMENTOS DISPONÍVEIS</th>
-                <tr>
-                  <th>arma</th>
-                  <th class="hide-td">categoria</th>
-                  <th>dano</th>
-                  <th class="hide-td">crítico</th>
-                  <th>alcance</th>
-                  <th class="hide-td">tipo</th>
-                  <th>espaço</th>
-                </tr>
-              </thead>
-  
-              <template v-if="armamento_simples_sessao.length > 0">
-                <h3>Armas Simples</h3>
-                <tr
-                  v-for="(arma, index) in armamento_simples_sessao"
-                  :key="index"
-                  @click="add_arma_simples(arma, index)"
-                >
-                  <td>{{ arma.arma }}</td>
-                  <td class="hide-td">{{ arma.categoria_0 }}</td>
-                  <td>{{ arma.dano }}</td>
-                  <td class="hide-td">{{ arma.critico }}</td>
-                  <td>{{ arma.alcance }}</td>
-                  <td class="hide-td">{{ arma.tipo }}</td>
-                  <td>{{ arma.espaco }}</td>
-                </tr>
-              </template>
-              <template v-if="armamento_tatico_sessao.length > 0">
-                <h3>Armas Táticas</h3>
-                <tr
-                  v-for="(arma, index) in armamento_tatico_sessao"
-                  :key="index"
-                  @click="add_arma_tatica(arma, index)"
-                >
-                  <td>{{ arma.arma }}</td>
-                  <td>{{ arma.categoria_0 }}</td>
-                  <td>{{ arma.dano }}</td>
-                  <td>{{ arma.critico }}</td>
-                  <td>{{ arma.alcance }}</td>
-                  <td>{{ arma.tipo }}</td>
-                  <td>{{ arma.espaco }}</td>
-                </tr>
-              </template>
-              <template v-if="armamento_pesado_sessao.length > 0">
-                <h3>Armas Pesadas</h3>
-                <tr
-                  v-for="(arma, index) in armamento_pesado_sessao"
-                  :key="index"
-                  @click="add_arma_pesada(arma, index)"
-                >
-                  <td>{{ arma.arma }}</td>
-                  <td>{{ arma.categoria_0 }}</td>
-                  <td>{{ arma.dano }}</td>
-                  <td>{{ arma.critico }}</td>
-                  <td>{{ arma.alcance }}</td>
-                  <td>{{ arma.tipo }}</td>
-                  <td>{{ arma.espaco }}</td>
-                </tr>
-              </template>
-            </table>
-          </div>
-          <div class="content-personagem">
-            <table>
-              <thead>
-                <th colspan="7">SEUS ARMAMENTOS</th>
-                <tr>
-                  <th>arma</th>
-                  <th>categoria</th>
-                  <th>dano</th>
-                  <th>crítico</th>
-                  <th>alcance</th>
-                  <th>tipo</th>
-                  <th>espaço</th>
-                </tr>
-              </thead>
-              <template v-if="armamento_simples_personagem.length > 0">
-                <h3>Armas Simples</h3>
-                <tr
-                  v-for="(arma, index) in armamento_simples_personagem"
-                  :key="index"
-                  @click="remove_arma_simples(arma, index)"
-                >
-                  <td>{{ arma.arma }}</td>
-                  <td>{{ arma.categoria_0 }}</td>
-                  <td>{{ arma.dano }}</td>
-                  <td>{{ arma.critico }}</td>
-                  <td>{{ arma.alcance }}</td>
-                  <td>{{ arma.tipo }}</td>
-                  <td>{{ arma.espaco }}</td>
-                </tr>
-              </template>
-              <template v-if="armamento_tatico_personagem.length > 0">
-                <h3>Armas Táticas</h3>
-                <tr
-                  v-for="(arma, index) in armamento_tatico_personagem"
-                  :key="index"
-                  @click="remove_arma_tatica(arma, index)"
-                >
-                  <td>{{ arma.arma }}</td>
-                  <td>{{ arma.categoria_0 }}</td>
-                  <td>{{ arma.dano }}</td>
-                  <td>{{ arma.critico }}</td>
-                  <td>{{ arma.alcance }}</td>
-                  <td>{{ arma.tipo }}</td>
-                  <td>{{ arma.espaco }}</td>
-                </tr>
-              </template>
-              <template v-if="armamento_pesado_personagem.length > 0">
-                <h3>Armas Pesadas</h3>
-                <tr
-                  v-for="(arma, index) in armamento_pesado_personagem"
-                  :key="index"
-                  @click="remove_arma_pesada(arma, index)"
-                >
-                  <td>{{ arma.arma }}</td>
-                  <td>{{ arma.categoria_0 }}</td>
-                  <td>{{ arma.dano }}</td>
-                  <td>{{ arma.critico }}</td>
-                  <td>{{ arma.alcance }}</td>
-                  <td>{{ arma.tipo }}</td>
-                  <td>{{ arma.espaco }}</td>
-                </tr>
-              </template>
-            </table>
-          </div>
-        </div> -->
-      </template>
-      <template v-if="carrosel == 6">
-        <div class="container-armamento">
-          <ul>
-            <li v-for="(item, index) in antescendentes" :key="index">
-              <h3>{{ item.nome }}</h3>
-              <textarea
-                v-model="item.descricao"
-                spellcheck="false"
-                rows="4"
-                cols="50"
-              ></textarea>
-            </li>
-          </ul>
-        </div>
-      </template>
 
     </div>
   </template>
@@ -330,8 +181,6 @@
   import ToastPlugin from "vue-toast-notification";
   import "vue-toast-notification/dist/theme-bootstrap.css";
   
-  import Detalhes from "../components/Detalhes.vue";
-  import Atributos from "../components/Atributos.vue";
   import Avatar from "../components/Avatar.vue";
   
   import { salvar_personagem } from "@/api/personagem/post_personagem.js";
@@ -341,8 +190,6 @@
             "info-atributos" : info_atributos,
             "info-pericias" : info_pericias,
       ToastPlugin,
-      Detalhes,
-      Atributos,
       Avatar,
       "modal-dado" : modal_dado
     },
@@ -940,19 +787,82 @@
       flex-direction: column;
 
     }
+    
+    // objeto pergaminho em css
+    .pergaminho-container{
+      width: 100%;
+      height: 7vmax;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      #pergaminho-main{
+        height: 65%;
+        width: 80%;
+        background-color: rgba(41, 22, 68, 0.771);
+        border-top: 2px solid rgba(49, 59, 142, 0.737);
+        border-bottom: 2px solid rgba(49, 59, 142, 0.737);
+
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        position: relative;
+        h2{
+          color: #f2e2e2;
+          
+        }
+        img{
+          cursor: pointer;
+          height: 30%;
+          aspect-ratio: 1/1;
+        
+  
+        }
+      }
+      .pergaminho-obj-1{
+        height: 100%;
+        width: 5%;
+        background-color: #2a2851d9;
+        border-radius: 1em;
+        border-right: 2px solid rgba(40, 230, 255, 0.398);
+        border-left: 2px solid rgba(40, 230, 255, 0.398);
+
+      }
+      .pergaminho-obj-2{
+        height: 50%;
+        width: 2%;
+        background-color: #111f3bdb;
+      }
+      .left-2, .left-3{
+        border-top-left-radius: 1em;
+        border-bottom-left-radius: 1em;
+        border-left: 2px solid rgba(40, 230, 255, 0.398);
+      }
+      .rigth-2, .rigth-3{
+        border-top-right-radius: 1em;
+        border-bottom-right-radius: 1em;
+        border-right: 2px solid rgba(40, 230, 255, 0.398);
+
+      }
+      .pergaminho-ponta{
+        height: 15%;
+        width: 2%;
+        background-color: #153a61c3;
+      }
+    }
     .folha-antiga{
       width: 80%;
       max-height: 75vh;
       aspect-ratio: 21/29;
       margin-top: -1.2vmax;
       z-index: 3;
+      border-right: 2px solid rgba(40, 230, 255, 0.398);
+        border-left: 2px solid rgba(40, 230, 255, 0.398);
 
-//      overflow-y: auto;
-
-      background-color: rgba(250, 221, 183, 0.963);
-      h2{
+      background-color: rgba(41, 22, 68, 0.771);
+      h2, h3{
         text-align: center;
-        color: #1a1a1a;
+        color: #e2eef2;
       }
       ul{
         padding: 0;
@@ -962,14 +872,15 @@
           text-align: left; 
           padding-left: 0.5em;
           box-shadow: none;
-          color: #301e12;
+          color: #e2eef2;
 
 
           }
           textarea{
-            color: #301e12;
+            color: #e2eef2;
             padding-left: 0.5em;
-            background-color: rgba(255, 228, 196, 0.554);
+            background-color: rgba(70, 39, 113, 0.564);
+            
             border-radius: 0.5em;
             border: 1px solid rgb(253, 211, 160);
             box-shadow: 0px 0px 3px rgba(75, 54, 29, 0.785);
@@ -978,64 +889,8 @@
         }
       }
     }
-    // objeto pergaminho em css
-    .pergaminho-container{
-      width: 100%;
-      height: 7vmax;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      #pergaminho-main{
-        height: 65%;
-        width: 80%;
-        background-color: rgb(234, 211, 167);
-        border-bottom: 2px solid rgba(214, 152, 76, 0.737);
-        position: relative;
-        h2{
-          color: #301e12;
-          text-align: center;
-        }
-        img{
-          cursor: pointer;
-          height: 30%;
-          aspect-ratio: 1/1;
-          position: absolute;
-          top: 30%;
-          right: 15%;
-  
-        }
-      }
-      .pergaminho-obj-1{
-        height: 100%;
-        width: 5%;
-        background-color: #f08945;
-        border-radius: 1em;
-        border: 2px solid rgba(158, 110, 50, 0.737);
 
-      }
-      .pergaminho-obj-2{
-        height: 50%;
-        width: 2%;
-        background-color: #f0f045;
-      }
-      .left-2, .left-3{
-        border-top-left-radius: 1em;
-        border-bottom-left-radius: 1em;
-        border-left: 2px solid rgba(255, 208, 40, 0.737);
-      }
-      .rigth-2, .rigth-3{
-        border-top-right-radius: 1em;
-        border-bottom-right-radius: 1em;
-        border-right: 2px solid rgba(255, 208, 40, 0.737);
-
-      }
-      .pergaminho-ponta{
-        height: 15%;
-        width: 2%;
-        background-color: #f0f045;
-      }
-    }
-
+    // inventario scss
   .container-inventario{
     position: relative;
     button{

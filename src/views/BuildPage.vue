@@ -233,16 +233,12 @@ import armamentos from "@/json/armamentos";
 import ToastPlugin from "vue-toast-notification";
 import "vue-toast-notification/dist/theme-bootstrap.css";
 
-import Detalhes from "../components/Detalhes.vue";
-import Atributos from "../components/Atributos.vue";
 import Avatar from "../components/Avatar.vue";
 
 import { salvar_personagem } from "@/api/personagem/post_personagem.js";
 export default {
   components: {
     ToastPlugin,
-    Detalhes,
-    Atributos,
     Avatar,
   },
   data() {

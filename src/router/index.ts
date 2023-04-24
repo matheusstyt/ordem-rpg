@@ -39,21 +39,9 @@ const routes: Array<RouteRecordRaw> = [
   }
   ,
   {
-    path: '/rituais',
-    name: 'rituais',
-    component: () => import(/* webpackChunkName: "rituais" */ '../views/RituaisView.vue')
-  }
-  ,
-  {
     path: '/sessao',
     name: 'sessao',
     component: () => import(/* webpackChunkName: "sessao" */ '../views/SessaoPage.vue')
-  }
-  ,
-  {
-    path: '/ritual',
-    name: 'ritual',
-    component: () => import(/* webpackChunkName: "ritual" */ '../views/RitualView.vue')
   }
 
 ]
